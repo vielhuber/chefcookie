@@ -17,6 +17,7 @@ atracker is a tracker.
 * Duration tracking
 * Scroll depth tracking
 * Opt out
+* Auto disable tracking for logged in WordPress users
 
 ## Installation
 
