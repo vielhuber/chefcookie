@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <title>.</title>
+    <style>
+    body
+    {
+        min-height:300vh;
+    }
+    </style>
+    <script src="atracker.js"></script> 
+    <script>
+    var atracker = new atracker({
+        'google': 'UA-77674501-1',
+        'facebook': '687761448085259',
+        'twitter': 'single',
+        'taboola': 'taboolaaccount-socialclose2de',
+        'match2one': '11538693',
+        'smartlook': 'e63141d523562364440934be8a0d418f17f5123b'
+    });
+    window.addEventListener('load', function(e)
+    {
+        // track duration
+        atracker.trackDuration();
+        // track scroll depth
+        atracker.trackScrollDepth();
+        // custom tracking
+        document.querySelector('.conversion').addEventListener('click', function(e)
+        { 
+            atracker.google('custom_category','custom_action');
+            atracker.facebook('custom_action_name');
+            atracker.twitter('nw79o');
+            atracker.taboola('custom_action_name');
+            atracker.match2one('id=962871&seg=11538694');
+            e.preventDefault();
+        }, false);
+    }, false);
+    </script>
+</head>
+<body>
+
+    <h2>Link tracking</h2>
+    <a href="#" class="conversion">Klick!</a>
+
+    <h2>Opt out</h2>
+    <a href="#" data-disable="google" data-message="Google Analytics reaktivieren">Google Analytics deaktivieren</a><br/>
+    <a href="#" data-disable="facebook" data-message="Facebook Pixel reaktivieren">Facebook Pixel deaktivieren</a><br/>
+    <a href="#" data-disable="twitter" data-message="Twitter Pixel reaktivieren">Twitter Pixel deaktivieren</a><br/>
+    <a href="#" data-disable="taboola" data-message="Taboola Pixel reaktivieren">Taboola Pixel deaktivieren</a><br/>
+    <a href="#" data-disable="match2one" data-message="Match2One Pixel reaktivieren">Match2One Pixel deaktivieren</a><br/>
+    <a href="#" data-disable="smartlook" data-message="Smartlook reaktivieren">Smartlook deaktivieren</a>
+
+</body>
+</html>
