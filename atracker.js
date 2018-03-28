@@ -118,6 +118,9 @@ var atracker = function(args)
             var script = document.createElement('script');
                 script.src = 'https://secure.adnxs.com/seg?add='+id+'&t=1';
             document.head.appendChild(script);
+            var script = document.createElement('script');
+                script.innerHTML = 'window.m2o = true;';
+            document.head.appendChild(script);
         }
 
         if( provider === 'smartlook' )
@@ -206,6 +209,10 @@ var atracker = function(args)
     this.match2one = function(id)
     {
         if( this.isDisabled('match2one') )
+        {
+            return;
+        }
+        if( typeof m2o == 'undefined' )
         {
             return;
         }
