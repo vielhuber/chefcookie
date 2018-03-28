@@ -4,18 +4,18 @@ atracker is a tracker.
 
 ## Supports
 
-* Google Analytics
-* Facebook
-* Twitter
-* Taboola
-* Match2One
-* Smartlook
+* [Google Analytics](https://analytics.google.com)
+* [Facebook Ads](https://de-de.facebook.com/business/products/ads)
+* [Twitter Ads](https://ads.twitter.com)
+* [Taboola Ads](https://www.taboola.com)
+* [Match2One Ads](https://www.match2one.com)
+* [Smartlook](https://www.smartlook.com)
 
 ## Features
 
 * Custom event tracking
-* Duration Tracking
-* Scroll Depth Tracking
+* Duration tracking
+* Scroll depth tracking
 * Opt out
 
 ## Installation
@@ -26,12 +26,12 @@ atracker is a tracker.
 
 ```js
 var atracker = new atracker({
-    'google': 'UA-77674501-1',
-    'facebook': '687761448085259',
+    'google': 'UA-xxxxxxxx-1',
+    'facebook': 'xxxxxxxxxxxxxxx',
     'twitter': 'single',
-    'taboola': 'taboolaaccount-socialclose2de',
-    'match2one': '11538693',
-    'smartlook': 'e63141d523562364440934be8a0d418f17f5123b'
+    'taboola': 'taboolaaccount-xxxxxxxxxxxxxx',
+    'match2one': 'xxxxxxxx',
+    'smartlook': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 });
 ```
 
@@ -50,9 +50,9 @@ window.addEventListener('load', function(e)
     { 
         atracker.google('custom_category','custom_action');
         atracker.facebook('custom_action_name');
-        atracker.twitter('nw79o');
+        atracker.twitter('conversion_id');
         atracker.taboola('custom_action_name');
-        atracker.match2one('id=962871&seg=11538694');
+        atracker.match2one('id=xxxxxx&seg=xxxxxx');
         e.preventDefault();
     }, false);
 }, false);
@@ -66,15 +66,4 @@ Opt out links:
 <a href="#" data-disable="taboola" data-message="Taboola Pixel reaktivieren">Taboola Pixel deaktivieren</a><br/>
 <a href="#" data-disable="match2one" data-message="Match2One Pixel reaktivieren">Match2One Pixel deaktivieren</a><br/>
 <a href="#" data-disable="smartlook" data-message="Smartlook reaktivieren">Smartlook deaktivieren</a>
-```
-
-WordPress
-```php
-echo '<div class="socialfoo" ';
-    echo 'data-url="'.get_permalink().'" ';
-    echo 'data-title="'.get_the_title().'" ';
-    if( has_post_thumbnail(get_the_ID()) ) {
-        echo 'data-image="'.wp_get_attachment_url( get_post_thumbnail_id(get_the_ID()) ).'"';
-    }
-echo '></div>';
 ```
