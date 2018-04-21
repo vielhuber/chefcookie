@@ -128,7 +128,7 @@ var atracker = function(args)
         }
         if( action === undefined )
         {
-            gtag('event', '', { 'event_category': category });
+            gtag('event', category);
             console.log('google '+category);
         }
         else
