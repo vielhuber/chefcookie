@@ -1,11 +1,11 @@
 {
   "name": "chefcookie",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "_js/_build/script.js",
   "files": [
     "_js/_build/*.js"
   ],
-  "repository": "git@github.com:vielhuber/hlp.git",
+  "repository": "git@github.com:vielhuber/chefcookie.git",
   "author": "David Vielhuber <david@vielhuber.de>",
   "license": "MIT",
   "description": "",

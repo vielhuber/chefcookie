@@ -1,6 +1,3 @@
-/_build/
 /node_modules/
-/_vue/_build/
 /_js/_build/
-/_tests/_build/
 /package-lock.json

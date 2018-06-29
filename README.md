@@ -4,15 +4,15 @@ chefcookie is a gdpr cookie solution without compromises.
 
 ## features
 
-* includes basic styling
-* custom tracking scripts
+* opt in
+* opt out
+* highly customizable
 * custom event tracking
 * duration tracking
 * scroll depth tracking
-* opt in
-* opt out
+* includes basic styling
+* supports custom tracking scripts
 * auto disable tracking for logged in wordpress users
-* button labels support multiple languages
 
 ## supports
 
@@ -36,7 +36,7 @@ import chefcookie from 'chefcookie';
 const cc = new chefcookie({});
 ```
 
-or include it the old way:
+or include it the traditional way:
 ```html
 <script src="chefcookie.min.js"></script>
 ```
@@ -56,25 +56,33 @@ var cc = new window.chefcookie({});
             <a href="https://tld.com/privacy">Mehr erfahren</a>
         </p>
     `,
+    'color': '#e4042d',
+    'labels': {
+        'decline': 'Ablehnen',
+        'settings_open': 'Meine Einstellungen verwalten',
+        'settings_close': 'Einstellungen schließen',
+        'accept': 'Akzeptieren',
+        'confirm': 'Bestätigen'
+    },
     'exclude': [
         'https://tld.com/privacy',
         ()=>{ return ( document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1 ); }
     ],
-    'groups': [
+    'settings': [
         {
             'title': 'Analysen',
-            'note': 'Tools, die anonyme Daten über Website-Nutzung und -Funktionalität sammeln. Wir nutzen die Erkenntnisse, um unsere Produkte, Dienstleistungen und das Benutzererlebnis zu verbessern.',
+            'description': 'Tools, die anonyme Daten über Website-Nutzung und -Funktionalität sammeln. Wir nutzen die Erkenntnisse, um unsere Produkte, Dienstleistungen und das Benutzererlebnis zu verbessern.',
             'active': false,
-            'readonly': false,
+            'hidden': false,
             'trackers': {
                 'google': 'UA-xxxxxxxx-1'
             }
         },
         {
             'title': 'Werbung',
-            'note': 'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
+            'description': 'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
             'active': false,
-            'readonly': false,
+            'hidden': false,
             'trackers': {
                 'facebook': 'xxxxxxxxxxxxxxx',
                 'twitter': 'single',
@@ -85,9 +93,9 @@ var cc = new window.chefcookie({});
         },
         {
             'title': 'Support',
-            'note': 'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
+            'description': 'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
             'active': false,
-            'readonly': false,
+            'hidden': false,
             'trackers': {
                 'custom': ()=>{
                     document.head.insertAdjacentHTML('beforeend',`
@@ -98,9 +106,9 @@ var cc = new window.chefcookie({});
         },
         {
             'title': 'Grundlegendes',
-            'note': 'Tools, die wesentliche Services und Funktionen ermöglichen, einschließlich Identitätsprüfung, Servicekontinuität und Standortsicherheit. Diese Option kann nicht abgelehnt werden.',
+            'description': 'Tools, die wesentliche Services und Funktionen ermöglichen, einschließlich Identitätsprüfung, Servicekontinuität und Standortsicherheit. Diese Option kann nicht abgelehnt werden.',
             'active': true,
-            'readonly': true,
+            'hidden': true,
             'trackers': {}
         },
     ]    
@@ -118,11 +126,11 @@ window.addEventListener('load', (e) =>
     // custom tracking
     document.querySelector('.conversion').addEventListener('click', (e) =>
     { 
-        cc.google('custom_category','custom_action');
-        cc.facebook('custom_action_name');
-        cc.twitter('conversion_id');
-        cc.taboola('custom_action_name');
-        cc.match2one('id=xxxxxx&seg=xxxxxx');
+        cc.eventGoogle('custom_category','custom_action');
+        cc.eventFacebook('custom_action_name');
+        cc.eventTwitter('conversion_id');
+        cc.eventTaboola('custom_action_name');
+        cc.eventMatch2one('id=xxxxxx&seg=xxxxxx');
         e.preventDefault();
     });
 });
@@ -130,10 +138,10 @@ window.addEventListener('load', (e) =>
 
 opt out links:
 ```html
-<a href="#" data-disable="google" data-message="Google Analytics reaktivieren">Google Analytics deaktivieren</a><br/>
-<a href="#" data-disable="facebook" data-message="Facebook Pixel reaktivieren">Facebook Pixel deaktivieren</a><br/>
-<a href="#" data-disable="twitter" data-message="Twitter Pixel reaktivieren">Twitter Pixel deaktivieren</a><br/>
-<a href="#" data-disable="taboola" data-message="Taboola Pixel reaktivieren">Taboola Pixel deaktivieren</a><br/>
-<a href="#" data-disable="match2one" data-message="Match2One Pixel reaktivieren">Match2One Pixel deaktivieren</a><br/>
-<a href="#" data-disable="smartlook" data-message="Smartlook reaktivieren">Smartlook deaktivieren</a>
+<a href="#" data-disable="google" data-message="Google Analytics aktivieren">Google Analytics deaktivieren</a><br/>
+<a href="#" data-disable="facebook" data-message="Facebook Pixel aktivieren">Facebook Pixel deaktivieren</a><br/>
+<a href="#" data-disable="twitter" data-message="Twitter Pixel aktivieren">Twitter Pixel deaktivieren</a><br/>
+<a href="#" data-disable="taboola" data-message="Taboola Pixel aktivieren">Taboola Pixel deaktivieren</a><br/>
+<a href="#" data-disable="match2one" data-message="Match2One Pixel aktivieren">Match2One Pixel deaktivieren</a><br/>
+<a href="#" data-disable="smartlook" data-message="Smartlook aktivieren">Smartlook deaktivieren</a>
 ```
