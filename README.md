@@ -115,7 +115,8 @@ var cc = new window.chefcookie({});
 }
 ```
 
-custom tracking:
+#### custom tracking
+
 ```js
 window.addEventListener('load', (e) =>
 {
@@ -136,7 +137,8 @@ window.addEventListener('load', (e) =>
 });
 ```
 
-opt out links:
+#### opt out links
+
 ```html
 <a href="#" data-disable="google" data-message="Google Analytics aktivieren">Google Analytics deaktivieren</a><br/>
 <a href="#" data-disable="facebook" data-message="Facebook Pixel aktivieren">Facebook Pixel deaktivieren</a><br/>
