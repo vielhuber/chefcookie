@@ -31,18 +31,20 @@ npm install chefcookie
 ```
 ```js
 import chefcookie from 'chefcookie';
+const cc = new chefcookie({});
 ```
 
-or include it directly:
+or include it the old way:
 ```html
 <script src="chefcookie.min.js"></script>
+```js
+var cc = new window.chefcookie({});
 ```
 
-
-## usage
+## configuration
 
 ```js
-const cc = new window.chefcookie({
+{
     'message': `
         <h2>Wir verwenden Cookies</h2>
         <p>
@@ -99,7 +101,7 @@ const cc = new window.chefcookie({
             'trackers': {}
         },
     ]    
-});
+}
 ```
 
 custom tracking:
@@ -107,17 +109,17 @@ custom tracking:
 window.addEventListener('load', (e) =>
 {
     // track duration
-    chefcookie.trackDuration();
+    cc.trackDuration();
     // track scroll depth
-    chefcookie.trackScrollDepth();
+    cc.trackScrollDepth();
     // custom tracking
     document.querySelector('.conversion').addEventListener('click', (e) =>
     { 
-        chefcookie.google('custom_category','custom_action');
-        chefcookie.facebook('custom_action_name');
-        chefcookie.twitter('conversion_id');
-        chefcookie.taboola('custom_action_name');
-        chefcookie.match2one('id=xxxxxx&seg=xxxxxx');
+        cc.google('custom_category','custom_action');
+        cc.facebook('custom_action_name');
+        cc.twitter('conversion_id');
+        cc.taboola('custom_action_name');
+        cc.match2one('id=xxxxxx&seg=xxxxxx');
         e.preventDefault();
     });
 });
