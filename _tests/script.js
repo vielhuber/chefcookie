@@ -1,48 +1,4 @@
-# 👻 chefcookie 👻
-
-chefcookie is a gdpr cookie solution without compromises.
-
-## features
-
-* includes basic styling
-* custom tracking scripts
-* custom event tracking
-* duration tracking
-* scroll depth tracking
-* opt in
-* opt out
-* auto disable tracking for logged in wordpress users
-* button labels support multiple languages
-
-## supports
-
-* [google analytics](https://analytics.google.com)
-* [facebook ads](https://de-de.facebook.com/business/products/ads)
-* [twitter ads](https://ads.twitter.com)
-* [taboola ads](https://www.taboola.com)
-* [match2one ads](https://www.match2one.com)
-* [smartlook](https://www.smartlook.com)
-
-## installation
-
-use it as a module:
-```
-npm install chefcookie
-```
-```js
-import chefcookie from 'chefcookie';
-```
-
-or include it directly:
-```html
-<script src="chefcookie.min.js"></script>
-```
-
-
-## usage
-
-```js
-const cc = new window.chefcookie({
+const chefcookie = new window.chefcookie({
     'message': `
         <h2>Wir verwenden Cookies</h2>
         <p>
@@ -51,10 +7,7 @@ const cc = new window.chefcookie({
             <a href="https://tld.com/privacy">Mehr erfahren</a>
         </p>
     `,
-    'exclude': [
-        'https://tld.com/privacy',
-        ()=>{ return ( document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1 ); }
-    ],
+    'exclude': 'https://tld.com/privacy',
     'groups': [
         {
             'title': 'Analysen',
@@ -100,12 +53,10 @@ const cc = new window.chefcookie({
         },
     ]    
 });
-```
 
-custom tracking:
-```js
 window.addEventListener('load', (e) =>
 {
+    /*
     // track duration
     chefcookie.trackDuration();
     // track scroll depth
@@ -115,20 +66,10 @@ window.addEventListener('load', (e) =>
     { 
         chefcookie.google('custom_category','custom_action');
         chefcookie.facebook('custom_action_name');
-        chefcookie.twitter('conversion_id');
+        chefcookie.twitter('xxxxx');
         chefcookie.taboola('custom_action_name');
-        chefcookie.match2one('id=xxxxxx&seg=xxxxxx');
+        chefcookie.match2one('id=xxxxxx&seg=xxxxxxxx');
         e.preventDefault();
     });
+    */
 });
-```
-
-opt out links:
-```html
-<a href="#" data-disable="google" data-message="Google Analytics reaktivieren">Google Analytics deaktivieren</a><br/>
-<a href="#" data-disable="facebook" data-message="Facebook Pixel reaktivieren">Facebook Pixel deaktivieren</a><br/>
-<a href="#" data-disable="twitter" data-message="Twitter Pixel reaktivieren">Twitter Pixel deaktivieren</a><br/>
-<a href="#" data-disable="taboola" data-message="Taboola Pixel reaktivieren">Taboola Pixel deaktivieren</a><br/>
-<a href="#" data-disable="match2one" data-message="Match2One Pixel reaktivieren">Match2One Pixel deaktivieren</a><br/>
-<a href="#" data-disable="smartlook" data-message="Smartlook reaktivieren">Smartlook deaktivieren</a>
-```
