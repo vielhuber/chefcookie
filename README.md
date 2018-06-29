@@ -37,6 +37,7 @@ const cc = new chefcookie({});
 or include it the old way:
 ```html
 <script src="chefcookie.min.js"></script>
+```
 ```js
 var cc = new window.chefcookie({});
 ```
