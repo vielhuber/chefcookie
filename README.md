@@ -1,6 +1,6 @@
-# 👻 atracker 👻
+# 👻 chefcookie 👻
 
-atracker is a tracker.
+chefcookie is a tracker.
 
 ## Supports
 
@@ -22,11 +22,11 @@ atracker is a tracker.
 ## Installation
 
 ```html
-<script src="atracker.js"></script>
+<script src="chefcookie.js"></script>
 ```
 
 ```js
-var atracker = new atracker({
+var chefcookie = new chefcookie({
     'google': 'UA-xxxxxxxx-1',
     'facebook': 'xxxxxxxxxxxxxxx',
     'twitter': 'single',
@@ -43,17 +43,17 @@ Custom tracking:
 window.addEventListener('load', function(e)
 {
     // track duration
-    atracker.trackDuration();
+    chefcookie.trackDuration();
     // track scroll depth
-    atracker.trackScrollDepth();
+    chefcookie.trackScrollDepth();
     // custom tracking
     document.querySelector('.conversion').addEventListener('click', function(e)
     { 
-        atracker.google('custom_category','custom_action');
-        atracker.facebook('custom_action_name');
-        atracker.twitter('conversion_id');
-        atracker.taboola('custom_action_name');
-        atracker.match2one('id=xxxxxx&seg=xxxxxx');
+        chefcookie.google('custom_category','custom_action');
+        chefcookie.facebook('custom_action_name');
+        chefcookie.twitter('conversion_id');
+        chefcookie.taboola('custom_action_name');
+        chefcookie.match2one('id=xxxxxx&seg=xxxxxx');
         e.preventDefault();
     }, false);
 }, false);
