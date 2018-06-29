@@ -1,46 +1,106 @@
 # 👻 chefcookie 👻
 
-chefcookie is a tracker.
+chefcookie is a gdpr cookie solution without compromises.
 
-## Supports
+## features
 
-* [Google Analytics](https://analytics.google.com)
-* [Facebook Ads](https://de-de.facebook.com/business/products/ads)
-* [Twitter Ads](https://ads.twitter.com)
-* [Taboola Ads](https://www.taboola.com)
-* [Match2One Ads](https://www.match2one.com)
-* [Smartlook](https://www.smartlook.com)
+* includes basic styling
+* custom tracking scripts
+* custom event tracking
+* duration tracking
+* scroll depth tracking
+* opt in
+* opt out
+* auto disable tracking for logged in WordPress users
+* button labels support multiple languages
 
-## Features
+## supports
 
-* Custom event tracking
-* Duration tracking
-* Scroll depth tracking
-* Opt out
-* Auto disable tracking for logged in WordPress users
+* [google analytics](https://analytics.google.com)
+* [facebook ads](https://de-de.facebook.com/business/products/ads)
+* [twitter ads](https://ads.twitter.com)
+* [taboola ads](https://www.taboola.com)
+* [match2one ads](https://www.match2one.com)
+* [smartlook](https://www.smartlook.com)
 
-## Installation
+## installation
 
+```
+npm install chefcookie
+```
+now embed it directly:
 ```html
 <script src="chefcookie.js"></script>
 ```
-
+or use it as a module:
 ```js
-var chefcookie = new chefcookie({
-    'google': 'UA-xxxxxxxx-1',
-    'facebook': 'xxxxxxxxxxxxxxx',
-    'twitter': 'single',
-    'taboola': 'taboolaaccount-xxxxxxxxxxxxxx',
-    'match2one': 'xxxxxxxx',
-    'smartlook': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+import chefcookie from 'chefcookie';
+```
+
+## usage
+
+init:
+```js
+const chefcookie = new chefcookie({
+    'message': `
+        <h2>Wir verwenden Cookies</h2>
+        <p>
+            Unsere Website verwendet Cookies, die uns helfen, unsere Website zu verbessern, den bestmöglichen Service zu bieten und ein optimales Kundenerlebnis zu ermöglichen.
+            Hier können Sie Ihre Einstellungen verwalten. Indem Sie auf "Akzeptieren" klicken, erklären Sie sich damit einverstanden, dass Ihre Cookies für diesen Zweck verwendet werden.
+            <a href="https://tld.com/privacy">Mehr erfahren</a>
+        </p>
+    `,
+    'exclude': 'https://tld.com/privacy',
+    'groups': [
+        {
+            'title': 'Analysen',
+            'note': 'Tools, die anonyme Daten über Website-Nutzung und -Funktionalität sammeln. Wir nutzen die Erkenntnisse, um unsere Produkte, Dienstleistungen und das Benutzererlebnis zu verbessern.',
+            'active': false,
+            'readonly': false,
+            'trackers': {
+                'google': 'UA-xxxxxxxx-1'
+            }
+        },
+        {
+            'title': 'Werbung',
+            'note': 'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
+            'active': false,
+            'readonly': false,
+            'trackers': {
+                'facebook': 'xxxxxxxxxxxxxxx',
+                'twitter': 'single',
+                'taboola': 'taboolaaccount-xxxxxxxxxxxxxx',
+                'match2one': 'xxxxxxxx',
+                'smartlook': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            }
+        },
+        {
+            'title': 'Support',
+            'note': 'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
+            'active': false,
+            'readonly': false,
+            'trackers': {
+                'custom': ()=>{
+                    document.head.insertAdjacentHTML('beforeend',`
+                        <script src="custom.js"></script> 
+                    `);
+                },
+            }
+        },
+        {
+            'title': 'Grundlegendes',
+            'note': 'Tools, die wesentliche Services und Funktionen ermöglichen, einschließlich Identitätsprüfung, Servicekontinuität und Standortsicherheit. Diese Option kann nicht abgelehnt werden.',
+            'active': true,
+            'readonly': true,
+            'trackers': {}
+        },
+    ]    
 });
 ```
 
-## Usage
-
-Custom tracking:
+custom tracking:
 ```js
-window.addEventListener('load', function(e)
+window.addEventListener('load', (e) =>
 {
     // track duration
     chefcookie.trackDuration();
@@ -55,11 +115,11 @@ window.addEventListener('load', function(e)
         chefcookie.taboola('custom_action_name');
         chefcookie.match2one('id=xxxxxx&seg=xxxxxx');
         e.preventDefault();
-    }, false);
-}, false);
+    });
+});
 ```
 
-Opt out links:
+opt out links:
 ```html
 <a href="#" data-disable="google" data-message="Google Analytics reaktivieren">Google Analytics deaktivieren</a><br/>
 <a href="#" data-disable="facebook" data-message="Facebook Pixel reaktivieren">Facebook Pixel deaktivieren</a><br/>
