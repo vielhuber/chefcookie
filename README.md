@@ -41,7 +41,6 @@ or include it directly:
 
 ## usage
 
-init:
 ```js
 const chefcookie = new chefcookie({
     'message': `
