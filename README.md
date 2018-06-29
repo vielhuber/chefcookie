@@ -25,17 +25,19 @@ chefcookie is a gdpr cookie solution without compromises.
 
 ## installation
 
+use it as a module:
 ```
 npm install chefcookie
 ```
-now embed it directly:
-```html
-<script src="chefcookie.min.js"></script>
-```
-or use it as a module:
 ```js
 import chefcookie from 'chefcookie';
 ```
+
+or include it directly:
+```html
+<script src="chefcookie.min.js"></script>
+```
+
 
 ## usage
 
