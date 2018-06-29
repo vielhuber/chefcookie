@@ -31,6 +31,8 @@ npm install chefcookie
 ```
 ```js
 import chefcookie from 'chefcookie';
+```
+```js
 const cc = new chefcookie({});
 ```
 
