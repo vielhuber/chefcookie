@@ -34,10 +34,10 @@ gulp.task('js', function()
         .transform(vueify)
         .bundle()
         .on('error', function(err) { console.log(err.toString()); this.emit('end'); })
-        .pipe(source('bundle.js'))
+        .pipe(source('chefcookie.min.js'))
         .pipe(buffer())
         .pipe(devMode ? through() : uglify()).on('error', function(e){ console.log(e); })
-        .pipe(gulp.dest('./_build'))
+        .pipe(gulp.dest('.'))
         .pipe(browserSync.reload({stream: true}));
 });
 
@@ -65,7 +65,7 @@ gulp.task('watch', function()
 // default
 gulp.task('default', function()
 {
-    runSequence('js','js-babel''watch');
+    runSequence('js','js-babel','watch');
 });
 
 // dev

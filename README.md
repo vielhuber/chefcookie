@@ -11,7 +11,7 @@ chefcookie is a gdpr cookie solution without compromises.
 * scroll depth tracking
 * opt in
 * opt out
-* auto disable tracking for logged in WordPress users
+* auto disable tracking for logged in wordpress users
 * button labels support multiple languages
 
 ## supports
@@ -30,7 +30,7 @@ npm install chefcookie
 ```
 now embed it directly:
 ```html
-<script src="chefcookie.js"></script>
+<script src="chefcookie.min.js"></script>
 ```
 or use it as a module:
 ```js
@@ -50,7 +50,10 @@ const chefcookie = new chefcookie({
             <a href="https://tld.com/privacy">Mehr erfahren</a>
         </p>
     `,
-    'exclude': 'https://tld.com/privacy',
+    'exclude': [
+        'https://tld.com/privacy',
+        ()=>{ return ( document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1 ); }
+    ],
     'groups': [
         {
             'title': 'Analysen',

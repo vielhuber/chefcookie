@@ -1,6 +1,16 @@
 export default class chefcookie
 {
 
+    constructor(config)
+    {
+        this.config = config;
+    }
+
+    test()
+    {
+        console.log(this.config);
+    }
+
 }
 
 /* expose all functions to window */

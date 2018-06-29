@@ -1,8 +1,15 @@
 {
   "name": "chefcookie",
-  "version": "1.0.1",
+  "version": "1.0.2",
+  "main": "_js/_build/script.js",
+  "files": [
+    "_js/_build/*.js",
+    "chefcookie.min.js"
+  ],
+  "repository": "git@github.com:vielhuber/hlp.git",
+  "author": "David Vielhuber <david@vielhuber.de>",
+  "license": "MIT",
   "description": "",
-  "main": "gulpfile.js",
   "dependencies": {
     "babel-core": "^6.26.3",
     "babel-plugin-array-includes": "^2.0.3",
@@ -16,6 +23,7 @@
     "babelify": "^8.0.0",
     "browser-sync": "^2.24.5",
     "browserify": "^16.2.2",
+    "chefcookie": "^1.0.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-babel": "^7.0.1",
@@ -47,7 +55,5 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+  }
 }
