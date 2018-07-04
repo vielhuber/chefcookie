@@ -134,9 +134,7 @@ export default class chefcookie
             .chefcookie
             {
                 position: fixed;
-                background-color: rgba(0, 0, 0, 0.75);
-                z-index: 2147483647;
-                top: 0;
+                z-index: 2147483645;
                 left: 0;
                 right: 0;
                 bottom: 0;
@@ -148,11 +146,11 @@ export default class chefcookie
                 opacity:0;
                 pointer-events:none;
             }
-            .chefcookie--hidden .chefcookie__inner
+            .chefcookie--hidden .chefcookie__box
             {
                 transform: scale(0.8);
             }
-            .chefcookie__overlay
+            .chefcookie__inner
             {
                 width:100%;
                 height:100%;
@@ -160,40 +158,38 @@ export default class chefcookie
                 white-space: nowrap;
                 font-size: 0;
                 overflow-y:auto;
+                max-height:100vh;
             }
-            .chefcookie__overlay:before
-            {
-                content: '';
-                display: inline-block;
-                height: 100%;
-                vertical-align: middle;
-            }
-            .chefcookie__inner
+            .chefcookie__box
             {
                 font-size: 15px;
+                color:#595f60;
                 line-height:1.6;
-                width: 50em;
-                max-width: 100%;
+                width: 100%;
                 margin: 0 auto;
                 display: inline-block;
                 vertical-align: middle;
                 white-space: normal;
-                background-color: #fff;
                 border-radius: 0;
-                padding: 3em 3em;
-                box-shadow: 0 1em 5em -0.5em #000;
+                padding-top: 3em;
+                padding-bottom: 3em;
+                padding-left: 3em;
+                padding-right: 3em;
                 text-align: left;
                 transition: transform 0.25s ease-in-out;
             }
             .chefcookie__message
             {
-                margin-bottom:2em;
+                margin-bottom:1em;
                 text-align:justify;
             }
             .chefcookie__message h2
             {
-                margin-bottom:1em;
-                font-size:1.5em;
+                margin-bottom:0.5em;
+                font-size:2em;
+                text-transform:uppercase;
+                font-weight:700;
+                text-align:left;
             }
             .chefcookie__message a
             {
@@ -210,18 +206,21 @@ export default class chefcookie
             }
             .chefcookie__buttons
             {
-                margin-top:1em;
+                margin-top:0.5em;
             }
             .chefcookie__button
             {
-                padding:1em 2em;
-                border:2px solid #000;
-                font-weight:bold;
-                display:block;
-                color:#000;
-                background-color:#fff;
-                text-decoration:none;
+                padding: 1em 0.5em;
+                border: 2px solid #595f60;
+                font-weight: bold;
+                display: block;
+                color: inherit;
+                text-decoration: none;
                 transition: all 0.25s ease-in-out;
+                text-transform: uppercase;
+                float: left;
+                min-width: 21em;
+                text-align: center;
             }
             .chefcookie__button:hover
             {
@@ -231,33 +230,23 @@ export default class chefcookie
             {
                 opacity:0.1;
             }
-            .chefcookie__button:after
+            .chefcookie__buttons:after
             {            
                 clear:both;
                 display:table;
                 content:"";
             }
-            .chefcookie__button--decline
-            {
-                float:left;
-                padding-left:0;
-                padding-right:0;
-                border-color:transparent;
-                text-decoration:underline;
-            }
             .chefcookie__button--settings
             {
-                float:right;
+                margin-right:3em;
             }
             .chefcookie__button--accept
             {
-                margin-left:1em;
-                float:right;
                 background-color:${this.config.color};
                 border-color:transparent;
                 color:#fff;
             }
-            .chefcookie__settings
+            .chefcookie__settings-container
             {
                 height:0;
                 overflow:hidden;
@@ -276,16 +265,6 @@ export default class chefcookie
             .chefcookie__group
             {
                 float: left;
-                width: 48%;
-                height: 13em;
-                margin-right: 4%;
-                margin-bottom: 4%;
-                background-color: #f7f7f7;
-                border: 1px solid #eee;
-            }
-            .chefcookie__group:nth-child(2n)
-            {
-                margin-right:0;
             }
             .chefcookie__group-title
             {
@@ -296,6 +275,7 @@ export default class chefcookie
                 display: block;
                 font-weight:bold;
                 font-size:1.2em;
+                text-transform:uppercase;
             }
             .chefcookie__label
             {
@@ -303,23 +283,10 @@ export default class chefcookie
                 display:block;
                 width:100%;
                 height:100%;
-                padding: 1em 1.25em;
             }
             .chefcookie__group--hidden .chefcookie__label
             {
                 cursor:default;
-            }
-            .chefcookie__group-checkbox-wrapper
-            {
-                float:right;
-                width:30%;
-                height:2em;
-                line-height:2em;
-                display: block;
-            }
-            .chefcookie__group--hidden .chefcookie__group-checkbox-wrapper
-            {
-                display:none;
             }
             .chefcookie__group-checkbox
             {
@@ -328,18 +295,36 @@ export default class chefcookie
                 display: block;
                 pointer-events:none;
             }
+            .chefcookie__group--hidden .chefcookie__group-checkbox-icon
+            {
+                display:none;
+            }
             .chefcookie__group-checkbox-icon
             {
+                line-height:2em;
                 display: block;
                 width: 4em;
                 height: 2em;
                 background-color: #fff;
-                border: 1px solid #dadada;
+                border: 2px solid #595f60;
                 margin: 0;
                 padding: 0;
                 position: relative;
                 border-radius: 2em;
                 float: right;
+            }
+            .chefcookie__group-checkbox-icon:before
+            {
+                content: "0";
+                position: absolute;
+                top: 0;
+                left: 45%;
+                width: 50%;
+                bottom: 0;
+                transition: all 0.15s ease-in-out;
+                text-align: center;
+                font-weight: bold;
+                color: #595f60;
             }
             .chefcookie__group-checkbox-icon:after
             {
@@ -349,28 +334,32 @@ export default class chefcookie
                 left: 0;
                 width: 50%;
                 bottom: 0;
-                background-color: #dadada;
+                box-shadow: 0 0 0px 1px #595f60;
+                background-color: #595f60;
                 transition: all 0.15s ease-in-out;
                 border-radius: 50%;
             }
-            .chefcookie__group:hover .chefcookie__group-checkbox-icon
+            .chefcookie__group-checkbox ~ *
             {
-                border-color: #c3c3c3;
+                opacity:0.5;
+                transition: all 0.25s ease-in-out;
             }
-            .chefcookie__group:hover .chefcookie__group-checkbox-icon:after
+            .chefcookie__group-checkbox:checked ~ *
             {
-                background-color: #c3c3c3;
+                opacity:1;
             }
-            .chefcookie__group-checkbox:checked + .chefcookie__group-checkbox-icon
-            {
-                background-color: #ffffff;
-                background-color: ${this.config.color}10;
-                border-color: ${this.config.color};
-            }
-            .chefcookie__group-checkbox:checked + .chefcookie__group-checkbox-icon:after
+            .chefcookie__group-checkbox:checked ~ .chefcookie__group-checkbox-icon:after
             {
                 left:50%;
-                background-color:${this.config.color};
+            }
+            .chefcookie__group-checkbox:checked ~ .chefcookie__group-checkbox-icon:before
+            {
+                content: "";
+                background-color: #595f60;
+                top: 30%;
+                bottom: 30%;
+                left: 27%;
+                width: 3px;
             }
             .chefcookie__group-description
             {
@@ -381,11 +370,71 @@ export default class chefcookie
                 font-size:0.9em;
                 text-align:justify;
             }
-            @media screen and (max-width: 650px)
+            .chefcookie--overlay
             {
-                .chefcookie__inner
+                top: 0;
+                background-color: rgba(0, 0, 0, 0.75);
+            }
+            .chefcookie--overlay .chefcookie__inner:before
+            {
+                content: '';
+                display: inline-block;
+                height: 100%;
+                vertical-align: middle;
+            }
+            .chefcookie--overlay .chefcookie__box
+            {
+                max-width: 60em;
+                box-shadow: 0 1em 5em -0.5em #000;
+                background-color: #fff;
+            }
+            .chefcookie--overlay .chefcookie__group
+            {
+                height: 13em;
+                width: 48%;
+                margin-bottom: 4%;
+                margin-right: 4%;
+                background-color: #f7f7f7;
+                border: 1px solid #eee;
+            }
+            .chefcookie--overlay .chefcookie__group:nth-child(2n)
+            {
+                margin-right:0;
+            }
+            .chefcookie--overlay .chefcookie__label
+            {
+                padding: 1em 1.25em;
+            }
+            .chefcookie--bottombar
+            {
+                top: auto;
+                background-color:#eee;
+                box-shadow: 0 1em 5em -0.5em #000;
+            }
+            .chefcookie--bottombar .chefcookie__box
+            {
+                max-width: 1280px;
+            }
+            .chefcookie--bottombar .chefcookie__group
+            {
+                width: 22%;
+                margin-right: 4%;
+                margin-bottom: 40px;
+                margin-top: 40px;
+            }
+            .chefcookie--bottombar .chefcookie__group:last-child
+            {
+                margin-right:0;
+            }
+            @media screen and (max-width: 768px)
+            {
+                .chefcookie__box
                 {
                     padding:1em;
+                }
+                .chefcookie__message h2
+                {
+                    font-size:1.5em;
                 }
                 .chefcookie__button
                 {
@@ -393,12 +442,11 @@ export default class chefcookie
                     margin: 0 0 1em;
                     text-align: center;
                     width: 100%;
+                    min-width:0;
                 }
-                .chefcookie__button--decline
-                {
-                    background-color:#eee;
-                }
-                .chefcookie__group
+                .chefcookie .chefcookie__group,
+                .chefcookie--overlay .chefcookie__group,
+                .chefcookie--bottombar .chefcookie__group
                 {
                     float:none;
                     margin-right:0;
@@ -413,20 +461,18 @@ export default class chefcookie
     buildDom()
     {
         document.body.insertAdjacentHTML('beforeend',`
-            <div class="chefcookie">
-                <div class="chefcookie__overlay">
-                    <div class="chefcookie__inner">
+            <div class="chefcookie chefcookie--${this.config.layout}">
+                <div class="chefcookie__inner">
+                    <div class="chefcookie__box">
                         <div class="chefcookie__message">${this.config.message}</div>
-                        <div class="chefcookie__settings">
+                        <div class="chefcookie__settings-container">
                             <ul class="chefcookie__groups">
                                 ${this.config.settings.map((group,i) => `
                                     <li class="chefcookie__group${(group.hidden)?(` chefcookie__group--hidden`):(``)}">                                    
                                         <label class="chefcookie__label" for="chefcookie_group_${i}">
+                                            <input${(group.hidden)?(` disabled="disabled"`):(``)} class="chefcookie__group-checkbox" id="chefcookie_group_${i}" type="checkbox" name="chefcookie_group[]" value="${i}"${(group.active)?(` checked="checked"`):(``)} />
                                             <span class="chefcookie__group-title">${group.title}</span>
-                                            <span class="chefcookie__group-checkbox-wrapper">
-                                                <input${(group.hidden)?(` disabled="disabled"`):(``)} class="chefcookie__group-checkbox" id="chefcookie_group_${i}" type="checkbox" name="chefcookie_group[]" value="${i}"${(group.active)?(` checked="checked"`):(``)} />
-                                                <span class="chefcookie__group-checkbox-icon"></span>
-                                            </span>                                                                                    
+                                            <span class="chefcookie__group-checkbox-icon"></span>                                                                                  
                                             <span class="chefcookie__group-description">${group.description}</span>
                                         </label>
                                     </li>
@@ -434,9 +480,8 @@ export default class chefcookie
                             </ul>
                         </div>
                         <div class="chefcookie__buttons">
-                            <a href="#" class="chefcookie__button chefcookie__button--decline">${this.getLabel('decline')}</a>
-                            <a href="#" class="chefcookie__button chefcookie__button--accept">${this.getLabel('accept')}</a>
-                            <a href="#" class="chefcookie__button chefcookie__button--settings">${this.getLabel('settings_open')}</a>                            
+                            <a href="#chefcookie__settings" class="chefcookie__button chefcookie__button--settings">${this.getLabel('settings_open')}</a>
+                            <a href="#chefcookie__accept" class="chefcookie__button chefcookie__button--accept">${this.getLabel('accept')}</a>
                         </div>
                     </div>
                 </div>
@@ -455,52 +500,68 @@ export default class chefcookie
 
     bindButtons()
     {
-        document.querySelector('.chefcookie__button--decline').addEventListener('click', (e) =>
+        if( document.querySelector('a[href="#chefcookie__decline"]') !== null )
         {
-            this.uncheckAllOptIns();
-            this.saveInCookie();
-            this.hideOverlay();
-            this.updateOptOut();
-            e.preventDefault();
-        });
-        document.querySelector('.chefcookie__button--accept').addEventListener('click', (e) =>
+            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__decline"]'), (el) =>
+            {
+                el.addEventListener('click', (e) =>
+                {
+                    this.uncheckAllOptIns();
+                    this.saveInCookie();
+                    this.hideOverlay();
+                    this.updateOptOut();
+                    e.preventDefault();
+                });
+            });
+        }
+        if( document.querySelector('a[href="#chefcookie__accept"]') !== null )
         {
-            if( !this.settingsVisible() )
+            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__accept"]'), (el) =>
             {
-                this.checkAllOptIns();
-            }
-            this.saveInCookie();
-            this.addEnabledScripts();
-            this.hideOverlay();
-            this.updateOptOut();
-            e.preventDefault();
-        });
-        document.querySelector('.chefcookie__button--settings').addEventListener('click', (e) =>
+                el.addEventListener('click', (e) =>
+                {
+                    if( !this.settingsVisible() )
+                    {
+                        this.checkAllOptIns();
+                    }
+                    this.saveInCookie();
+                    this.addEnabledScripts();
+                    this.hideOverlay();
+                    this.updateOptOut();
+                    e.preventDefault();
+                });
+            });
+        }
+        if( document.querySelector('a[href="#chefcookie__settings"]') !== null )
         {
-            if( !this.settingsVisible() )
+            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__settings"]'), (el) =>
             {
-                this.showSettings();
-                this.switchLabelsOpen();
-            }
-            else
-            {
-                this.hideSettings();
-                this.switchLabelsClose();
-            }
-            e.preventDefault();
-        });
+                el.addEventListener('click', (e) =>
+                {
+                    if( !this.settingsVisible() )
+                    {
+                        this.showSettings();
+                        this.switchLabelsOpen();
+                    }
+                    else
+                    {
+                        this.hideSettings();
+                        this.switchLabelsClose();
+                    }
+                    e.preventDefault();
+                });
+            });
+        }
     }
 
     switchLabelsOpen()
     {
         document.querySelector('.chefcookie__button--settings').textContent = this.getLabel('settings_close');
-        document.querySelector('.chefcookie__button--accept').textContent = this.getLabel('confirm');
     }
 
     switchLabelsClose()
     {
         document.querySelector('.chefcookie__button--settings').textContent = this.getLabel('settings_open');
-        document.querySelector('.chefcookie__button--accept').textContent = this.getLabel('accept');
     }
 
     checkAllOptIns()
@@ -711,19 +772,19 @@ export default class chefcookie
 
     settingsVisible()
     {
-        return document.querySelector('.chefcookie__settings').classList.contains('chefcookie__settings--visible');
+        return document.querySelector('.chefcookie__settings-container').classList.contains('chefcookie__settings-container--visible');
     }
 
     showSettings()
     {
-        document.querySelector('.chefcookie__settings').classList.add('chefcookie__settings--visible');
-        document.querySelector('.chefcookie__settings').style.height = document.querySelector('.chefcookie__settings').scrollHeight+'px';
+        document.querySelector('.chefcookie__settings-container').classList.add('chefcookie__settings-container--visible');
+        document.querySelector('.chefcookie__settings-container').style.height = document.querySelector('.chefcookie__settings-container').scrollHeight+'px';
     }
 
     hideSettings()
     {
-        document.querySelector('.chefcookie__settings').classList.remove('chefcookie__settings--visible');
-        document.querySelector('.chefcookie__settings').style.height = 0;
+        document.querySelector('.chefcookie__settings-container').classList.remove('chefcookie__settings-container--visible');
+        document.querySelector('.chefcookie__settings-container').style.height = 0;
     }
 
     eventGoogle(category, action)
