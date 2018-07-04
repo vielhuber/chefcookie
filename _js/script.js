@@ -37,6 +37,7 @@ export default class chefcookie
             this.addStyle();
             this.buildDom();
             this.bindButtons();
+            this.fixMaxHeight();
         }
     }
 
@@ -434,7 +435,7 @@ export default class chefcookie
             {
                 margin-right:0;
             }
-            @media screen and (max-width: 768px)
+            @media screen and (max-width: 840px)
             {
                 .chefcookie__box
                 {
@@ -787,12 +788,18 @@ export default class chefcookie
     {
         document.querySelector('.chefcookie__settings-container').classList.add('chefcookie__settings-container--visible');
         document.querySelector('.chefcookie__settings-container').style.height = document.querySelector('.chefcookie__settings-container').scrollHeight+'px';
+        this.fixMaxHeight();
     }
 
     hideSettings()
     {
         document.querySelector('.chefcookie__settings-container').classList.remove('chefcookie__settings-container--visible');
         document.querySelector('.chefcookie__settings-container').style.height = 0;
+    }
+
+    fixMaxHeight()
+    {
+        document.querySelector('.chefcookie__inner').style.maxHeight = window.innerHeight+'px';
     }
 
     eventGoogle(category, action)
