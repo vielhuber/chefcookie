@@ -14,13 +14,14 @@ export default class chefcookie
 
     init()
     {
+
         if( this.forceAccept() )
         {
             this.addAllProvidersToCookie();
         }
 
         this.initOptOut();
-        
+
         if( this.isExcluded() )
         {
             return;
@@ -108,9 +109,16 @@ export default class chefcookie
             {
                  excluded = true;
             }
-            if( typeof exclude__value === 'string' && exclude__value === helper.url() )
+            if(
+                typeof exclude__value === 'string' &&
+                (
+                    (exclude__value.indexOf('http') === 0 && exclude__value === window.location.protocol+'//'+window.location.host+window.location.pathname) ||
+                    (exclude__value.indexOf('http') !== 0 && exclude__value === window.location.pathname) ||
+                    (exclude__value.indexOf('http') !== 0 && exclude__value+'/' === window.location.pathname)
+                )
+            )
             {
-                excluded =  true;
+                excluded = true;
             }
         });
         return excluded;
@@ -171,8 +179,8 @@ export default class chefcookie
                 vertical-align: middle;
                 white-space: normal;
                 border-radius: 0;
-                padding-top: 3em;
-                padding-bottom: 3em;
+                padding-top: 2em;
+                padding-bottom: 2em;
                 padding-left: 3em;
                 padding-right: 3em;
                 text-align: left;
@@ -408,7 +416,7 @@ export default class chefcookie
             .chefcookie--bottombar
             {
                 top: auto;
-                background-color:#eee;
+                background-color:#eeeeee;
                 box-shadow: 0 1em 5em -0.5em #000;
             }
             .chefcookie--bottombar .chefcookie__box
