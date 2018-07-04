@@ -170,7 +170,7 @@ export default class chefcookie
             }
             .chefcookie__box
             {
-                font-size: 15px;
+                font-size: ${(15+(this.config.style.size-3))}px;
                 color:#595f60;
                 line-height:1.6;
                 width: 100%;
@@ -250,7 +250,7 @@ export default class chefcookie
             }
             .chefcookie__button--accept
             {
-                background-color:${this.config.color};
+                background-color:${this.config.style.color};
                 border-color:transparent;
                 color:#fff;
             }
@@ -469,7 +469,7 @@ export default class chefcookie
     buildDom()
     {
         document.body.insertAdjacentHTML('beforeend',`
-            <div class="chefcookie chefcookie--${this.config.layout}">
+            <div class="chefcookie chefcookie--${this.config.style.layout}">
                 <div class="chefcookie__inner">
                     <div class="chefcookie__box">
                         <div class="chefcookie__message">${this.config.message}</div>
