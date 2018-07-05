@@ -66,7 +66,9 @@ var cc = new window.chefcookie({});
         'settings_close': 'Einstellungen schliessen',
     },
     'exclude': [
+        // exclude privacy site if needed
         '/privacy',
+        // exclude wordpress users
         ()=>{ return ( document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1 ); }
     ],
     'settings': [
@@ -98,6 +100,7 @@ var cc = new window.chefcookie({});
             'active': true,
             'hidden': false,
             'trackers': {
+                // add custom trackers
                 'custom': ()=>{
                     document.head.insertAdjacentHTML('beforeend',`
                         <script src="custom.js"></script> 
