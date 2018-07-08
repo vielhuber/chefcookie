@@ -1,4 +1,4 @@
-const cc = new window.chefcookie({
+const cc = new chefcookie({
     'message': '\
         <h2>Wir verwenden Cookies</h2>\
         <p>\

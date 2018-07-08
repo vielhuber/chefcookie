@@ -33,22 +33,16 @@ npm install chefcookie
 ```js
 import chefcookie from 'chefcookie';
 ```
-```js
-const cc = new chefcookie({});
-```
 
 or include it the traditional way:
 ```html
 <script src="chefcookie.min.js"></script>
 ```
-```js
-var cc = new window.chefcookie({});
-```
 
-## configuration
+## usage
 
 ```js
-{
+const cc = new chefcookie({
     'message': `
         <h2>Wir verwenden Cookies</h2>
         <p>
@@ -116,7 +110,7 @@ var cc = new window.chefcookie({});
             'trackers': {}
         },
     ]    
-}
+});
 ```
 
 #### custom tracking
