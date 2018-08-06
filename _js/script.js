@@ -400,11 +400,11 @@ export default class chefcookie
             .chefcookie--overlay .chefcookie__group
             {
                 height: 13em;
-                width: 48%;
                 margin-bottom: 4%;
-                margin-right: 4%;
                 background-color: #f7f7f7;
                 border: 1px solid #eee;
+                width: 48%;
+                margin-right: 4%;
             }
             .chefcookie--overlay .chefcookie__group:nth-child(2n)
             {
@@ -426,15 +426,24 @@ export default class chefcookie
             }
             .chefcookie--bottombar .chefcookie__group
             {
-                width: 22%;
-                margin-right: 4%;
                 margin-bottom: 40px;
                 margin-top: 40px;
+                width: 22%;
+                margin-right: 4%;
             }
             .chefcookie--bottombar .chefcookie__group:last-child
             {
                 margin-right:0;
             }
+            .chefcookie--bottombar .chefcookie__groups--count-9 .chefcookie__group { width: 7.55%; }
+            .chefcookie--bottombar .chefcookie__groups--count-8 .chefcookie__group { width: 9.00%; }
+            .chefcookie--bottombar .chefcookie__groups--count-7 .chefcookie__group { width: 10.85%; }
+            .chefcookie--bottombar .chefcookie__groups--count-6 .chefcookie__group { width: 13.33%; }
+            .chefcookie--bottombar .chefcookie__groups--count-5 .chefcookie__group { width: 16.80%; }
+            .chefcookie--bottombar .chefcookie__groups--count-4 .chefcookie__group { width: 22.00%; }
+            .chefcookie--bottombar .chefcookie__groups--count-3 .chefcookie__group { width: 30.66%; }
+            .chefcookie--bottombar .chefcookie__groups--count-2 .chefcookie__group { width: 48%; }
+            .chefcookie--bottombar .chefcookie__groups--count-1 .chefcookie__group { width: 100%; }
             @media screen and (max-width: 840px)
             {
                 .chefcookie__box
@@ -475,7 +484,7 @@ export default class chefcookie
                     <div class="chefcookie__box">
                         <div class="chefcookie__message">${this.config.message}</div>
                         <div class="chefcookie__settings-container">
-                            <ul class="chefcookie__groups">
+                            <ul class="chefcookie__groups chefcookie__groups--count-${this.config.settings.length}">
                                 ${this.config.settings.map((group,i) => `
                                     <li class="chefcookie__group${(group.hidden)?(` chefcookie__group--hidden`):(``)}">                                    
                                         <label class="chefcookie__label" for="chefcookie_group_${i}">
