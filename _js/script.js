@@ -1,77 +1,63 @@
 import helper from './_helper';
 
-export default class chefcookie
-{
-
-    constructor(config = {})
-    {
+export default class chefcookie {
+    constructor(config = {}) {
         this.config = config;
-        document.addEventListener('DOMContentLoaded', () =>
-        {
+        document.addEventListener('DOMContentLoaded', () => {
             this.init();
         });
     }
 
-    init()
-    {
-
-        if( this.forceAccept() )
-        {
+    init() {
+        if (this.forceAccept()) {
             this.addAllProvidersToCookie();
         }
 
         this.initOptOut();
 
-        if( this.isExcluded() )
-        {
+        if (this.isExcluded()) {
             return;
         }
 
-        if( this.cookieExists() )
-        {
+        if (this.cookieExists()) {
             this.addEnabledScripts();
-        }
-
-        else
-        {
+        } else {
             this.addStyle();
             this.buildDom();
+            this.addHtmlClasses();
             this.bindButtons();
             this.fixMaxHeight();
         }
     }
 
-    forceAccept()
-    {
+    forceAccept() {
         return helper.getParam('accept') === '1';
     }
 
-    initOptOut()
-    {
-        if( document.querySelector('[data-disable]') !== null )
-        {
-            [].forEach.call(document.querySelectorAll('[data-disable]'), (el) =>
-            {
+    initOptOut() {
+        if (document.querySelector('[data-disable]') !== null) {
+            [].forEach.call(document.querySelectorAll('[data-disable]'), el => {
                 el.setAttribute('data-message-original', el.textContent);
-                if( !this.isEnabled(el.getAttribute('data-disable')) )
-                {
+                if (!this.isEnabled(el.getAttribute('data-disable'))) {
                     el.textContent = el.getAttribute('data-message');
-                }
-                else
-                {
+                } else {
                     el.textContent = el.getAttribute('data-message-original');
                 }
-                el.addEventListener('click', (e) =>
-                {
-                    if( !this.isEnabled(el.getAttribute('data-disable')) )
-                    {
-                        e.currentTarget.textContent = e.currentTarget.getAttribute('data-message-original');
-                        this.addToCookie(e.currentTarget.getAttribute('data-disable'));
-                    }
-                    else
-                    {
-                        e.currentTarget.textContent = e.currentTarget.getAttribute('data-message');
-                        this.deleteFromCookie(e.currentTarget.getAttribute('data-disable'));
+                el.addEventListener('click', e => {
+                    if (!this.isEnabled(el.getAttribute('data-disable'))) {
+                        e.currentTarget.textContent = e.currentTarget.getAttribute(
+                            'data-message-original'
+                        );
+                        this.addToCookie(
+                            e.currentTarget.getAttribute('data-disable')
+                        );
+                    } else {
+                        e.currentTarget.textContent = e.currentTarget.getAttribute(
+                            'data-message'
+                        );
+                        this.deleteFromCookie(
+                            e.currentTarget.getAttribute('data-disable')
+                        );
                     }
                     e.preventDefault();
                 });
@@ -79,60 +65,57 @@ export default class chefcookie
         }
     }
 
-    updateOptOut()
-    {
-        if( document.querySelector('[data-disable]') !== null )
-        {
-            [].forEach.call(document.querySelectorAll('[data-disable]'), (el) =>
-            {
-                if( !this.isEnabled(el.getAttribute('data-disable')) )
-                {
+    updateOptOut() {
+        if (document.querySelector('[data-disable]') !== null) {
+            [].forEach.call(document.querySelectorAll('[data-disable]'), el => {
+                if (!this.isEnabled(el.getAttribute('data-disable'))) {
                     el.textContent = el.getAttribute('data-message');
-                }
-                else
-                {
+                } else {
                     el.textContent = el.getAttribute('data-message-original');
                 }
             });
         }
     }
 
-    isExcluded()
-    {
-        if( this.config.exclude === undefined )
-        {
+    isExcluded() {
+        if (this.config.exclude === undefined) {
             return false;
         }
         let excluded = false;
-        this.config.exclude.forEach((exclude__value) =>
-        {
-            if( typeof exclude__value === 'function' && exclude__value() === true )
-            {
-                 excluded = true;
+        this.config.exclude.forEach(exclude__value => {
+            if (
+                typeof exclude__value === 'function' &&
+                exclude__value() === true
+            ) {
+                excluded = true;
             }
-            if(
+            if (
                 typeof exclude__value === 'string' &&
-                (
-                    (exclude__value.indexOf('http') === 0 && exclude__value === window.location.protocol+'//'+window.location.host+window.location.pathname) ||
-                    (exclude__value.indexOf('http') !== 0 && exclude__value === window.location.pathname) ||
-                    (exclude__value.indexOf('http') !== 0 && exclude__value+'/' === window.location.pathname)
-                )
-            )
-            {
+                ((exclude__value.indexOf('http') === 0 &&
+                    exclude__value ===
+                        window.location.protocol +
+                            '//' +
+                            window.location.host +
+                            window.location.pathname) ||
+                    (exclude__value.indexOf('http') !== 0 &&
+                        exclude__value === window.location.pathname) ||
+                    (exclude__value.indexOf('http') !== 0 &&
+                        exclude__value + '/' === window.location.pathname))
+            ) {
                 excluded = true;
             }
         });
         return excluded;
     }
 
-    cookieExists()
-    {
+    cookieExists() {
         return helper.cookieExists('chefcookie');
     }
 
-    addStyle()
-    {
-        document.head.insertAdjacentHTML('beforeend',`
+    addStyle() {
+        document.head.insertAdjacentHTML(
+            'beforeend',
+            `
         <style>
             .chefcookie, .chefcookie *
             {
@@ -171,7 +154,7 @@ export default class chefcookie
             }
             .chefcookie__box
             {
-                font-size: ${(15+(this.config.style.size-3))}px;
+                font-size: ${15 + (this.config.style.size - 3)}px;
                 color:#595f60;
                 line-height:1.6;
                 width: 100%;
@@ -379,10 +362,29 @@ export default class chefcookie
                 font-size:0.9em;
                 text-align:justify;
             }
+            .chefcookie--noscroll
+            {
+                position:fixed;
+                overflow:hidden;
+            }
+            .chefcookie--fade body:after
+            {
+                content:"";
+                position:fixed;
+                top:0;
+                left:0;
+                width:100%;
+                height:100%;
+                background-color: rgba(0, 0, 0, 0.65);
+            }
+            .chefcookie--blur .chefcookie ~ *
+            {
+                filter: grayscale(50%) blur(5px);
+                -webkit-filter: grayscale(50%) blur(5px);
+            }
             .chefcookie--overlay
             {
                 top: 0;
-                background-color: rgba(0, 0, 0, 0.75);
             }
             .chefcookie--overlay .chefcookie__inner:before
             {
@@ -473,462 +475,508 @@ export default class chefcookie
                 }
             }
         </style>
-        `);
+        `
+        );
     }
 
-    buildDom()
-    {
-        document.body.insertAdjacentHTML('beforeend',`
+    addHtmlClasses() {
+        document.documentElement.classList.add('chefcookie--visible');
+        if (this.config.style.noscroll == true) {
+            document.documentElement.classList.add('chefcookie--noscroll');
+        }
+        if (this.config.style.fade == true) {
+            document.documentElement.classList.add('chefcookie--fade');
+        }
+        if (this.config.style.blur == true) {
+            document.documentElement.classList.add('chefcookie--blur');
+        }
+    }
+
+    buildDom() {
+        document.body.insertAdjacentHTML(
+            'afterbegin',
+            `
             <div class="chefcookie chefcookie--${this.config.style.layout}">
                 <div class="chefcookie__inner">
                     <div class="chefcookie__box">
-                        <div class="chefcookie__message">${this.config.message}</div>
+                        <div class="chefcookie__message">${
+                            this.config.message
+                        }</div>
                         <div class="chefcookie__settings-container">
-                            <ul class="chefcookie__groups chefcookie__groups--count-${this.config.settings.length}">
-                                ${this.config.settings.map((group,i) => `
-                                    <li class="chefcookie__group${(group.hidden)?(` chefcookie__group--hidden`):(``)}">                                    
+                            <ul class="chefcookie__groups chefcookie__groups--count-${
+                                this.config.settings.length
+                            }">
+                                ${this.config.settings
+                                    .map(
+                                        (group, i) => `
+                                    <li class="chefcookie__group${
+                                        group.hidden
+                                            ? ` chefcookie__group--hidden`
+                                            : ``
+                                    }">                                    
                                         <label class="chefcookie__label" for="chefcookie_group_${i}">
-                                            <input${(group.hidden)?(` disabled="disabled"`):(``)} class="chefcookie__group-checkbox" id="chefcookie_group_${i}" type="checkbox" name="chefcookie_group[]" value="${i}"${(group.active)?(` checked="checked"`):(``)} />
-                                            <span class="chefcookie__group-title">${group.title}</span>
+                                            <input${
+                                                group.hidden
+                                                    ? ` disabled="disabled"`
+                                                    : ``
+                                            } class="chefcookie__group-checkbox" id="chefcookie_group_${i}" type="checkbox" name="chefcookie_group[]" value="${i}"${
+                                            group.active
+                                                ? ` checked="checked"`
+                                                : ``
+                                        } />
+                                            <span class="chefcookie__group-title">${
+                                                group.title
+                                            }</span>
                                             <span class="chefcookie__group-checkbox-icon"></span>                                                                                  
-                                            <span class="chefcookie__group-description">${group.description}</span>
+                                            <span class="chefcookie__group-description">${
+                                                group.description
+                                            }</span>
                                         </label>
                                     </li>
-                                `).join('')}
+                                `
+                                    )
+                                    .join('')}
                             </ul>
                         </div>
                         <div class="chefcookie__buttons">
-                            <a href="#chefcookie__settings" class="chefcookie__button chefcookie__button--settings">${this.getLabel('settings_open')}</a>
-                            <a href="#chefcookie__accept" class="chefcookie__button chefcookie__button--accept">${this.getLabel('accept')}</a>
+                            <a href="#chefcookie__settings" class="chefcookie__button chefcookie__button--settings">${this.getLabel(
+                                'settings_open'
+                            )}</a>
+                            <a href="#chefcookie__accept" class="chefcookie__button chefcookie__button--accept">${this.getLabel(
+                                'accept'
+                            )}</a>
                         </div>
                     </div>
                 </div>
             </div>
-        `);
+        `
+        );
     }
 
-    getLabel(label)
-    {
-        if( this.config.labels[label] === undefined )
-        {
+    getLabel(label) {
+        if (this.config.labels[label] === undefined) {
             return '';
         }
         return this.config.labels[label];
     }
 
-    bindButtons()
-    {
-        if( document.querySelector('a[href="#chefcookie__decline"]') !== null )
-        {
-            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__decline"]'), (el) =>
-            {
-                el.addEventListener('click', (e) =>
-                {
-                    this.uncheckAllOptIns();
-                    this.saveInCookie();
-                    this.hideOverlay();
-                    this.updateOptOut();
-                    e.preventDefault();
-                });
-            });
+    bindButtons() {
+        if (document.querySelector('a[href="#chefcookie__decline"]') !== null) {
+            [].forEach.call(
+                document.querySelectorAll('a[href="#chefcookie__decline"]'),
+                el => {
+                    el.addEventListener('click', e => {
+                        this.uncheckAllOptIns();
+                        this.saveInCookie();
+                        this.hideOverlay();
+                        this.updateOptOut();
+                        e.preventDefault();
+                    });
+                }
+            );
         }
-        if( document.querySelector('a[href="#chefcookie__accept"]') !== null )
-        {
-            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__accept"]'), (el) =>
-            {
-                el.addEventListener('click', (e) =>
-                {
-                    if( !this.settingsVisible() )
-                    {
-                        this.checkAllOptIns();
-                    }
-                    this.saveInCookie();
-                    this.addEnabledScripts();
-                    this.hideOverlay();
-                    this.updateOptOut();
-                    e.preventDefault();
-                });
-            });
+        if (document.querySelector('a[href="#chefcookie__accept"]') !== null) {
+            [].forEach.call(
+                document.querySelectorAll('a[href="#chefcookie__accept"]'),
+                el => {
+                    el.addEventListener('click', e => {
+                        if (!this.settingsVisible()) {
+                            this.checkAllOptIns();
+                        }
+                        this.saveInCookie();
+                        this.addEnabledScripts();
+                        this.hideOverlay();
+                        this.updateOptOut();
+                        e.preventDefault();
+                    });
+                }
+            );
         }
-        if( document.querySelector('a[href="#chefcookie__settings"]') !== null )
-        {
-            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__settings"]'), (el) =>
-            {
-                el.addEventListener('click', (e) =>
-                {
-                    if( !this.settingsVisible() )
-                    {
-                        this.showSettings();
-                        this.switchLabelsOpen();
-                    }
-                    else
-                    {
-                        this.hideSettings();
-                        this.switchLabelsClose();
-                    }
-                    e.preventDefault();
-                });
-            });
+        if (
+            document.querySelector('a[href="#chefcookie__settings"]') !== null
+        ) {
+            [].forEach.call(
+                document.querySelectorAll('a[href="#chefcookie__settings"]'),
+                el => {
+                    el.addEventListener('click', e => {
+                        if (!this.settingsVisible()) {
+                            this.showSettings();
+                            this.switchLabelsOpen();
+                        } else {
+                            this.hideSettings();
+                            this.switchLabelsClose();
+                        }
+                        e.preventDefault();
+                    });
+                }
+            );
         }
     }
 
-    switchLabelsOpen()
-    {
-        document.querySelector('.chefcookie__button--settings').textContent = this.getLabel('settings_close');
+    switchLabelsOpen() {
+        document.querySelector(
+            '.chefcookie__button--settings'
+        ).textContent = this.getLabel('settings_close');
     }
 
-    switchLabelsClose()
-    {
-        document.querySelector('.chefcookie__button--settings').textContent = this.getLabel('settings_open');
+    switchLabelsClose() {
+        document.querySelector(
+            '.chefcookie__button--settings'
+        ).textContent = this.getLabel('settings_open');
     }
 
-    checkAllOptIns()
-    {
-        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), (el) =>
-        {
-            el.checked = true;
-        });
-    }
-
-    uncheckAllOptIns()
-    {
-        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), (el) =>
-        {
-            el.checked = false;
-        });
-    }
-
-    saveInCookie()
-    {
-        let providers = [];
-        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), (el) =>
-        {
-            if( el.checked === true )
-            {
-                if( this.config.settings[el.value].trackers !== undefined )
-                {
-                    Object.entries(this.config.settings[el.value].trackers).forEach(([trackers__key, trackers__value]) =>
-                    {
-                        providers.push(trackers__key);
-                    });   
-                }             
+    checkAllOptIns() {
+        [].forEach.call(
+            document.querySelectorAll('.chefcookie__group-checkbox'),
+            el => {
+                el.checked = true;
             }
-        });
-        if( providers.length === 0 )
-        {
+        );
+    }
+
+    uncheckAllOptIns() {
+        [].forEach.call(
+            document.querySelectorAll('.chefcookie__group-checkbox'),
+            el => {
+                el.checked = false;
+            }
+        );
+    }
+
+    saveInCookie() {
+        let providers = [];
+        [].forEach.call(
+            document.querySelectorAll('.chefcookie__group-checkbox'),
+            el => {
+                if (el.checked === true) {
+                    if (this.config.settings[el.value].trackers !== undefined) {
+                        Object.entries(
+                            this.config.settings[el.value].trackers
+                        ).forEach(([trackers__key, trackers__value]) => {
+                            providers.push(trackers__key);
+                        });
+                    }
+                }
+            }
+        );
+        if (providers.length === 0) {
             providers.push('null');
         }
         providers.join(',');
         helper.cookieSet('chefcookie', providers, 30);
     }
 
-    addToCookie(provider)
-    {
+    addToCookie(provider) {
         let providers;
-        if( !helper.cookieExists('chefcookie') || helper.cookieGet('chefcookie') === 'null' )
-        {
+        if (
+            !helper.cookieExists('chefcookie') ||
+            helper.cookieGet('chefcookie') === 'null'
+        ) {
             providers = [];
-        }
-        else
-        {
+        } else {
             providers = helper.cookieGet('chefcookie').split(',');
         }
-        if( providers.indexOf(provider) === -1 )
-        {
+        if (providers.indexOf(provider) === -1) {
             providers.push(provider);
             helper.cookieSet('chefcookie', providers.join(','), 30);
-        }        
+        }
     }
 
-    deleteFromCookie(provider)
-    {
-        if( !helper.cookieExists('chefcookie') )
-        {
+    deleteFromCookie(provider) {
+        if (!helper.cookieExists('chefcookie')) {
             return;
         }
         let providers = helper.cookieGet('chefcookie').split(',');
         let index = providers.indexOf(provider);
-        if(index !== -1)
-        {
+        if (index !== -1) {
             providers.splice(index, 1);
         }
-        if( providers.length > 0 )
-        {
+        if (providers.length > 0) {
             helper.cookieSet('chefcookie', providers.join(','), 30);
-        }
-        else
-        {
+        } else {
             helper.cookieSet('chefcookie', 'null', 30);
         }
     }
-    
-    addEnabledScripts()
-    {
-        if( !helper.cookieExists('chefcookie') )
-        {
+
+    addEnabledScripts() {
+        if (!helper.cookieExists('chefcookie')) {
             return;
         }
         let settings = helper.cookieGet('chefcookie');
-        if( settings == 'null' )
-        {
+        if (settings == 'null') {
             return;
         }
         settings = settings.split(',');
-        this.config.settings.forEach((settings__value) =>
-        {
-            if( settings__value.trackers !== undefined )
-            {
-                Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) =>
-                {
-                    if( settings.indexOf(trackers__key) === -1 )
-                    {
-                        return; 
+        this.config.settings.forEach(settings__value => {
+            if (settings__value.trackers !== undefined) {
+                Object.entries(settings__value.trackers).forEach(
+                    ([trackers__key, trackers__value]) => {
+                        if (settings.indexOf(trackers__key) === -1) {
+                            return;
+                        }
+                        this.addScript(trackers__key, trackers__value);
                     }
-                    this.addScript(trackers__key, trackers__value);
-                });  
-            }          
+                );
+            }
         });
     }
 
-    addAllProvidersToCookie()
-    {
+    addAllProvidersToCookie() {
         let providers = [];
-        this.config.settings.forEach((settings__value) =>
-        {
-            if( settings__value.trackers !== undefined )
-            {
-                Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) =>
-                {
-                    providers.push(trackers__key);
-                });  
-            }          
-        });        
+        this.config.settings.forEach(settings__value => {
+            if (settings__value.trackers !== undefined) {
+                Object.entries(settings__value.trackers).forEach(
+                    ([trackers__key, trackers__value]) => {
+                        providers.push(trackers__key);
+                    }
+                );
+            }
+        });
         providers.join(',');
         helper.cookieSet('chefcookie', providers, 30);
     }
 
-    addScript(provider, id)
-    {
+    addScript(provider, id) {
         var script;
 
-        if( provider === 'google' )
-        {
+        if (provider === 'google') {
             script = document.createElement('script');
-            script.src = 'https://www.googletagmanager.com/gtag/js?id='+id;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
             document.head.appendChild(script);
             script = document.createElement('script');
-            script.innerHTML = 'window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag(\'js\', new Date()); gtag(\'config\', \''+id+'\'); gtag(\'config\', \''+id+'\', { \'anonymize_ip\': true });';
-            document.head.appendChild(script);
-        }
-
-        if( provider === 'facebook' )
-        {
-            script = document.createElement('script');
-            script.innerHTML = '!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version=\'2.0\';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,\'script\',\'https://connect.facebook.net/en_US/fbevents.js\');fbq(\'init\', \''+id+'\');fbq(\'track\', \'PageView\');fbq(\'track\', \'ViewContent\');';
+            script.innerHTML =
+                "window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '" +
+                id +
+                "'); gtag('config', '" +
+                id +
+                "', { 'anonymize_ip': true });";
             document.head.appendChild(script);
         }
 
-        if( provider === 'twitter' )
-        {
+        if (provider === 'facebook') {
+            script = document.createElement('script');
+            script.innerHTML =
+                "!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init', '" +
+                id +
+                "');fbq('track', 'PageView');fbq('track', 'ViewContent');";
+            document.head.appendChild(script);
+        }
+
+        if (provider === 'twitter') {
             script = document.createElement('script');
             script.src = '//platform.twitter.com/oct.js';
             document.head.appendChild(script);
         }
 
-        if( provider === 'taboola' )
-        {
+        if (provider === 'taboola') {
             script = document.createElement('script');
-            script.innerHTML = 'window._tfa = window._tfa || [];_tfa.push({ notify: \'action\',name: \'page_view\' });';
+            script.innerHTML =
+                "window._tfa = window._tfa || [];_tfa.push({ notify: 'action',name: 'page_view' });";
             document.head.appendChild(script);
             script = document.createElement('script');
-            script.src = '//cdn.taboola.com/libtrc/'+id+'/tfa.js';
+            script.src = '//cdn.taboola.com/libtrc/' + id + '/tfa.js';
             document.head.appendChild(script);
         }
 
-        if( provider === 'match2one' )
-        {
+        if (provider === 'match2one') {
             script = document.createElement('script');
-            script.src = 'https://secure.adnxs.com/seg?add='+id+'&t=1';
+            script.src = 'https://secure.adnxs.com/seg?add=' + id + '&t=1';
             document.head.appendChild(script);
             script = document.createElement('script');
             script.innerHTML = 'window.m2o = true;';
             document.head.appendChild(script);
         }
 
-        if( provider === 'smartlook' )
-        {
+        if (provider === 'smartlook') {
             script = document.createElement('script');
-            script.innerHTML = 'window.smartlook||(function(d) {var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName(\'head\')[0];var c=d.createElement(\'script\');o.api=new Array();c.async=true;c.type=\'text/javascript\';c.charset=\'utf-8\';c.src=\'https://rec.smartlook.com/recorder.js\';h.appendChild(c);})(document);smartlook(\'init\', \''+id+'\');';
+            script.innerHTML =
+                "window.smartlook||(function(d) {var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);})(document);smartlook('init', '" +
+                id +
+                "');";
             document.head.appendChild(script);
         }
 
-        if( provider === 'custom' )
-        {
+        if (provider === 'custom') {
             id();
         }
 
-        console.log('added script '+provider);
+        console.log('added script ' + provider);
     }
 
-    isEnabled(provider)
-    {
-        if( !helper.cookieExists('chefcookie') )
-        {
-            return false;       
+    isEnabled(provider) {
+        if (!helper.cookieExists('chefcookie')) {
+            return false;
         }
-        return helper.cookieGet('chefcookie').split(',').indexOf(provider) > -1;
+        return (
+            helper
+                .cookieGet('chefcookie')
+                .split(',')
+                .indexOf(provider) > -1
+        );
     }
 
-    hideOverlay()
-    {
-        document.querySelector('.chefcookie').classList.add('chefcookie--hidden');
-        setTimeout(() =>
-        {
+    hideOverlay() {
+        document.documentElement.classList.remove('chefcookie--visible');
+        document.documentElement.classList.remove('chefcookie--fade');
+        document.documentElement.classList.remove('chefcookie--noscroll');
+        document.documentElement.classList.remove('chefcookie--blur');
+        document
+            .querySelector('.chefcookie')
+            .classList.add('chefcookie--hidden');
+        setTimeout(() => {
             document.body.removeChild(document.querySelector('.chefcookie'));
-        },2000);
+        }, 2000);
     }
 
-    settingsVisible()
-    {
-        return document.querySelector('.chefcookie__settings-container').classList.contains('chefcookie__settings-container--visible');
+    settingsVisible() {
+        return document
+            .querySelector('.chefcookie__settings-container')
+            .classList.contains('chefcookie__settings-container--visible');
     }
 
-    showSettings()
-    {
-        document.querySelector('.chefcookie__settings-container').classList.add('chefcookie__settings-container--visible');
-        document.querySelector('.chefcookie__settings-container').style.height = document.querySelector('.chefcookie__settings-container').scrollHeight+'px';
+    showSettings() {
+        document
+            .querySelector('.chefcookie__settings-container')
+            .classList.add('chefcookie__settings-container--visible');
+        document.querySelector('.chefcookie__settings-container').style.height =
+            document.querySelector('.chefcookie__settings-container')
+                .scrollHeight + 'px';
         this.fixMaxHeight();
     }
 
-    hideSettings()
-    {
-        document.querySelector('.chefcookie__settings-container').classList.remove('chefcookie__settings-container--visible');
-        document.querySelector('.chefcookie__settings-container').style.height = 0;
+    hideSettings() {
+        document
+            .querySelector('.chefcookie__settings-container')
+            .classList.remove('chefcookie__settings-container--visible');
+        document.querySelector(
+            '.chefcookie__settings-container'
+        ).style.height = 0;
     }
 
-    fixMaxHeight()
-    {
-        document.querySelector('.chefcookie__inner').style.maxHeight = window.innerHeight+'px';
+    fixMaxHeight() {
+        document.querySelector('.chefcookie__inner').style.maxHeight =
+            window.innerHeight + 'px';
     }
 
-    eventGoogle(category, action)
-    {
-        if( !this.isEnabled('google') )
-        {
+    eventGoogle(category, action) {
+        if (!this.isEnabled('google')) {
             return;
         }
-        if( typeof gtag != 'function' )
-        {
+        if (typeof gtag != 'function') {
             return;
         }
-        if( action === undefined )
-        {
+        if (action === undefined) {
             gtag('event', category);
-            console.log('google '+category);
-        }
-        else
-        {
-            gtag('event', action, { 'event_category': category });
-            console.log('google '+category+' '+action);
+            console.log('google ' + category);
+        } else {
+            gtag('event', action, { event_category: category });
+            console.log('google ' + category + ' ' + action);
         }
     }
 
-    eventFacebook(action)
-    {
-        if( !this.isEnabled('facebook') )
-        {
+    eventFacebook(action) {
+        if (!this.isEnabled('facebook')) {
             return;
         }
-        if( typeof fbq != 'function' )
-        {
+        if (typeof fbq != 'function') {
             return;
         }
         fbq('trackCustom', action);
-        console.log('facebook '+action);
+        console.log('facebook ' + action);
     }
 
-    eventTwitter(action)
-    {
-        if( !this.isEnabled('twitter') )
-        {
+    eventTwitter(action) {
+        if (!this.isEnabled('twitter')) {
             return;
         }
-        if( typeof twttr == 'undefined' || typeof twttr.conversion == 'undefined' || typeof twttr.conversion.trackPid != 'function' )
-        {
+        if (
+            typeof twttr == 'undefined' ||
+            typeof twttr.conversion == 'undefined' ||
+            typeof twttr.conversion.trackPid != 'function'
+        ) {
             return;
         }
         twttr.conversion.trackPid(action);
-        console.log('twitter '+action);
+        console.log('twitter ' + action);
     }
 
-    eventTaboola(action)
-    {
-        if( !this.isEnabled('taboola') )
-        {
+    eventTaboola(action) {
+        if (!this.isEnabled('taboola')) {
             return;
         }
-        if( typeof _tfa != 'function' )
-        {
+        if (typeof _tfa != 'function') {
             return;
         }
         _tfa.push({ notify: 'action', name: action });
-        console.log('taboola '+action);
+        console.log('taboola ' + action);
     }
 
-    eventMatch2one(id)
-    {
-        if( !this.isEnabled('match2one') )
-        {
+    eventMatch2one(id) {
+        if (!this.isEnabled('match2one')) {
             return;
         }
-        if( typeof m2o == 'undefined' )
-        {
+        if (typeof m2o == 'undefined') {
             return;
         }
         let script = document.createElement('script');
-            script.src = 'https://secure.adnxs.com/px?'+id+'&t=1';
+        script.src = 'https://secure.adnxs.com/px?' + id + '&t=1';
         document.head.appendChild(script);
-        console.log('match2one '+id);
+        console.log('match2one ' + id);
     }
 
-    trackDuration()
-    {
+    trackDuration() {
         var _this = this,
             timer = 30;
-        while((timer/60) <= 8)
-        {
-            (function(timer)
-            {
-                window.setTimeout(function()
-                {
-                    _this.eventGoogle('duration_time', timer+'s');
-                },timer*1000);
+        while (timer / 60 <= 8) {
+            (function(timer) {
+                window.setTimeout(function() {
+                    _this.eventGoogle('duration_time', timer + 's');
+                }, timer * 1000);
             })(timer);
             timer += 30;
         }
     }
 
-    trackScrollDepth()
-    {
-        var scrollDepthTriggered = { 1: false, 10: false, 25: false, 50: false, 75: false, 100: false };
+    trackScrollDepth() {
+        var scrollDepthTriggered = {
+            1: false,
+            10: false,
+            25: false,
+            50: false,
+            75: false,
+            100: false
+        };
         this.eventGoogle('scroll_depth', '0%');
-        window.addEventListener('scroll', () =>
-        {
-            let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop,
-                documentHeight = Math.max(document.body.offsetHeight, document.body.scrollHeight, document.documentElement.clientHeight, document.documentElement.offsetHeight, document.documentElement.scrollHeight),
+        window.addEventListener('scroll', () => {
+            let scrollTop =
+                    (document.documentElement &&
+                        document.documentElement.scrollTop) ||
+                    document.body.scrollTop,
+                documentHeight = Math.max(
+                    document.body.offsetHeight,
+                    document.body.scrollHeight,
+                    document.documentElement.clientHeight,
+                    document.documentElement.offsetHeight,
+                    document.documentElement.scrollHeight
+                ),
                 windowHeight = window.innerHeight,
-                scroll = Math.round((scrollTop/(documentHeight-windowHeight))*100);
-            for(var scrollDepthTriggered__key in scrollDepthTriggered)
-            {
-                if(scrollDepthTriggered[scrollDepthTriggered__key] === false && scroll >= scrollDepthTriggered__key)
-                {
+                scroll = Math.round(
+                    (scrollTop / (documentHeight - windowHeight)) * 100
+                );
+            for (var scrollDepthTriggered__key in scrollDepthTriggered) {
+                if (
+                    scrollDepthTriggered[scrollDepthTriggered__key] === false &&
+                    scroll >= scrollDepthTriggered__key
+                ) {
                     scrollDepthTriggered[scrollDepthTriggered__key] = true;
-                    this.eventGoogle('scroll_depth', scrollDepthTriggered__key+'%');
+                    this.eventGoogle(
+                        'scroll_depth',
+                        scrollDepthTriggered__key + '%'
+                    );
                 }
-            };
+            }
         });
     }
-
 }
 
 window.chefcookie = chefcookie;

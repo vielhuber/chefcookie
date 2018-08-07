@@ -4,37 +4,40 @@ chefcookie is a gdpr cookie solution without compromises.
 
 ## features
 
-* opt in
-* opt out
-* highly customizable
-* custom event tracking
-* duration tracking
-* scroll depth tracking
-* includes basic styling
-* ships two layouts (overlay, bottombar)
-* supports custom tracking scripts
-* auto disable tracking for logged in wordpress users
+-   opt in
+-   opt out
+-   highly customizable
+-   custom event tracking
+-   duration tracking
+-   scroll depth tracking
+-   includes basic styling
+-   ships two layouts (overlay, bottombar)
+-   supports custom tracking scripts
+-   auto disable tracking for logged in wordpress users
 
 ## supports
 
-* [google analytics](https://analytics.google.com)
-* [facebook ads](https://de-de.facebook.com/business/products/ads)
-* [twitter ads](https://ads.twitter.com)
-* [taboola ads](https://www.taboola.com)
-* [match2one ads](https://www.match2one.com)
-* [smartlook](https://www.smartlook.com)
+-   [google analytics](https://analytics.google.com)
+-   [facebook ads](https://de-de.facebook.com/business/products/ads)
+-   [twitter ads](https://ads.twitter.com)
+-   [taboola ads](https://www.taboola.com)
+-   [match2one ads](https://www.match2one.com)
+-   [smartlook](https://www.smartlook.com)
 
 ## installation
 
 use it as a module:
+
 ```
 npm install chefcookie
 ```
+
 ```js
 import chefcookie from 'chefcookie';
 ```
 
 or include it the traditional way:
+
 ```html
 <script src="chefcookie.min.js"></script>
 ```
@@ -43,89 +46,102 @@ or include it the traditional way:
 
 ```js
 const cc = new chefcookie({
-    'message': `
+    message: `
         <h2>Wir verwenden Cookies</h2>
         <p>
             Unsere Website verwendet Cookies, die uns helfen, unsere Website zu verbessern, den bestmöglichen Service zu bieten und ein optimales Kundenerlebnis zu ermöglichen. <a href="#chefcookie__settings">Hier</a> können Sie Ihre Einstellungen verwalten. Indem Sie auf "<a href="#chefcookie__accept">Einverstanden</a>" klicken, erklären Sie sich damit einverstanden, dass Ihre Cookies für diesen Zweck verwendet werden. Weitere Informationen dazu finden Sie in unserer <a href="/privacy">Datenschutzerklärung</a>. Sollten Sie hiermit nicht einverstanden sein, können Sie die Verwendung von Cookies hier <a href="#chefcookie__decline">ablehnen</a>.
         </p>
     `,
-    'style': {
-        'layout': 'overlay', // options: overlay, bottombar
-        'size': 3, // 1,2,3,4,5
-        'color': '#e4042d',
+    style: {
+        layout: 'overlay', // options: overlay, bottombar
+        size: 3, // 1,2,3,4,5
+        color: '#e4042d',
+        noscroll: true,
+        fade: true,
+        blur: true
     },
-    'labels': {
-        'accept': 'Einverstanden',
-        'settings_open': 'Meine Einstellungen festlegen',
-        'settings_close': 'Einstellungen schliessen',
+    labels: {
+        accept: 'Einverstanden',
+        settings_open: 'Meine Einstellungen festlegen',
+        settings_close: 'Einstellungen schliessen'
     },
-    'exclude': [
+    exclude: [
         // exclude privacy site if needed
         '/privacy',
         // exclude wordpress users
-        ()=>{ return ( document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1 ); }
+        () => {
+            return (
+                document.cookie !== undefined &&
+                document.cookie.indexOf('wp-settings-time') > -1
+            );
+        }
     ],
-    'settings': [
+    settings: [
         {
-            'title': 'Analysen',
-            'description': 'Tools, die anonyme Daten über Website-Nutzung und -Funktionalität sammeln. Wir nutzen die Erkenntnisse, um unsere Produkte, Dienstleistungen und das Benutzererlebnis zu verbessern.',
-            'active': true,
-            'hidden': false,
-            'trackers': {
-                'google': 'UA-xxxxxxxx-1'
+            title: 'Analysen',
+            description:
+                'Tools, die anonyme Daten über Website-Nutzung und -Funktionalität sammeln. Wir nutzen die Erkenntnisse, um unsere Produkte, Dienstleistungen und das Benutzererlebnis zu verbessern.',
+            active: true,
+            hidden: false,
+            trackers: {
+                google: 'UA-xxxxxxxx-1'
             }
         },
         {
-            'title': 'Werbung',
-            'description': 'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
-            'active': true,
-            'hidden': false,
-            'trackers': {
-                'facebook': 'xxxxxxxxxxxxxxx',
-                'twitter': 'single',
-                'taboola': 'taboolaaccount-xxxxxxxxxxxxxx',
-                'match2one': 'xxxxxxxx',
-                'smartlook': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            title: 'Werbung',
+            description:
+                'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
+            active: true,
+            hidden: false,
+            trackers: {
+                facebook: 'xxxxxxxxxxxxxxx',
+                twitter: 'single',
+                taboola: 'taboolaaccount-xxxxxxxxxxxxxx',
+                match2one: 'xxxxxxxx',
+                smartlook: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
             }
         },
         {
-            'title': 'Support',
-            'description': 'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
-            'active': true,
-            'hidden': false,
-            'trackers': {
+            title: 'Support',
+            description:
+                'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
+            active: true,
+            hidden: false,
+            trackers: {
                 // add custom trackers
-                'custom': ()=>{
-                    document.head.insertAdjacentHTML('beforeend',`
+                custom: () => {
+                    document.head.insertAdjacentHTML(
+                        'beforeend',
+                        `
                         <script src="custom.js"></script> 
-                    `);
-                },
+                    `
+                    );
+                }
             }
         },
         {
-            'title': 'Grundlegendes',
-            'description': 'Tools, die wesentliche Services und Funktionen ermöglichen, einschließlich Identitätsprüfung, Servicekontinuität und Standortsicherheit. Diese Option kann nicht abgelehnt werden.',
-            'active': true,
-            'hidden': true,
-            'trackers': {}
-        },
-    ]    
+            title: 'Grundlegendes',
+            description:
+                'Tools, die wesentliche Services und Funktionen ermöglichen, einschließlich Identitätsprüfung, Servicekontinuität und Standortsicherheit. Diese Option kann nicht abgelehnt werden.',
+            active: true,
+            hidden: true,
+            trackers: {}
+        }
+    ]
 });
 ```
 
 #### custom tracking
 
 ```js
-window.addEventListener('load', (e) =>
-{
+window.addEventListener('load', e => {
     // track duration
     cc.trackDuration();
     // track scroll depth
     cc.trackScrollDepth();
     // custom tracking
-    document.querySelector('.conversion').addEventListener('click', (e) =>
-    { 
-        cc.eventGoogle('custom_category','custom_action');
+    document.querySelector('.conversion').addEventListener('click', e => {
+        cc.eventGoogle('custom_category', 'custom_action');
         cc.eventFacebook('custom_action_name');
         cc.eventTwitter('conversion_id');
         cc.eventTaboola('custom_action_name');
