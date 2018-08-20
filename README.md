@@ -96,7 +96,7 @@ const cc = new chefcookie({
             trackers: {
                 facebook: 'xxxxxxxxxxxxxxx',
                 twitter: 'single',
-                taboola: 'taboolaaccount-xxxxxxxxxxxxxx',
+                taboola: 'xxxxxxx',
                 match2one: 'xxxxxxxx',
                 smartlook: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
             }
@@ -144,7 +144,7 @@ window.addEventListener('load', e => {
         cc.eventGoogle('custom_category', 'custom_action');
         cc.eventFacebook('custom_action_name');
         cc.eventTwitter('conversion_id');
-        cc.eventTaboola('custom_action_name');
+        cc.eventTaboola('custom_event_name');
         cc.eventMatch2one('id=xxxxxx&seg=xxxxxx');
         e.preventDefault();
     });

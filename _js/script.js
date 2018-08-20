@@ -371,6 +371,7 @@ export default class chefcookie {
             {
                 content:"";
                 position:fixed;
+                z-index: 2147483644;
                 top:0;
                 left:0;
                 width:100%;
@@ -771,10 +772,11 @@ export default class chefcookie {
         if (provider === 'taboola') {
             script = document.createElement('script');
             script.innerHTML =
-                "window._tfa = window._tfa || [];_tfa.push({ notify: 'action',name: 'page_view' });";
-            document.head.appendChild(script);
-            script = document.createElement('script');
-            script.src = '//cdn.taboola.com/libtrc/' + id + '/tfa.js';
+                "window._tfa = window._tfa || [];window._tfa.push({notify: 'event', name: 'page_view'});!function (t, f, a, x) { if (!document.getElementById(x)) { t.async = 1;t.src = a;t.id=x;f.parentNode.insertBefore(t, f); } }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/unip/"
+                +
+                id
+                +
+                "/tfa.js', 'tb_tfa_script');";
             document.head.appendChild(script);
         }
 
@@ -900,15 +902,15 @@ export default class chefcookie {
         console.log('twitter ' + action);
     }
 
-    eventTaboola(action) {
+    eventTaboola(event) {
         if (!this.isEnabled('taboola')) {
             return;
         }
         if (typeof _tfa != 'function') {
             return;
         }
-        _tfa.push({ notify: 'action', name: action });
-        console.log('taboola ' + action);
+        _tfa.push({ notify: 'event', name: event });
+        console.log('taboola ' + event);
     }
 
     eventMatch2one(id) {
