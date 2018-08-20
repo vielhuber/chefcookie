@@ -910,7 +910,7 @@ export default class chefcookie {
             return;
         }
         _tfa.push({ notify: 'event', name: event });
-        console.log('taboola ' + event);
+        console.log('taboola '+event);
     }
 
     eventMatch2one(id) {
