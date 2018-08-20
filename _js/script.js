@@ -906,7 +906,7 @@ export default class chefcookie {
         if (!this.isEnabled('taboola')) {
             return;
         }
-        if (typeof _tfa != 'function') {
+        if (typeof _tfa != 'object') {
             return;
         }
         _tfa.push({ notify: 'event', name: event });
