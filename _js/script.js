@@ -19,7 +19,7 @@ export default class chefcookie {
             return;
         }
 
-        if (this.cookieExists()) {
+        if (this.cookieExists() && !this.isEnabled('initial_tracking')) {
             this.addEnabledScripts();
         }
         else {
@@ -30,7 +30,9 @@ export default class chefcookie {
             this.fixMaxHeight();
             if( this.config.initial_tracking === true )
             {
-                this.addAllScripts();
+                this.addAllProvidersToCookie();
+                this.addEnabledScripts();
+                this.addToCookie('initial_tracking');
             }
         }
     }
@@ -111,10 +113,6 @@ export default class chefcookie {
             }
         });
         return excluded;
-    }
-
-    cookieExists() {
-        return helper.cookieExists('chefcookie');
     }
 
     addStyle() {
@@ -649,6 +647,10 @@ export default class chefcookie {
         );
     }
 
+    cookieExists() {
+        return helper.cookieExists('chefcookie');
+    }
+
     saveInCookie() {
         let providers = [];
         [].forEach.call(
@@ -721,18 +723,6 @@ export default class chefcookie {
                             return;
                         }
                         this.addScript(trackers__key, trackers__value);
-                    }
-                );
-            }
-        });
-    }
-
-    addAllScripts() {
-        this.config.settings.forEach(settings__value => {
-            if (settings__value.trackers !== undefined) {
-                Object.entries(settings__value.trackers).forEach(
-                    ([trackers__key, trackers__value]) => {
-                        this.addScript(trackers__key, trackers__value)
                     }
                 );
             }
