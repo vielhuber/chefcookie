@@ -21,12 +21,17 @@ export default class chefcookie {
 
         if (this.cookieExists()) {
             this.addEnabledScripts();
-        } else {
+        }
+        else {
             this.addStyle();
             this.buildDom();
             this.addHtmlClasses();
             this.bindButtons();
             this.fixMaxHeight();
+            if( this.config.initial_tracking === true )
+            {
+                this.addAllScripts();
+            }
         }
     }
 
@@ -716,6 +721,18 @@ export default class chefcookie {
                             return;
                         }
                         this.addScript(trackers__key, trackers__value);
+                    }
+                );
+            }
+        });
+    }
+
+    addAllScripts() {
+        this.config.settings.forEach(settings__value => {
+            if (settings__value.trackers !== undefined) {
+                Object.entries(settings__value.trackers).forEach(
+                    ([trackers__key, trackers__value]) => {
+                        this.addScript(trackers__key, trackers__value)
                     }
                 );
             }
