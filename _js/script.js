@@ -3,9 +3,6 @@ import helper from './_helper';
 export default class chefcookie {
     constructor(config = {}) {
         this.config = config;
-        document.addEventListener('DOMContentLoaded', () => {
-            this.init();
-        });
     }
 
     init() {
@@ -21,15 +18,13 @@ export default class chefcookie {
 
         if (this.cookieExists() && !this.isEnabled('initial_tracking')) {
             this.addEnabledScripts();
-        }
-        else {
+        } else {
             this.addStyle();
             this.buildDom();
             this.addHtmlClasses();
             this.bindButtons();
             this.fixMaxHeight();
-            if( this.config.initial_tracking === true )
-            {
+            if (this.config.initial_tracking === true) {
                 this.addAllProvidersToCookie();
                 this.addEnabledScripts();
                 this.addToCookie('initial_tracking');
@@ -52,19 +47,11 @@ export default class chefcookie {
                 }
                 el.addEventListener('click', e => {
                     if (!this.isEnabled(el.getAttribute('data-disable'))) {
-                        e.currentTarget.textContent = e.currentTarget.getAttribute(
-                            'data-message-original'
-                        );
-                        this.addToCookie(
-                            e.currentTarget.getAttribute('data-disable')
-                        );
+                        e.currentTarget.textContent = e.currentTarget.getAttribute('data-message-original');
+                        this.addToCookie(e.currentTarget.getAttribute('data-disable'));
                     } else {
-                        e.currentTarget.textContent = e.currentTarget.getAttribute(
-                            'data-message'
-                        );
-                        this.deleteFromCookie(
-                            e.currentTarget.getAttribute('data-disable')
-                        );
+                        e.currentTarget.textContent = e.currentTarget.getAttribute('data-message');
+                        this.deleteFromCookie(e.currentTarget.getAttribute('data-disable'));
                     }
                     e.preventDefault();
                 });
@@ -90,24 +77,14 @@ export default class chefcookie {
         }
         let excluded = false;
         this.config.exclude.forEach(exclude__value => {
-            if (
-                typeof exclude__value === 'function' &&
-                exclude__value() === true
-            ) {
+            if (typeof exclude__value === 'function' && exclude__value() === true) {
                 excluded = true;
             }
             if (
                 typeof exclude__value === 'string' &&
-                ((exclude__value.indexOf('http') === 0 &&
-                    exclude__value ===
-                        window.location.protocol +
-                            '//' +
-                            window.location.host +
-                            window.location.pathname) ||
-                    (exclude__value.indexOf('http') !== 0 &&
-                        exclude__value === window.location.pathname) ||
-                    (exclude__value.indexOf('http') !== 0 &&
-                        exclude__value + '/' === window.location.pathname))
+                ((exclude__value.indexOf('http') === 0 && exclude__value === window.location.protocol + '//' + window.location.host + window.location.pathname) ||
+                    (exclude__value.indexOf('http') !== 0 && exclude__value === window.location.pathname) ||
+                    (exclude__value.indexOf('http') !== 0 && exclude__value + '/' === window.location.pathname))
             ) {
                 excluded = true;
             }
@@ -503,38 +480,22 @@ export default class chefcookie {
             <div class="chefcookie chefcookie--${this.config.style.layout}">
                 <div class="chefcookie__inner">
                     <div class="chefcookie__box">
-                        <div class="chefcookie__message">${
-                            this.config.message
-                        }</div>
+                        <div class="chefcookie__message">${this.config.message}</div>
                         <div class="chefcookie__settings-container">
-                            <ul class="chefcookie__groups chefcookie__groups--count-${
-                                this.config.settings.length
-                            }">
+                            <ul class="chefcookie__groups chefcookie__groups--count-${this.config.settings.length}">
                                 ${this.config.settings
                                     .map(
                                         (group, i) => `
-                                    <li class="chefcookie__group${
-                                        group.hidden
-                                            ? ` chefcookie__group--hidden`
-                                            : ``
-                                    }">                                    
+                                    <li class="chefcookie__group${group.hidden ? ` chefcookie__group--hidden` : ``}">                                    
                                         <label class="chefcookie__label" for="chefcookie_group_${i}">
                                             <input${
-                                                group.hidden
-                                                    ? ` disabled="disabled"`
-                                                    : ``
+                                                group.hidden ? ` disabled="disabled"` : ``
                                             } class="chefcookie__group-checkbox" id="chefcookie_group_${i}" type="checkbox" name="chefcookie_group[]" value="${i}"${
-                                            group.active
-                                                ? ` checked="checked"`
-                                                : ``
+                                            group.active ? ` checked="checked"` : ``
                                         } />
-                                            <span class="chefcookie__group-title">${
-                                                group.title
-                                            }</span>
+                                            <span class="chefcookie__group-title">${group.title}</span>
                                             <span class="chefcookie__group-checkbox-icon"></span>                                                                                  
-                                            <span class="chefcookie__group-description">${
-                                                group.description
-                                            }</span>
+                                            <span class="chefcookie__group-description">${group.description}</span>
                                         </label>
                                     </li>
                                 `
@@ -543,12 +504,8 @@ export default class chefcookie {
                             </ul>
                         </div>
                         <div class="chefcookie__buttons">
-                            <a href="#chefcookie__settings" class="chefcookie__button chefcookie__button--settings">${this.getLabel(
-                                'settings_open'
-                            )}</a>
-                            <a href="#chefcookie__accept" class="chefcookie__button chefcookie__button--accept">${this.getLabel(
-                                'accept'
-                            )}</a>
+                            <a href="#chefcookie__settings" class="chefcookie__button chefcookie__button--settings">${this.getLabel('settings_open')}</a>
+                            <a href="#chefcookie__accept" class="chefcookie__button chefcookie__button--accept">${this.getLabel('accept')}</a>
                         </div>
                     </div>
                 </div>
@@ -566,85 +523,64 @@ export default class chefcookie {
 
     bindButtons() {
         if (document.querySelector('a[href="#chefcookie__decline"]') !== null) {
-            [].forEach.call(
-                document.querySelectorAll('a[href="#chefcookie__decline"]'),
-                el => {
-                    el.addEventListener('click', e => {
-                        this.uncheckAllOptIns();
-                        this.saveInCookie();
-                        this.hideOverlay();
-                        this.updateOptOut();
-                        e.preventDefault();
-                    });
-                }
-            );
+            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__decline"]'), el => {
+                el.addEventListener('click', e => {
+                    this.uncheckAllOptIns();
+                    this.saveInCookie();
+                    this.hideOverlay();
+                    this.updateOptOut();
+                    e.preventDefault();
+                });
+            });
         }
         if (document.querySelector('a[href="#chefcookie__accept"]') !== null) {
-            [].forEach.call(
-                document.querySelectorAll('a[href="#chefcookie__accept"]'),
-                el => {
-                    el.addEventListener('click', e => {
-                        if (!this.settingsVisible()) {
-                            this.checkAllOptIns();
-                        }
-                        this.saveInCookie();
-                        this.addEnabledScripts();
-                        this.hideOverlay();
-                        this.updateOptOut();
-                        e.preventDefault();
-                    });
-                }
-            );
+            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__accept"]'), el => {
+                el.addEventListener('click', e => {
+                    if (!this.settingsVisible()) {
+                        this.checkAllOptIns();
+                    }
+                    this.saveInCookie();
+                    this.addEnabledScripts();
+                    this.hideOverlay();
+                    this.updateOptOut();
+                    e.preventDefault();
+                });
+            });
         }
-        if (
-            document.querySelector('a[href="#chefcookie__settings"]') !== null
-        ) {
-            [].forEach.call(
-                document.querySelectorAll('a[href="#chefcookie__settings"]'),
-                el => {
-                    el.addEventListener('click', e => {
-                        if (!this.settingsVisible()) {
-                            this.showSettings();
-                            this.switchLabelsOpen();
-                        } else {
-                            this.hideSettings();
-                            this.switchLabelsClose();
-                        }
-                        e.preventDefault();
-                    });
-                }
-            );
+        if (document.querySelector('a[href="#chefcookie__settings"]') !== null) {
+            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__settings"]'), el => {
+                el.addEventListener('click', e => {
+                    if (!this.settingsVisible()) {
+                        this.showSettings();
+                        this.switchLabelsOpen();
+                    } else {
+                        this.hideSettings();
+                        this.switchLabelsClose();
+                    }
+                    e.preventDefault();
+                });
+            });
         }
     }
 
     switchLabelsOpen() {
-        document.querySelector(
-            '.chefcookie__button--settings'
-        ).textContent = this.getLabel('settings_close');
+        document.querySelector('.chefcookie__button--settings').textContent = this.getLabel('settings_close');
     }
 
     switchLabelsClose() {
-        document.querySelector(
-            '.chefcookie__button--settings'
-        ).textContent = this.getLabel('settings_open');
+        document.querySelector('.chefcookie__button--settings').textContent = this.getLabel('settings_open');
     }
 
     checkAllOptIns() {
-        [].forEach.call(
-            document.querySelectorAll('.chefcookie__group-checkbox'),
-            el => {
-                el.checked = true;
-            }
-        );
+        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), el => {
+            el.checked = true;
+        });
     }
 
     uncheckAllOptIns() {
-        [].forEach.call(
-            document.querySelectorAll('.chefcookie__group-checkbox'),
-            el => {
-                el.checked = false;
-            }
-        );
+        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), el => {
+            el.checked = false;
+        });
     }
 
     cookieExists() {
@@ -653,20 +589,15 @@ export default class chefcookie {
 
     saveInCookie() {
         let providers = [];
-        [].forEach.call(
-            document.querySelectorAll('.chefcookie__group-checkbox'),
-            el => {
-                if (el.checked === true) {
-                    if (this.config.settings[el.value].trackers !== undefined) {
-                        Object.entries(
-                            this.config.settings[el.value].trackers
-                        ).forEach(([trackers__key, trackers__value]) => {
-                            providers.push(trackers__key);
-                        });
-                    }
+        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), el => {
+            if (el.checked === true) {
+                if (this.config.settings[el.value].trackers !== undefined) {
+                    Object.entries(this.config.settings[el.value].trackers).forEach(([trackers__key, trackers__value]) => {
+                        providers.push(trackers__key);
+                    });
                 }
             }
-        );
+        });
         if (providers.length === 0) {
             providers.push('null');
         }
@@ -676,10 +607,7 @@ export default class chefcookie {
 
     addToCookie(provider) {
         let providers;
-        if (
-            !helper.cookieExists('chefcookie') ||
-            helper.cookieGet('chefcookie') === 'null'
-        ) {
+        if (!helper.cookieExists('chefcookie') || helper.cookieGet('chefcookie') === 'null') {
             providers = [];
         } else {
             providers = helper.cookieGet('chefcookie').split(',');
@@ -717,14 +645,12 @@ export default class chefcookie {
         settings = settings.split(',');
         this.config.settings.forEach(settings__value => {
             if (settings__value.trackers !== undefined) {
-                Object.entries(settings__value.trackers).forEach(
-                    ([trackers__key, trackers__value]) => {
-                        if (settings.indexOf(trackers__key) === -1) {
-                            return;
-                        }
-                        this.addScript(trackers__key, trackers__value);
+                Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) => {
+                    if (settings.indexOf(trackers__key) === -1) {
+                        return;
                     }
-                );
+                    this.addScript(trackers__key, trackers__value);
+                });
             }
         });
     }
@@ -733,11 +659,9 @@ export default class chefcookie {
         let providers = [];
         this.config.settings.forEach(settings__value => {
             if (settings__value.trackers !== undefined) {
-                Object.entries(settings__value.trackers).forEach(
-                    ([trackers__key, trackers__value]) => {
-                        providers.push(trackers__key);
-                    }
-                );
+                Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) => {
+                    providers.push(trackers__key);
+                });
             }
         });
         providers.join(',');
@@ -779,10 +703,8 @@ export default class chefcookie {
         if (provider === 'taboola') {
             script = document.createElement('script');
             script.innerHTML =
-                "window._tfa = window._tfa || [];window._tfa.push({notify: 'event', name: 'page_view'});!function (t, f, a, x) { if (!document.getElementById(x)) { t.async = 1;t.src = a;t.id=x;f.parentNode.insertBefore(t, f); } }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/unip/"
-                +
-                id
-                +
+                "window._tfa = window._tfa || [];window._tfa.push({notify: 'event', name: 'page_view'});!function (t, f, a, x) { if (!document.getElementById(x)) { t.async = 1;t.src = a;t.id=x;f.parentNode.insertBefore(t, f); } }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/unip/" +
+                id +
                 "/tfa.js', 'tb_tfa_script');";
             document.head.appendChild(script);
         }
@@ -829,42 +751,29 @@ export default class chefcookie {
         document.documentElement.classList.remove('chefcookie--fade');
         document.documentElement.classList.remove('chefcookie--noscroll');
         document.documentElement.classList.remove('chefcookie--blur');
-        document
-            .querySelector('.chefcookie')
-            .classList.add('chefcookie--hidden');
+        document.querySelector('.chefcookie').classList.add('chefcookie--hidden');
         setTimeout(() => {
             document.body.removeChild(document.querySelector('.chefcookie'));
         }, 2000);
     }
 
     settingsVisible() {
-        return document
-            .querySelector('.chefcookie__settings-container')
-            .classList.contains('chefcookie__settings-container--visible');
+        return document.querySelector('.chefcookie__settings-container').classList.contains('chefcookie__settings-container--visible');
     }
 
     showSettings() {
-        document
-            .querySelector('.chefcookie__settings-container')
-            .classList.add('chefcookie__settings-container--visible');
-        document.querySelector('.chefcookie__settings-container').style.height =
-            document.querySelector('.chefcookie__settings-container')
-                .scrollHeight + 'px';
+        document.querySelector('.chefcookie__settings-container').classList.add('chefcookie__settings-container--visible');
+        document.querySelector('.chefcookie__settings-container').style.height = document.querySelector('.chefcookie__settings-container').scrollHeight + 'px';
         this.fixMaxHeight();
     }
 
     hideSettings() {
-        document
-            .querySelector('.chefcookie__settings-container')
-            .classList.remove('chefcookie__settings-container--visible');
-        document.querySelector(
-            '.chefcookie__settings-container'
-        ).style.height = 0;
+        document.querySelector('.chefcookie__settings-container').classList.remove('chefcookie__settings-container--visible');
+        document.querySelector('.chefcookie__settings-container').style.height = 0;
     }
 
     fixMaxHeight() {
-        document.querySelector('.chefcookie__inner').style.maxHeight =
-            window.innerHeight + 'px';
+        document.querySelector('.chefcookie__inner').style.maxHeight = window.innerHeight + 'px';
     }
 
     eventGoogle(category, action) {
@@ -898,11 +807,7 @@ export default class chefcookie {
         if (!this.isEnabled('twitter')) {
             return;
         }
-        if (
-            typeof twttr == 'undefined' ||
-            typeof twttr.conversion == 'undefined' ||
-            typeof twttr.conversion.trackPid != 'function'
-        ) {
+        if (typeof twttr == 'undefined' || typeof twttr.conversion == 'undefined' || typeof twttr.conversion.trackPid != 'function') {
             return;
         }
         twttr.conversion.trackPid(action);
@@ -917,7 +822,7 @@ export default class chefcookie {
             return;
         }
         _tfa.push({ notify: 'event', name: event });
-        console.log('taboola '+event);
+        console.log('taboola ' + event);
     }
 
     eventMatch2one(id) {
@@ -957,10 +862,7 @@ export default class chefcookie {
         };
         this.eventGoogle('scroll_depth', '0%');
         window.addEventListener('scroll', () => {
-            let scrollTop =
-                    (document.documentElement &&
-                        document.documentElement.scrollTop) ||
-                    document.body.scrollTop,
+            let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop,
                 documentHeight = Math.max(
                     document.body.offsetHeight,
                     document.body.scrollHeight,
@@ -969,19 +871,11 @@ export default class chefcookie {
                     document.documentElement.scrollHeight
                 ),
                 windowHeight = window.innerHeight,
-                scroll = Math.round(
-                    (scrollTop / (documentHeight - windowHeight)) * 100
-                );
+                scroll = Math.round((scrollTop / (documentHeight - windowHeight)) * 100);
             for (var scrollDepthTriggered__key in scrollDepthTriggered) {
-                if (
-                    scrollDepthTriggered[scrollDepthTriggered__key] === false &&
-                    scroll >= scrollDepthTriggered__key
-                ) {
+                if (scrollDepthTriggered[scrollDepthTriggered__key] === false && scroll >= scrollDepthTriggered__key) {
                     scrollDepthTriggered[scrollDepthTriggered__key] = true;
-                    this.eventGoogle(
-                        'scroll_depth',
-                        scrollDepthTriggered__key + '%'
-                    );
+                    this.eventGoogle('scroll_depth', scrollDepthTriggered__key + '%');
                 }
             }
         });

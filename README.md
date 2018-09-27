@@ -71,10 +71,7 @@ const cc = new chefcookie({
         '/privacy',
         // exclude wordpress users
         () => {
-            return (
-                document.cookie !== undefined &&
-                document.cookie.indexOf('wp-settings-time') > -1
-            );
+            return document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1;
         }
     ],
     settings: [
@@ -90,8 +87,7 @@ const cc = new chefcookie({
         },
         {
             title: 'Werbung',
-            description:
-                'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
+            description: 'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
             active: true,
             hidden: false,
             trackers: {
@@ -104,8 +100,7 @@ const cc = new chefcookie({
         },
         {
             title: 'Support',
-            description:
-                'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
+            description: 'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
             active: true,
             hidden: false,
             trackers: {
@@ -130,6 +125,9 @@ const cc = new chefcookie({
         }
     ]
 });
+document.addEventListener('DOMContentLoaded', () => {
+    cc.init();
+});
 ```
 
 #### custom tracking
@@ -141,7 +139,7 @@ window.addEventListener('load', e => {
     // track scroll depth
     cc.trackScrollDepth();
     // custom tracking
-    document.querySelector('.conversion').addEventListener('click', e => {
+    document.querySelector('.conversion').addEventListener('click', () => {
         cc.eventGoogle('custom_category', 'custom_action');
         cc.eventFacebook('custom_action_name');
         cc.eventTwitter('conversion_id');
