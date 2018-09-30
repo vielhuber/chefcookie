@@ -167,6 +167,7 @@ export default class chefcookie {
             {
                 color:inherit;
                 transition: all 0.25s ease-in-out;
+                text-decoration:underline;
             }
             .chefcookie__message a:hover
             {
