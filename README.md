@@ -18,6 +18,7 @@ chefcookie is a gdpr cookie solution without compromises.
 ## supports
 
 -   [google analytics](https://analytics.google.com)
+-   [google tag manager](https://tagmanager.google.com)
 -   [facebook ads](https://de-de.facebook.com/business/products/ads)
 -   [twitter ads](https://ads.twitter.com)
 -   [taboola ads](https://www.taboola.com)
@@ -71,7 +72,9 @@ const cc = new chefcookie({
         '/privacy',
         // exclude wordpress users
         () => {
-            return document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1;
+            return (
+                document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1
+            );
         }
     ],
     settings: [
@@ -82,15 +85,17 @@ const cc = new chefcookie({
             active: true,
             hidden: false,
             trackers: {
-                google: 'UA-xxxxxxxx-1'
+                analytics: 'UA-xxxxxxxx-1'
             }
         },
         {
             title: 'Werbung',
-            description: 'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
+            description:
+                'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
             active: true,
             hidden: false,
             trackers: {
+                tagmanager: 'GTM-XXXXXXX',
                 facebook: 'xxxxxxxxxxxxxxx',
                 twitter: 'single',
                 taboola: 'xxxxxxx',
@@ -100,7 +105,8 @@ const cc = new chefcookie({
         },
         {
             title: 'Support',
-            description: 'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
+            description:
+                'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
             active: true,
             hidden: false,
             trackers: {
@@ -140,7 +146,7 @@ window.addEventListener('load', e => {
     cc.trackScrollDepth();
     // custom tracking
     document.querySelector('.conversion').addEventListener('click', () => {
-        cc.eventGoogle('custom_category', 'custom_action');
+        cc.eventAnalytics('custom_category', 'custom_action');
         cc.eventFacebook('custom_action_name');
         cc.eventTwitter('conversion_id');
         cc.eventTaboola('custom_event_name');
@@ -153,10 +159,20 @@ window.addEventListener('load', e => {
 #### opt out links
 
 ```html
-<a href="#" data-disable="google" data-message="Google Analytics aktivieren">Google Analytics deaktivieren</a><br/>
-<a href="#" data-disable="facebook" data-message="Facebook Pixel aktivieren">Facebook Pixel deaktivieren</a><br/>
-<a href="#" data-disable="twitter" data-message="Twitter Pixel aktivieren">Twitter Pixel deaktivieren</a><br/>
-<a href="#" data-disable="taboola" data-message="Taboola Pixel aktivieren">Taboola Pixel deaktivieren</a><br/>
-<a href="#" data-disable="match2one" data-message="Match2One Pixel aktivieren">Match2One Pixel deaktivieren</a><br/>
+<a href="#" data-disable="analytics" data-message="Google Analytics aktivieren"
+    >Google Analytics deaktivieren</a
+><br />
+<a href="#" data-disable="facebook" data-message="Facebook Pixel aktivieren"
+    >Facebook Pixel deaktivieren</a
+><br />
+<a href="#" data-disable="twitter" data-message="Twitter Pixel aktivieren"
+    >Twitter Pixel deaktivieren</a
+><br />
+<a href="#" data-disable="taboola" data-message="Taboola Pixel aktivieren"
+    >Taboola Pixel deaktivieren</a
+><br />
+<a href="#" data-disable="match2one" data-message="Match2One Pixel aktivieren"
+    >Match2One Pixel deaktivieren</a
+><br />
 <a href="#" data-disable="smartlook" data-message="Smartlook aktivieren">Smartlook deaktivieren</a>
 ```

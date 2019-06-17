@@ -23,7 +23,9 @@ const cc = new chefcookie({
     exclude: [
         '/privacy',
         function() {
-            return document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1;
+            return (
+                document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1
+            );
         }
     ],
     settings: [
@@ -34,15 +36,17 @@ const cc = new chefcookie({
             active: true,
             hidden: false,
             trackers: {
-                google: 'UA-77674501-1'
+                analytics: 'UA-77674501-1'
             }
         },
         {
             title: 'Werbung',
-            description: 'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
+            description:
+                'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
             active: true,
             hidden: false,
             trackers: {
+                tagmanager: 'GTM-N667H38',
                 facebook: '687761448085259',
                 twitter: 'single',
                 taboola: '1117744',
@@ -52,7 +56,8 @@ const cc = new chefcookie({
         },
         {
             title: 'Support',
-            description: 'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
+            description:
+                'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
             active: true,
             hidden: false
             /*
@@ -87,7 +92,7 @@ window.addEventListener('load', function() {
     cc.trackScrollDepth();
     // custom tracking
     document.querySelector('.conversion').addEventListener('click', function(e) {
-        cc.eventGoogle('custom_category', 'custom_action');
+        cc.eventAnalytics('custom_category', 'custom_action');
         cc.eventFacebook('custom_action_name');
         cc.eventTwitter('conversion_id');
         cc.eventTaboola('custom_action_name');
