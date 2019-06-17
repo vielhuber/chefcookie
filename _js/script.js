@@ -823,7 +823,7 @@ export default class chefcookie {
     }
 
     eventAnalytics(category, action) {
-        if (!this.isEnabled('analytics')) {
+        if (!this.isEnabled('analytics') && !this.isEnabled('tagmanager')) {
             return;
         }
         if (typeof gtag != 'function') {
