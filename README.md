@@ -179,3 +179,7 @@ window.addEventListener('load', e => {
 ><br />
 <a href="#" data-disable="smartlook" data-message="Smartlook aktivieren">Smartlook deaktivieren</a>
 ```
+
+#### backdoor
+
+just add ```?accept=1``` to your urls to completely bypass chefcookie.
