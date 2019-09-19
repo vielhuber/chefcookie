@@ -51,7 +51,8 @@ const cc = new chefcookie({
                 twitter: 'single',
                 taboola: '1117744',
                 match2one: '11538693',
-                smartlook: 'e63141d523562364440934be8a0d418f17f5123b'
+                smartlook: 'e63141d523562364440934be8a0d418f17f5123b',
+                etracker: 'OBVSQs'
             }
         },
         {
@@ -97,6 +98,7 @@ window.addEventListener('load', function() {
         cc.eventTwitter('conversion_id');
         cc.eventTaboola('custom_action_name');
         cc.eventMatch2one('id=xxxxxx&seg=xxxxxx');
+        cc.eventEtracker('custom_action_name');
         e.preventDefault();
     });
 });

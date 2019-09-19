@@ -23,6 +23,7 @@ chefcookie is a gdpr cookie solution without compromises.
 -   [twitter ads](https://ads.twitter.com)
 -   [taboola ads](https://www.taboola.com)
 -   [match2one ads](https://www.match2one.com)
+-   [etracker](https://www.etracker.com)
 -   [smartlook](https://www.smartlook.com)
 
 ## installation
@@ -100,6 +101,7 @@ const cc = new chefcookie({
                 twitter: 'single',
                 taboola: 'xxxxxxx',
                 match2one: 'xxxxxxxx',
+                etracker: 'xxxxxx',
                 smartlook: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
             }
         },
@@ -151,6 +153,7 @@ window.addEventListener('load', e => {
         cc.eventTwitter('conversion_id');
         cc.eventTaboola('custom_event_name');
         cc.eventMatch2one('id=xxxxxx&seg=xxxxxx');
+        cc.eventEtracker('custom_event_name');
         e.preventDefault();
     });
 });
@@ -177,9 +180,11 @@ window.addEventListener('load', e => {
 <a href="#" data-disable="match2one" data-message="Match2One Pixel aktivieren"
     >Match2One Pixel deaktivieren</a
 ><br />
+<a href="#" data-disable="etracker" data-message="etracker aktivieren">etracker deaktivieren</a
+><br />
 <a href="#" data-disable="smartlook" data-message="Smartlook aktivieren">Smartlook deaktivieren</a>
 ```
 
 #### backdoor
 
-just add ```?accept=1``` to your urls to completely bypass chefcookie.
+just add `?accept=1` to your urls to completely bypass chefcookie.

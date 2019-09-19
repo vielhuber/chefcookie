@@ -720,7 +720,8 @@ export default class chefcookie {
         if (provider === 'tagmanager') {
             script = document.createElement('script');
             let html = '';
-            html += "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N667H38');";
+            html +=
+                "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N667H38');";
             // this is not part of the default tagmanager code, because events are tracked via "dataLayer" or directly inside tag manager
             // we make this also available here
             html += 'function gtag(){dataLayer.push(arguments);}';
@@ -767,6 +768,17 @@ export default class chefcookie {
                 "window.smartlook||(function(d) {var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);})(document);smartlook('init', '" +
                 id +
                 "');";
+            document.head.appendChild(script);
+        }
+
+        if (provider === 'etracker') {
+            script = document.createElement('script');
+            script.id = '_etLoader';
+            script.type = 'text/javascript';
+            script.charset = 'UTF-8';
+            script.setAttribute('data-respect-dnt', 'true');
+            script.setAttribute('data-secure-code', id);
+            script.src = '//static.etracker.com/code/e.js';
             document.head.appendChild(script);
         }
 
@@ -894,6 +906,17 @@ export default class chefcookie {
         script.src = 'https://secure.adnxs.com/px?' + id + '&t=1';
         document.head.appendChild(script);
         console.log('match2one ' + id);
+    }
+
+    eventEtracker(id) {
+        if (!this.isEnabled('etracker')) {
+            return;
+        }
+        if (typeof _etracker == 'undefined') {
+            return;
+        }
+        _etracker.sendEvent(new et_UserDefinedEvent(null, null, id, null));
+        console.log('etracker ' + id);
     }
 
     trackDuration() {
