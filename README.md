@@ -153,7 +153,7 @@ window.addEventListener('load', e => {
         cc.eventTwitter('conversion_id');
         cc.eventTaboola('custom_event_name');
         cc.eventMatch2one('id=xxxxxx&seg=xxxxxx');
-        cc.eventEtracker('custom_event_name');
+        cc.eventEtracker('custom_category', 'custom_action');
         e.preventDefault();
     });
 });

@@ -908,15 +908,20 @@ export default class chefcookie {
         console.log('match2one ' + id);
     }
 
-    eventEtracker(id) {
+    eventEtracker(category, action) {
         if (!this.isEnabled('etracker')) {
             return;
         }
         if (typeof _etracker == 'undefined') {
             return;
         }
-        _etracker.sendEvent(new et_UserDefinedEvent(null, null, id, null));
-        console.log('etracker ' + id);
+        if (action === undefined) {
+            _etracker.sendEvent(new et_UserDefinedEvent(null, null, category, null));
+            console.log('etracker ' + category);
+        } else {
+            _etracker.sendEvent(new et_UserDefinedEvent(null, category, action, null));
+            console.log('etracker ' + category + ' ' + action);
+        }
     }
 
     trackDuration() {
@@ -926,6 +931,7 @@ export default class chefcookie {
             (function(timer) {
                 window.setTimeout(function() {
                     _this.eventAnalytics('duration_time', timer + 's');
+                    _this.eventEtracker('duration_time', timer + 's');
                 }, timer * 1000);
             })(timer);
             timer += 30;
@@ -942,6 +948,7 @@ export default class chefcookie {
             100: false
         };
         this.eventAnalytics('scroll_depth', '0%');
+        this.eventEtracker('scroll_depth', '0%');
         window.addEventListener('scroll', () => {
             let scrollTop =
                     (document.documentElement && document.documentElement.scrollTop) ||
@@ -962,6 +969,7 @@ export default class chefcookie {
                 ) {
                     scrollDepthTriggered[scrollDepthTriggered__key] = true;
                     this.eventAnalytics('scroll_depth', scrollDepthTriggered__key + '%');
+                    this.eventEtracker('scroll_depth', scrollDepthTriggered__key + '%');
                 }
             }
         });

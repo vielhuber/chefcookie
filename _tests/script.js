@@ -98,7 +98,7 @@ window.addEventListener('load', function() {
         cc.eventTwitter('conversion_id');
         cc.eventTaboola('custom_action_name');
         cc.eventMatch2one('id=xxxxxx&seg=xxxxxx');
-        cc.eventEtracker('custom_action_name');
+        cc.eventEtracker('custom_category', 'custom_action');
         e.preventDefault();
     });
 });
