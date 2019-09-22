@@ -16,7 +16,7 @@ export default class chefcookie {
             return;
         }
 
-        if (this.cookieExists() && !this.isEnabled('initial_tracking')) {
+        if (this.cookieExists()) {
             this.addEnabledScripts();
         } else {
             this.addStyle();
@@ -25,9 +25,7 @@ export default class chefcookie {
             this.bindButtons();
             this.fixMaxHeight();
             if (this.config.initial_tracking === true) {
-                this.addAllProvidersToCookie();
-                this.addEnabledScripts();
-                this.addToCookie('initial_tracking');
+                this.addAllScripts();
             }
         }
     }
@@ -562,7 +560,12 @@ export default class chefcookie {
                         this.checkAllOptIns();
                     }
                     this.saveInCookie();
-                    this.addEnabledScripts();
+                    if (
+                        !('initial_tracking' in this.config) ||
+                        this.config.initial_tracking !== true
+                    ) {
+                        this.addEnabledScripts();
+                    }
                     this.hideOverlay();
                     this.updateOptOut();
                     e.preventDefault();
@@ -678,6 +681,18 @@ export default class chefcookie {
                         if (settings.indexOf(trackers__key) === -1) {
                             return;
                         }
+                        this.addScript(trackers__key, trackers__value);
+                    }
+                );
+            }
+        });
+    }
+
+    addAllScripts() {
+        this.config.settings.forEach(settings__value => {
+            if (settings__value.trackers !== undefined) {
+                Object.entries(settings__value.trackers).forEach(
+                    ([trackers__key, trackers__value]) => {
                         this.addScript(trackers__key, trackers__value);
                     }
                 );
