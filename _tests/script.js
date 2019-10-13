@@ -89,10 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('load', function() {
     cc.trackDuration();
     cc.trackScrollDepth();
-    cc.trackDurationCustom(60, () => {
+    cc.trackDurationCustom(60, function() {
         cc.eventAnalytics('60s');
     });
-    cc.trackScrollDepthCustom(25, () => {
+    cc.trackScrollDepthCustom(25, function() {
         cc.eventAnalytics('25%');
     });
     document.querySelector('.conversion').addEventListener('click', function(e) {
