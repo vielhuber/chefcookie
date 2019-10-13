@@ -87,18 +87,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('load', function() {
-    // track duration
     cc.trackDuration();
-    // track scroll depth
     cc.trackScrollDepth();
-    // custom tracking
+    cc.trackDurationCustom(60, () => {
+        cc.eventAnalytics('60s');
+    });
+    cc.trackScrollDepthCustom(25, () => {
+        cc.eventAnalytics('25%');
+    });
     document.querySelector('.conversion').addEventListener('click', function(e) {
         cc.eventAnalytics('custom_category', 'custom_action');
+        cc.eventAnalytics('custom_action');
         cc.eventFacebook('custom_action_name');
         cc.eventTwitter('conversion_id');
         cc.eventTaboola('custom_action_name');
         cc.eventMatch2one('id=xxxxxx&seg=xxxxxx');
         cc.eventEtracker('custom_category', 'custom_action');
+        cc.eventEtracker('custom_action');
         e.preventDefault();
     });
 });

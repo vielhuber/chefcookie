@@ -142,18 +142,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ```js
 window.addEventListener('load', e => {
-    // track duration
+    // track duration (sends action "xxs" in 30 second intervals)
     cc.trackDuration();
-    // track scroll depth
+    // track scroll depth (sends "xx%" in scroll steps 1, 10, 25, 50, 75, 100)
     cc.trackScrollDepth();
+    // custom duration
+    cc.trackDurationCustom(60, () => {
+        cc.eventAnalytics('60s');
+    });
+    // custom scroll depth
+    cc.trackScrollDepthCustom(25, () => {
+        cc.eventAnalytics('25%');
+    });
     // custom tracking
     document.querySelector('.conversion').addEventListener('click', () => {
         cc.eventAnalytics('custom_category', 'custom_action');
+        cc.eventAnalytics('custom_action');
         cc.eventFacebook('custom_action_name');
         cc.eventTwitter('conversion_id');
         cc.eventTaboola('custom_event_name');
         cc.eventMatch2one('id=xxxxxx&seg=xxxxxx');
         cc.eventEtracker('custom_category', 'custom_action');
+        cc.eventEtracker('custom_action');
         e.preventDefault();
     });
 });

@@ -953,6 +953,10 @@ export default class chefcookie {
         }
     }
 
+    trackDurationCustom(timer, callback) {
+        setTimeout(callback, timer * 1000);
+    }
+
     trackScrollDepth() {
         var scrollDepthTriggered = {
             1: false,
@@ -965,18 +969,7 @@ export default class chefcookie {
         this.eventAnalytics('scroll_depth', '0%');
         this.eventEtracker('scroll_depth', '0%');
         window.addEventListener('scroll', () => {
-            let scrollTop =
-                    (document.documentElement && document.documentElement.scrollTop) ||
-                    document.body.scrollTop,
-                documentHeight = Math.max(
-                    document.body.offsetHeight,
-                    document.body.scrollHeight,
-                    document.documentElement.clientHeight,
-                    document.documentElement.offsetHeight,
-                    document.documentElement.scrollHeight
-                ),
-                windowHeight = window.innerHeight,
-                scroll = Math.round((scrollTop / (documentHeight - windowHeight)) * 100);
+            let scroll = this.scrollPos();
             for (var scrollDepthTriggered__key in scrollDepthTriggered) {
                 if (
                     scrollDepthTriggered[scrollDepthTriggered__key] === false &&
@@ -988,6 +981,33 @@ export default class chefcookie {
                 }
             }
         });
+    }
+
+    trackScrollDepthCustom(percent, callback) {
+        var scrollDepthTriggered = false;
+        window.addEventListener('scroll', () => {
+            let scroll = this.scrollPos();
+            if (scrollDepthTriggered === false && scroll >= percent) {
+                scrollDepthTriggered = true;
+                callback();
+            }
+        });
+    }
+
+    scrollPos() {
+        let scrollTop =
+                (document.documentElement && document.documentElement.scrollTop) ||
+                document.body.scrollTop,
+            documentHeight = Math.max(
+                document.body.offsetHeight,
+                document.body.scrollHeight,
+                document.documentElement.clientHeight,
+                document.documentElement.offsetHeight,
+                document.documentElement.scrollHeight
+            ),
+            windowHeight = window.innerHeight,
+            scroll = Math.round((scrollTop / (documentHeight - windowHeight)) * 100);
+        return scroll;
     }
 }
 
