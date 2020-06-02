@@ -36,18 +36,16 @@ export default class chefcookie {
 
     initOptOut() {
         if (document.querySelector('[data-disable]') !== null) {
-            [].forEach.call(document.querySelectorAll('[data-disable]'), el => {
+            [].forEach.call(document.querySelectorAll('[data-disable]'), (el) => {
                 el.setAttribute('data-message-original', el.textContent);
                 if (!this.isEnabled(el.getAttribute('data-disable'))) {
                     el.textContent = el.getAttribute('data-message');
                 } else {
                     el.textContent = el.getAttribute('data-message-original');
                 }
-                el.addEventListener('click', e => {
+                el.addEventListener('click', (e) => {
                     if (!this.isEnabled(el.getAttribute('data-disable'))) {
-                        e.currentTarget.textContent = e.currentTarget.getAttribute(
-                            'data-message-original'
-                        );
+                        e.currentTarget.textContent = e.currentTarget.getAttribute('data-message-original');
                         this.addToCookie(e.currentTarget.getAttribute('data-disable'));
                     } else {
                         e.currentTarget.textContent = e.currentTarget.getAttribute('data-message');
@@ -61,7 +59,7 @@ export default class chefcookie {
 
     updateOptOut() {
         if (document.querySelector('[data-disable]') !== null) {
-            [].forEach.call(document.querySelectorAll('[data-disable]'), el => {
+            [].forEach.call(document.querySelectorAll('[data-disable]'), (el) => {
                 if (!this.isEnabled(el.getAttribute('data-disable'))) {
                     el.textContent = el.getAttribute('data-message');
                 } else {
@@ -76,7 +74,7 @@ export default class chefcookie {
             return false;
         }
         let excluded = false;
-        this.config.exclude.forEach(exclude__value => {
+        this.config.exclude.forEach((exclude__value) => {
             if (typeof exclude__value === 'function' && exclude__value() === true) {
                 excluded = true;
             }
@@ -84,14 +82,9 @@ export default class chefcookie {
                 typeof exclude__value === 'string' &&
                 ((exclude__value.indexOf('http') === 0 &&
                     exclude__value ===
-                        window.location.protocol +
-                            '//' +
-                            window.location.host +
-                            window.location.pathname) ||
-                    (exclude__value.indexOf('http') !== 0 &&
-                        exclude__value === window.location.pathname) ||
-                    (exclude__value.indexOf('http') !== 0 &&
-                        exclude__value + '/' === window.location.pathname))
+                        window.location.protocol + '//' + window.location.host + window.location.pathname) ||
+                    (exclude__value.indexOf('http') !== 0 && exclude__value === window.location.pathname) ||
+                    (exclude__value.indexOf('http') !== 0 && exclude__value + '/' === window.location.pathname))
             ) {
                 excluded = true;
             }
@@ -113,7 +106,7 @@ export default class chefcookie {
             .chefcookie
             {
                 position: fixed;
-                z-index: 2147483645;
+                z-index: 2147483647;
                 left: 0;
                 right: 0;
                 bottom: 0;
@@ -205,6 +198,7 @@ export default class chefcookie {
             .chefcookie__button:hover
             {
                 opacity:0.5;
+                text-decoration:none;
             }
             .chefcookie__button:active
             {
@@ -490,9 +484,7 @@ export default class chefcookie {
                     <div class="chefcookie__box">
                         <div class="chefcookie__message">${this.config.message}</div>
                         <div class="chefcookie__settings-container">
-                            <ul class="chefcookie__groups chefcookie__groups--count-${
-                                this.config.settings.length
-                            }">
+                            <ul class="chefcookie__groups chefcookie__groups--count-${this.config.settings.length}">
                                 ${this.config.settings
                                     .map(
                                         (group, i) => `
@@ -505,13 +497,9 @@ export default class chefcookie {
                                             } class="chefcookie__group-checkbox" id="chefcookie_group_${i}" type="checkbox" name="chefcookie_group[]" value="${i}"${
                                             group.active ? ` checked="checked"` : ``
                                         } />
-                                            <span class="chefcookie__group-title">${
-                                                group.title
-                                            }</span>
+                                            <span class="chefcookie__group-title">${group.title}</span>
                                             <span class="chefcookie__group-checkbox-icon"></span>                                                                                  
-                                            <span class="chefcookie__group-description">${
-                                                group.description
-                                            }</span>
+                                            <span class="chefcookie__group-description">${group.description}</span>
                                         </label>
                                     </li>
                                 `
@@ -543,8 +531,8 @@ export default class chefcookie {
 
     bindButtons() {
         if (document.querySelector('a[href="#chefcookie__decline"]') !== null) {
-            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__decline"]'), el => {
-                el.addEventListener('click', e => {
+            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__decline"]'), (el) => {
+                el.addEventListener('click', (e) => {
                     this.uncheckAllOptIns();
                     this.saveInCookie();
                     this.hideOverlay();
@@ -554,16 +542,13 @@ export default class chefcookie {
             });
         }
         if (document.querySelector('a[href="#chefcookie__accept"]') !== null) {
-            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__accept"]'), el => {
-                el.addEventListener('click', e => {
+            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__accept"]'), (el) => {
+                el.addEventListener('click', (e) => {
                     if (!this.settingsVisible()) {
                         this.checkAllOptIns();
                     }
                     this.saveInCookie();
-                    if (
-                        !('initial_tracking' in this.config) ||
-                        this.config.initial_tracking !== true
-                    ) {
+                    if (!('initial_tracking' in this.config) || this.config.initial_tracking !== true) {
                         this.addEnabledScripts();
                     }
                     this.hideOverlay();
@@ -573,8 +558,8 @@ export default class chefcookie {
             });
         }
         if (document.querySelector('a[href="#chefcookie__settings"]') !== null) {
-            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__settings"]'), el => {
-                el.addEventListener('click', e => {
+            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__settings"]'), (el) => {
+                el.addEventListener('click', (e) => {
                     if (!this.settingsVisible()) {
                         this.showSettings();
                         this.switchLabelsOpen();
@@ -589,25 +574,21 @@ export default class chefcookie {
     }
 
     switchLabelsOpen() {
-        document.querySelector('.chefcookie__button--settings').textContent = this.getLabel(
-            'settings_close'
-        );
+        document.querySelector('.chefcookie__button--settings').textContent = this.getLabel('settings_close');
     }
 
     switchLabelsClose() {
-        document.querySelector('.chefcookie__button--settings').textContent = this.getLabel(
-            'settings_open'
-        );
+        document.querySelector('.chefcookie__button--settings').textContent = this.getLabel('settings_open');
     }
 
     checkAllOptIns() {
-        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), el => {
+        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), (el) => {
             el.checked = true;
         });
     }
 
     uncheckAllOptIns() {
-        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), el => {
+        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), (el) => {
             el.checked = false;
         });
     }
@@ -618,7 +599,7 @@ export default class chefcookie {
 
     saveInCookie() {
         let providers = [];
-        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), el => {
+        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), (el) => {
             if (el.checked === true) {
                 if (this.config.settings[el.value].trackers !== undefined) {
                     Object.entries(this.config.settings[el.value].trackers).forEach(
@@ -674,41 +655,35 @@ export default class chefcookie {
             return;
         }
         settings = settings.split(',');
-        this.config.settings.forEach(settings__value => {
+        this.config.settings.forEach((settings__value) => {
             if (settings__value.trackers !== undefined) {
-                Object.entries(settings__value.trackers).forEach(
-                    ([trackers__key, trackers__value]) => {
-                        if (settings.indexOf(trackers__key) === -1) {
-                            return;
-                        }
-                        this.addScript(trackers__key, trackers__value);
+                Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) => {
+                    if (settings.indexOf(trackers__key) === -1) {
+                        return;
                     }
-                );
+                    this.addScript(trackers__key, trackers__value);
+                });
             }
         });
     }
 
     addAllScripts() {
-        this.config.settings.forEach(settings__value => {
+        this.config.settings.forEach((settings__value) => {
             if (settings__value.trackers !== undefined) {
-                Object.entries(settings__value.trackers).forEach(
-                    ([trackers__key, trackers__value]) => {
-                        this.addScript(trackers__key, trackers__value);
-                    }
-                );
+                Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) => {
+                    this.addScript(trackers__key, trackers__value);
+                });
             }
         });
     }
 
     addAllProvidersToCookie() {
         let providers = [];
-        this.config.settings.forEach(settings__value => {
+        this.config.settings.forEach((settings__value) => {
             if (settings__value.trackers !== undefined) {
-                Object.entries(settings__value.trackers).forEach(
-                    ([trackers__key, trackers__value]) => {
-                        providers.push(trackers__key);
-                    }
-                );
+                Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) => {
+                    providers.push(trackers__key);
+                });
             }
         });
         providers.join(',');
@@ -964,17 +939,14 @@ export default class chefcookie {
             25: false,
             50: false,
             75: false,
-            100: false
+            100: false,
         };
         this.eventAnalytics('scroll_depth', '0%');
         this.eventEtracker('scroll_depth', '0%');
         window.addEventListener('scroll', () => {
             let scroll = this.scrollPos();
             for (var scrollDepthTriggered__key in scrollDepthTriggered) {
-                if (
-                    scrollDepthTriggered[scrollDepthTriggered__key] === false &&
-                    scroll >= scrollDepthTriggered__key
-                ) {
+                if (scrollDepthTriggered[scrollDepthTriggered__key] === false && scroll >= scrollDepthTriggered__key) {
                     scrollDepthTriggered[scrollDepthTriggered__key] = true;
                     this.eventAnalytics('scroll_depth', scrollDepthTriggered__key + '%');
                     this.eventEtracker('scroll_depth', scrollDepthTriggered__key + '%');
@@ -995,9 +967,7 @@ export default class chefcookie {
     }
 
     scrollPos() {
-        let scrollTop =
-                (document.documentElement && document.documentElement.scrollTop) ||
-                document.body.scrollTop,
+        let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop,
             documentHeight = Math.max(
                 document.body.offsetHeight,
                 document.body.scrollHeight,
