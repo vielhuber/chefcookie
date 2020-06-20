@@ -15,7 +15,7 @@ chefcookie is a gdpr cookie solution without compromises.
 -   supports custom tracking scripts
 -   auto disable tracking for logged in wordpress users
 
-## supports
+## included
 
 -   [google analytics](https://analytics.google.com)
 -   [google tag manager](https://tagmanager.google.com)
@@ -25,8 +25,6 @@ chefcookie is a gdpr cookie solution without compromises.
 -   [match2one ads](https://www.match2one.com)
 -   [etracker](https://www.etracker.com)
 -   [smartlook](https://www.smartlook.com)
--   [google maps](https://maps.google.com)
--   [google recaptcha](https://www.google.com/recaptcha)
 
 ## installation
 
@@ -156,17 +154,14 @@ document.addEventListener('DOMContentLoaded', () => {
 #### opt out links
 
 ```html
-<a href="#" data-disable="analytics" data-message="Google Analytics aktivieren">Google Analytics deaktivieren</a><br />
-<a href="#" data-disable="tagmanager" data-message="Google Tag Manager aktivieren">Google Tag Manager deaktivieren</a
-><br />
-<a href="#" data-disable="facebook" data-message="Facebook Pixel aktivieren">Facebook Pixel deaktivieren</a><br />
-<a href="#" data-disable="twitter" data-message="Twitter Pixel aktivieren">Twitter Pixel deaktivieren</a><br />
-<a href="#" data-disable="taboola" data-message="Taboola Pixel aktivieren">Taboola Pixel deaktivieren</a><br />
-<a href="#" data-disable="match2one" data-message="Match2One Pixel aktivieren">Match2One Pixel deaktivieren</a><br />
-<a href="#" data-disable="etracker" data-message="etracker aktivieren">etracker deaktivieren</a><br />
-<a href="#" data-disable="smartlook" data-message="Smartlook aktivieren">Smartlook deaktivieren</a><br />
-<a href="#" data-disable="google_maps" data-message="Google Maps aktivieren">Google Maps deaktivieren</a><br />
-<a href="#" data-disable="google_recaptcha" data-message="Google reCAPTCHA aktivieren">Google reCAPTCHA deaktivieren</a>
+<a href="#" data-disable="analytics" data-message="Google Analytics aktivieren">Google Analytics deaktivieren</a>
+<a href="#" data-disable="tagmanager" data-message="Google Tag Manager aktivieren">Google Tag Manager deaktivieren</a>
+<a href="#" data-disable="facebook" data-message="Facebook Pixel aktivieren">Facebook Pixel deaktivieren</a>
+<a href="#" data-disable="twitter" data-message="Twitter Pixel aktivieren">Twitter Pixel deaktivieren</a>
+<a href="#" data-disable="taboola" data-message="Taboola Pixel aktivieren">Taboola Pixel deaktivieren</a>
+<a href="#" data-disable="match2one" data-message="Match2One Pixel aktivieren">Match2One Pixel deaktivieren</a>
+<a href="#" data-disable="etracker" data-message="etracker aktivieren">etracker deaktivieren</a>
+<a href="#" data-disable="smartlook" data-message="Smartlook aktivieren">Smartlook deaktivieren</a>
 ```
 
 #### backdoor
@@ -186,8 +181,6 @@ the following keywords are reserved:
 -   `smartlook`
 -   `etracker`
 
-initialize them as described.
-
 however, you can use any other keyword as described above and execute your own functions.
 
 #### script blocking
@@ -200,14 +193,14 @@ if you cannot do that (e.g. when you cannot manipulate the page content), there 
 -   manipulate embeds (set `type="javascript/blocked"` or `alt-src="..."`)
 -   monkey patch `document.createElement`
 -   watch and modify with `MutationObserver`
--   abusing document.write
+-   abuse `document.write`
 
 chefcookie is flexible and very well works together with e.g. [yett](https://github.com/snipsco/yett):
 
--   call `yett` before chefcookie to block scripts
+-   init `yett` before chefcookie to block scripts
 -   call `unblock()` inside chefcookies custom trackers
 
-#### dynamically loading a script
+#### dynamically load a script
 
 chefcookie provides a `load`-helper, where you can provide one or multiple urls to load:
 
@@ -222,9 +215,9 @@ load(['script1.js', 'script2.js']).then(() => { resolve(); };
 load(['script1.js', 'script2.js'], function() { resolve(); }); // also supported
 ```
 
-#### waiting for a script
+#### wait for a tracker
 
-if your javascript is dependent on a specific script loaded by chefcookie, you should handle that case and wait for the provider being executed:
+if your javascript is dependent on a specific script loaded by chefcookie, you should handle that case and wait for the tracker being executed:
 
 ```js
 cc.waitFor('google_recaptcha').then(() => {});
