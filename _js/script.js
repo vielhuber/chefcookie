@@ -359,6 +359,7 @@ export default class chefcookie {
             .chefcookie--noscroll
             {
                 position:fixed;
+                width: 100%;
                 overflow:hidden;
             }
             .chefcookie--fade body:after
