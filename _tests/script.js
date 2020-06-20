@@ -74,13 +74,13 @@ const cc = new chefcookie({
                         });
                     }
                 },
-                google_recaptcha: function() {
-                    let script = document.createElement('script');
-                    script.setAttribute(
-                        'src',
-                        'https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit'
+                google_recaptcha: function(resolve, load) {
+                    load(
+                        'https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit',
+                        function() {
+                            resolve();
+                        }
                     );
-                    document.head.appendChild(script);
                 }
             }
         }
@@ -88,6 +88,9 @@ const cc = new chefcookie({
 });
 document.addEventListener('DOMContentLoaded', function() {
     cc.init();
+    cc.waitFor('google_recaptcha').then(function() {
+        alert('google_recaptcha');
+    });
 });
 
 window.addEventListener('load', function() {

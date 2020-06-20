@@ -1,10 +1,13 @@
 import 'mdn-polyfills/Object.entries';
 import 'mdn-polyfills/Number.isInteger';
+import 'mdn-polyfills/Number.isInteger';
+import Promise from 'promise-polyfill';
 import helper from './_helper';
 
 export default class chefcookie {
     constructor(config = {}) {
         this.config = config;
+        window.chefcookie_loaded = [];
     }
 
     init() {
@@ -701,10 +704,11 @@ export default class chefcookie {
     }
 
     addScript(provider, id) {
-        var script;
-
         if (provider === 'analytics' || provider === 'google') {
-            script = document.createElement('script');
+            let script = document.createElement('script');
+            script.onload = () => {
+                window.chefcookie_loaded.push(provider);
+            };
             script.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
             document.head.appendChild(script);
             script = document.createElement('script');
@@ -716,7 +720,10 @@ export default class chefcookie {
                 "', { 'anonymize_ip': true });";
             document.head.appendChild(script);
         } else if (provider === 'tagmanager') {
-            script = document.createElement('script');
+            let script = document.createElement('script');
+            script.onload = () => {
+                window.chefcookie_loaded.push(provider);
+            };
             let html = '';
             html +=
                 "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N667H38');";
@@ -726,39 +733,57 @@ export default class chefcookie {
             script.innerHTML = html;
             document.head.appendChild(script);
         } else if (provider === 'facebook') {
-            script = document.createElement('script');
+            let script = document.createElement('script');
+            script.onload = () => {
+                window.chefcookie_loaded.push(provider);
+            };
             script.innerHTML =
                 "!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init', '" +
                 id +
                 "');fbq('track', 'PageView');fbq('track', 'ViewContent');";
             document.head.appendChild(script);
         } else if (provider === 'twitter') {
-            script = document.createElement('script');
+            let script = document.createElement('script');
+            script.onload = () => {
+                window.chefcookie_loaded.push(provider);
+            };
             script.src = '//platform.twitter.com/oct.js';
             document.head.appendChild(script);
         } else if (provider === 'taboola') {
-            script = document.createElement('script');
+            let script = document.createElement('script');
+            script.onload = () => {
+                window.chefcookie_loaded.push(provider);
+            };
             script.innerHTML =
                 "window._tfa = window._tfa || [];window._tfa.push({notify: 'event', name: 'page_view'});!function (t, f, a, x) { if (!document.getElementById(x)) { t.async = 1;t.src = a;t.id=x;f.parentNode.insertBefore(t, f); } }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/unip/" +
                 id +
                 "/tfa.js', 'tb_tfa_script');";
             document.head.appendChild(script);
         } else if (provider === 'match2one') {
-            script = document.createElement('script');
+            let script = document.createElement('script');
+            script.onload = () => {
+                window.chefcookie_loaded.push(provider);
+            };
             script.src = 'https://secure.adnxs.com/seg?add=' + id + '&t=1';
             document.head.appendChild(script);
             script = document.createElement('script');
             script.innerHTML = 'window.m2o = true;';
             document.head.appendChild(script);
         } else if (provider === 'smartlook') {
-            script = document.createElement('script');
+            let script = document.createElement('script');
+            script.onload = () => {
+                window.chefcookie_loaded.push(provider);
+            };
             script.innerHTML =
                 "window.smartlook||(function(d) {var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);})(document);smartlook('init', '" +
                 id +
                 "');";
             document.head.appendChild(script);
         } else if (provider === 'etracker') {
-            script = document.createElement('script');
+            let script = document.createElement('script');
+            script.onload = () => {
+                window.chefcookie_loaded.push(provider);
+            };
             script.id = '_etLoader';
             script.type = 'text/javascript';
             script.charset = 'UTF-8';
@@ -767,7 +792,11 @@ export default class chefcookie {
             script.src = '//static.etracker.com/code/e.js';
             document.head.appendChild(script);
         } else if (typeof id === 'function') {
-            id();
+            new Promise(resolve => {
+                id(resolve, this.loadJs);
+            }).then(() => {
+                window.chefcookie_loaded.push(provider);
+            });
         }
 
         console.log('added script ' + provider);
@@ -972,6 +1001,43 @@ export default class chefcookie {
             windowHeight = window.innerHeight,
             scroll = Math.round((scrollTop / (documentHeight - windowHeight)) * 100);
         return scroll;
+    }
+
+    waitFor(provider) {
+        return new Promise((resolve, reject) => {
+            let timeout = setInterval(() => {
+                if ('chefcookie_loaded' in window && window.chefcookie_loaded.indexOf(provider) > -1) {
+                    window.clearInterval(timeout);
+                    resolve();
+                }
+            }, 30);
+        });
+    }
+
+    loadJs(urls, callback = null) {
+        if (typeof urls === 'string' || urls instanceof String) {
+            urls = [urls];
+        }
+        let promises = [];
+        urls.forEach(urls__value => {
+            promises.push(
+                new Promise((resolve, reject) => {
+                    let script = document.createElement('script');
+                    script.src = urls__value;
+                    script.onload = () => {
+                        resolve();
+                    };
+                    document.head.appendChild(script);
+                })
+            );
+        });
+        if (callback !== null && typeof callback === 'function') {
+            Promise.all(promises).then(() => {
+                callback();
+            });
+        } else {
+            return Promise.all(promises);
+        }
     }
 }
 
