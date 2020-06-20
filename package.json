@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "1.3.8",
+    "version": "1.3.9",
     "main": "_js/_build/script.js",
     "files": [
         "_js/_build/*.js",
@@ -85,7 +85,6 @@
         "postcss-tailwind-data-attr": "^1.0.4",
         "postcss-url": "^8.0.0",
         "prettier": "^1.19.1",
-        "promise-polyfill": "^8.1.3",
         "puppeteer": "^1.19.0",
         "regenerator-runtime": "^0.13.5",
         "replace-in-file": "^4.3.1",
@@ -102,6 +101,9 @@
         "vueify": "^9.4.1",
         "vueify-insert-css": "^1.0.0",
         "whatwg-fetch": "^3.0.0"
+    },
+    "dependencies": {
+        "promise-polyfill": "^8.1.3"
     },
     "browserslist": [
         "> 0.25%",
