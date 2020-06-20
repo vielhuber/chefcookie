@@ -7,7 +7,9 @@ import helper from './_helper';
 export default class chefcookie {
     constructor(config = {}) {
         this.config = config;
-        window.chefcookie_loaded = [];
+        if (!('chefcookie_loaded' in window)) {
+            window.chefcookie_loaded = [];
+        }
     }
 
     init() {
