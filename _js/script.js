@@ -1,3 +1,5 @@
+import 'mdn-polyfills/Object.entries';
+import 'mdn-polyfills/Number.isInteger';
 import helper from './_helper';
 
 export default class chefcookie {
@@ -36,14 +38,14 @@ export default class chefcookie {
 
     initOptOut() {
         if (document.querySelector('[data-disable]') !== null) {
-            [].forEach.call(document.querySelectorAll('[data-disable]'), (el) => {
+            [].forEach.call(document.querySelectorAll('[data-disable]'), el => {
                 el.setAttribute('data-message-original', el.textContent);
                 if (!this.isEnabled(el.getAttribute('data-disable'))) {
                     el.textContent = el.getAttribute('data-message');
                 } else {
                     el.textContent = el.getAttribute('data-message-original');
                 }
-                el.addEventListener('click', (e) => {
+                el.addEventListener('click', e => {
                     if (!this.isEnabled(el.getAttribute('data-disable'))) {
                         e.currentTarget.textContent = e.currentTarget.getAttribute('data-message-original');
                         this.addToCookie(e.currentTarget.getAttribute('data-disable'));
@@ -59,7 +61,7 @@ export default class chefcookie {
 
     updateOptOut() {
         if (document.querySelector('[data-disable]') !== null) {
-            [].forEach.call(document.querySelectorAll('[data-disable]'), (el) => {
+            [].forEach.call(document.querySelectorAll('[data-disable]'), el => {
                 if (!this.isEnabled(el.getAttribute('data-disable'))) {
                     el.textContent = el.getAttribute('data-message');
                 } else {
@@ -74,7 +76,7 @@ export default class chefcookie {
             return false;
         }
         let excluded = false;
-        this.config.exclude.forEach((exclude__value) => {
+        this.config.exclude.forEach(exclude__value => {
             if (typeof exclude__value === 'function' && exclude__value() === true) {
                 excluded = true;
             }
@@ -531,8 +533,8 @@ export default class chefcookie {
 
     bindButtons() {
         if (document.querySelector('a[href="#chefcookie__decline"]') !== null) {
-            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__decline"]'), (el) => {
-                el.addEventListener('click', (e) => {
+            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__decline"]'), el => {
+                el.addEventListener('click', e => {
                     this.uncheckAllOptIns();
                     this.saveInCookie();
                     this.hideOverlay();
@@ -542,8 +544,8 @@ export default class chefcookie {
             });
         }
         if (document.querySelector('a[href="#chefcookie__accept"]') !== null) {
-            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__accept"]'), (el) => {
-                el.addEventListener('click', (e) => {
+            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__accept"]'), el => {
+                el.addEventListener('click', e => {
                     if (!this.settingsVisible()) {
                         this.checkAllOptIns();
                     }
@@ -558,8 +560,8 @@ export default class chefcookie {
             });
         }
         if (document.querySelector('a[href="#chefcookie__settings"]') !== null) {
-            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__settings"]'), (el) => {
-                el.addEventListener('click', (e) => {
+            [].forEach.call(document.querySelectorAll('a[href="#chefcookie__settings"]'), el => {
+                el.addEventListener('click', e => {
                     if (!this.settingsVisible()) {
                         this.showSettings();
                         this.switchLabelsOpen();
@@ -582,13 +584,13 @@ export default class chefcookie {
     }
 
     checkAllOptIns() {
-        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), (el) => {
+        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), el => {
             el.checked = true;
         });
     }
 
     uncheckAllOptIns() {
-        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), (el) => {
+        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), el => {
             el.checked = false;
         });
     }
@@ -599,7 +601,7 @@ export default class chefcookie {
 
     saveInCookie() {
         let providers = [];
-        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), (el) => {
+        [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), el => {
             if (el.checked === true) {
                 if (this.config.settings[el.value].trackers !== undefined) {
                     Object.entries(this.config.settings[el.value].trackers).forEach(
@@ -614,7 +616,7 @@ export default class chefcookie {
             providers.push('null');
         }
         providers.join(',');
-        helper.cookieSet('chefcookie', providers, 30);
+        helper.cookieSet('chefcookie', providers, this.getCookieExpiration());
     }
 
     addToCookie(provider) {
@@ -626,7 +628,7 @@ export default class chefcookie {
         }
         if (providers.indexOf(provider) === -1) {
             providers.push(provider);
-            helper.cookieSet('chefcookie', providers.join(','), 30);
+            helper.cookieSet('chefcookie', providers.join(','), this.getCookieExpiration());
         }
     }
 
@@ -640,10 +642,18 @@ export default class chefcookie {
             providers.splice(index, 1);
         }
         if (providers.length > 0) {
-            helper.cookieSet('chefcookie', providers.join(','), 30);
+            helper.cookieSet('chefcookie', providers.join(','), this.getCookieExpiration());
         } else {
-            helper.cookieSet('chefcookie', 'null', 30);
+            helper.cookieSet('chefcookie', 'null', this.getCookieExpiration());
         }
+    }
+
+    getCookieExpiration() {
+        let expiration = 30;
+        if ('expiration' in this.config && Number.isInteger(this.config.expiration)) {
+            expiration = this.config.expiration;
+        }
+        return expiration;
     }
 
     addEnabledScripts() {
@@ -655,7 +665,7 @@ export default class chefcookie {
             return;
         }
         settings = settings.split(',');
-        this.config.settings.forEach((settings__value) => {
+        this.config.settings.forEach(settings__value => {
             if (settings__value.trackers !== undefined) {
                 Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) => {
                     if (settings.indexOf(trackers__key) === -1) {
@@ -668,7 +678,7 @@ export default class chefcookie {
     }
 
     addAllScripts() {
-        this.config.settings.forEach((settings__value) => {
+        this.config.settings.forEach(settings__value => {
             if (settings__value.trackers !== undefined) {
                 Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) => {
                     this.addScript(trackers__key, trackers__value);
@@ -679,7 +689,7 @@ export default class chefcookie {
 
     addAllProvidersToCookie() {
         let providers = [];
-        this.config.settings.forEach((settings__value) => {
+        this.config.settings.forEach(settings__value => {
             if (settings__value.trackers !== undefined) {
                 Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) => {
                     providers.push(trackers__key);
@@ -687,7 +697,7 @@ export default class chefcookie {
             }
         });
         providers.join(',');
-        helper.cookieSet('chefcookie', providers, 30);
+        helper.cookieSet('chefcookie', providers, this.getCookieExpiration());
     }
 
     addScript(provider, id) {
@@ -705,9 +715,7 @@ export default class chefcookie {
                 id +
                 "', { 'anonymize_ip': true });";
             document.head.appendChild(script);
-        }
-
-        if (provider === 'tagmanager') {
+        } else if (provider === 'tagmanager') {
             script = document.createElement('script');
             let html = '';
             html +=
@@ -717,51 +725,39 @@ export default class chefcookie {
             html += 'function gtag(){dataLayer.push(arguments);}';
             script.innerHTML = html;
             document.head.appendChild(script);
-        }
-
-        if (provider === 'facebook') {
+        } else if (provider === 'facebook') {
             script = document.createElement('script');
             script.innerHTML =
                 "!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init', '" +
                 id +
                 "');fbq('track', 'PageView');fbq('track', 'ViewContent');";
             document.head.appendChild(script);
-        }
-
-        if (provider === 'twitter') {
+        } else if (provider === 'twitter') {
             script = document.createElement('script');
             script.src = '//platform.twitter.com/oct.js';
             document.head.appendChild(script);
-        }
-
-        if (provider === 'taboola') {
+        } else if (provider === 'taboola') {
             script = document.createElement('script');
             script.innerHTML =
                 "window._tfa = window._tfa || [];window._tfa.push({notify: 'event', name: 'page_view'});!function (t, f, a, x) { if (!document.getElementById(x)) { t.async = 1;t.src = a;t.id=x;f.parentNode.insertBefore(t, f); } }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/unip/" +
                 id +
                 "/tfa.js', 'tb_tfa_script');";
             document.head.appendChild(script);
-        }
-
-        if (provider === 'match2one') {
+        } else if (provider === 'match2one') {
             script = document.createElement('script');
             script.src = 'https://secure.adnxs.com/seg?add=' + id + '&t=1';
             document.head.appendChild(script);
             script = document.createElement('script');
             script.innerHTML = 'window.m2o = true;';
             document.head.appendChild(script);
-        }
-
-        if (provider === 'smartlook') {
+        } else if (provider === 'smartlook') {
             script = document.createElement('script');
             script.innerHTML =
                 "window.smartlook||(function(d) {var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);})(document);smartlook('init', '" +
                 id +
                 "');";
             document.head.appendChild(script);
-        }
-
-        if (provider === 'etracker') {
+        } else if (provider === 'etracker') {
             script = document.createElement('script');
             script.id = '_etLoader';
             script.type = 'text/javascript';
@@ -770,9 +766,7 @@ export default class chefcookie {
             script.setAttribute('data-secure-code', id);
             script.src = '//static.etracker.com/code/e.js';
             document.head.appendChild(script);
-        }
-
-        if (provider === 'custom') {
+        } else if (typeof id === 'function') {
             id();
         }
 
@@ -939,7 +933,7 @@ export default class chefcookie {
             25: false,
             50: false,
             75: false,
-            100: false,
+            100: false
         };
         this.eventAnalytics('scroll_depth', '0%');
         this.eventEtracker('scroll_depth', '0%');

@@ -2,14 +2,8 @@
 <html lang="de">
     <head>
         <meta charset="utf-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"
-        />
-        <link
-            href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
-            rel="stylesheet"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
         <title>.</title>
         <style>
             body {
@@ -25,29 +19,58 @@
         <a href="#" class="conversion">Klick!</a>
 
         <h2>Opt out</h2>
-        <a href="#" data-disable="analytics" data-message="Google Analytics aktivieren"
-            >Google Analytics deaktivieren</a
+        <a href="#" data-disable="analytics" data-message="Google Analytics aktivieren">Google Analytics deaktivieren</a
         ><br />
         <a href="#" data-disable="tagmanager" data-message="Google Tag Manager aktivieren"
             >Google Tag Manager deaktivieren</a
         ><br />
-        <a href="#" data-disable="facebook" data-message="Facebook Pixel aktivieren"
-            >Facebook Pixel deaktivieren</a
+        <a href="#" data-disable="facebook" data-message="Facebook Pixel aktivieren">Facebook Pixel deaktivieren</a
         ><br />
-        <a href="#" data-disable="twitter" data-message="Twitter Pixel aktivieren"
-            >Twitter Pixel deaktivieren</a
+        <a href="#" data-disable="twitter" data-message="Twitter Pixel aktivieren">Twitter Pixel deaktivieren</a><br />
+        <a href="#" data-disable="taboola" data-message="Taboola Pixel aktivieren">Taboola Pixel deaktivieren</a><br />
+        <a href="#" data-disable="match2one" data-message="Match2One Pixel aktivieren">Match2One Pixel deaktivieren</a
         ><br />
-        <a href="#" data-disable="taboola" data-message="Taboola Pixel aktivieren"
-            >Taboola Pixel deaktivieren</a
-        ><br />
-        <a href="#" data-disable="match2one" data-message="Match2One Pixel aktivieren"
-            >Match2One Pixel deaktivieren</a
-        ><br />
-        <a href="#" data-disable="etracker" data-message="etracker aktivieren"
-            >etracker deaktivieren</a
-        ><br />
-        <a href="#" data-disable="smartlook" data-message="Smartlook aktivieren"
-            >Smartlook deaktivieren</a
+        <a href="#" data-disable="etracker" data-message="etracker aktivieren">etracker deaktivieren</a><br />
+        <a href="#" data-disable="smartlook" data-message="Smartlook aktivieren">Smartlook deaktivieren</a><br />
+        <a href="#" data-disable="google_maps" data-message="Google Maps aktivieren">Google Maps deaktivieren</a><br />
+        <a href="#" data-disable="google_recaptcha" data-message="Google reCAPTCHA aktivieren"
+            >Google reCAPTCHA deaktivieren</a
         >
+        <h2>Google Maps</h2>
+        <iframe
+            alt-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2427.818511855828!2d13.373998515998997!3d52.518623444083396!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c741ee506d%3A0x641b52d3abf17de5!2sReichstagsgeb%C3%A4ude!5e0!3m2!1sde!2sde!4v1592608462754!5m2!1sde!2sde"
+            width="600"
+            height="450"
+            frameborder="0"
+            style="border:0;"
+            allowfullscreen=""
+            aria-hidden="false"
+            tabindex="0"
+        ></iframe>
+        <h2>Google reCAPTCHA</h2>
+        <script type="text/javascript">
+            var captchaCallback = function() {
+                [].forEach.call(document.querySelectorAll('.recaptcha'), function(el) {
+                    var holderId = grecaptcha.render(el, {
+                        sitekey: 'XXX',
+                        badge: 'inline',
+                        type: 'image',
+                        size: 'invisible',
+                        callback: function(token) {
+                            HTMLFormElement.prototype.submit.call(el.closest('form'));
+                        }
+                    });
+                    el.closest('form').onsubmit = function(e) {
+                        e.preventDefault();
+                        grecaptcha.execute(holderId);
+                    };
+                });
+            };
+        </script>
+        <form method="post" action="form.php">
+            <input type="text" name="name" required="required" />
+            <div class="recaptcha"></div>
+            <input type="submit" value="Kontaktanfrage absenden" />
+        </form>
     </body>
 </html>

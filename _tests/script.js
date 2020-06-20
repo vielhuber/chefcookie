@@ -7,6 +7,7 @@ const cc = new chefcookie({
         </p>\
     ',
     initial_tracking: false,
+    expiration: 1,
     style: {
         layout: 'bottombar', // options: overlay, bottombar
         size: 3, // 1,2,3,4,5
@@ -23,9 +24,7 @@ const cc = new chefcookie({
     exclude: [
         '/privacy',
         function() {
-            return (
-                document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1
-            );
+            return document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1;
         }
     ],
     settings: [
@@ -57,20 +56,9 @@ const cc = new chefcookie({
         },
         {
             title: 'Support',
-            description:
-                'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
+            description: 'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
             active: true,
             hidden: false
-            /*
-            'trackers': {
-                'custom': function()
-                {
-                    document.head.insertAdjacentHTML('beforeend',`
-                        <script src="custom.js"></script> 
-                    `);
-                },
-            }
-            */
         },
         {
             title: 'Grundlegendes',
@@ -78,11 +66,27 @@ const cc = new chefcookie({
                 'Tools, die wesentliche Services und Funktionen ermöglichen, einschließlich Identitätsprüfung, Servicekontinuität und Standortsicherheit. Diese Option kann nicht abgelehnt werden.',
             active: true,
             hidden: true,
-            trackers: {}
+            trackers: {
+                google_maps: function() {
+                    if (document.querySelector('iframe[alt-src*="google.com/maps"]') !== null) {
+                        [].forEach.call(document.querySelectorAll('iframe[alt-src*="google.com/maps"]'), function(el) {
+                            el.setAttribute('src', el.getAttribute('alt-src'));
+                        });
+                    }
+                },
+                google_recaptcha: function() {
+                    let script = document.createElement('script');
+                    script.setAttribute(
+                        'src',
+                        'https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit'
+                    );
+                    document.head.appendChild(script);
+                }
+            }
         }
     ]
 });
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     cc.init();
 });
 

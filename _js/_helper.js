@@ -15,6 +15,10 @@ export default class helper {
     }
 
     static cookieSet(cookie_name, cookie_value, days) {
+        let samesite = '';
+        if (window.location.protocol.indexOf('https') > -1) {
+            samesite = '; SameSite=None; Secure';
+        }
         document.cookie =
             cookie_name +
             '=' +
@@ -22,11 +26,16 @@ export default class helper {
             '; ' +
             'expires=' +
             new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000).toUTCString() +
-            '; path=/';
+            '; path=/' +
+            samesite;
     }
 
     static cookieDelete(cookie_name) {
-        document.cookie = cookie_name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+        let samesite = '';
+        if (window.location.protocol.indexOf('https') > -1) {
+            samesite = '; SameSite=None; Secure';
+        }
+        document.cookie = cookie_name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/' + samesite;
     }
 
     static getParam(variable) {

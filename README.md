@@ -25,6 +25,8 @@ chefcookie is a gdpr cookie solution without compromises.
 -   [match2one ads](https://www.match2one.com)
 -   [etracker](https://www.etracker.com)
 -   [smartlook](https://www.smartlook.com)
+-   [google maps](https://maps.google.com)
+-   [google recaptcha](https://www.google.com/recaptcha)
 
 ## installation
 
@@ -55,6 +57,7 @@ const cc = new chefcookie({
         </p>
     `,
     initial_tracking: false,
+    expiration: 30, // days
     style: {
         layout: 'overlay', // options: overlay, bottombar
         size: 3, // 1,2,3,4,5
@@ -73,9 +76,7 @@ const cc = new chefcookie({
         '/privacy',
         // exclude wordpress users
         () => {
-            return (
-                document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1
-            );
+            return document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1;
         }
     ],
     settings: [
@@ -107,19 +108,15 @@ const cc = new chefcookie({
         },
         {
             title: 'Support',
-            description:
-                'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
+            description: 'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
             active: true,
             hidden: false,
             trackers: {
                 // add custom trackers
                 custom: () => {
-                    document.head.insertAdjacentHTML(
-                        'beforeend',
-                        `
-                        <script src="custom.js"></script> 
-                    `
-                    );
+                    let script = document.createElement('script');
+                    script.setAttribute('src', 'custom.js');
+                    document.head.appendChild(script);
                 }
             }
         },
@@ -129,7 +126,23 @@ const cc = new chefcookie({
                 'Tools, die wesentliche Services und Funktionen ermöglichen, einschließlich Identitätsprüfung, Servicekontinuität und Standortsicherheit. Diese Option kann nicht abgelehnt werden.',
             active: true,
             hidden: true,
-            trackers: {}
+            trackers: {
+                google_maps: () => {
+                    if (document.querySelector('iframe[alt-src*="google.com/maps"]') !== null) {
+                        document.querySelectorAll('iframe[alt-src*="google.com/maps"]').forEach(el => {
+                            el.setAttribute('src', el.getAttribute('alt-src'));
+                        });
+                    }
+                },
+                google_recaptcha: () => {
+                    let script = document.createElement('script');
+                    script.setAttribute(
+                        'src',
+                        'https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit'
+                    );
+                    document.head.appendChild(script);
+                }
+            }
         }
     ]
 });
@@ -172,27 +185,17 @@ window.addEventListener('load', e => {
 #### opt out links
 
 ```html
-<a href="#" data-disable="analytics" data-message="Google Analytics aktivieren"
-    >Google Analytics deaktivieren</a
+<a href="#" data-disable="analytics" data-message="Google Analytics aktivieren">Google Analytics deaktivieren</a><br />
+<a href="#" data-disable="tagmanager" data-message="Google Tag Manager aktivieren">Google Tag Manager deaktivieren</a
 ><br />
-<a href="#" data-disable="tagmanager" data-message="Google Tag Manager aktivieren"
-    >Google Tag Manager deaktivieren</a
-><br />
-<a href="#" data-disable="facebook" data-message="Facebook Pixel aktivieren"
-    >Facebook Pixel deaktivieren</a
-><br />
-<a href="#" data-disable="twitter" data-message="Twitter Pixel aktivieren"
-    >Twitter Pixel deaktivieren</a
-><br />
-<a href="#" data-disable="taboola" data-message="Taboola Pixel aktivieren"
-    >Taboola Pixel deaktivieren</a
-><br />
-<a href="#" data-disable="match2one" data-message="Match2One Pixel aktivieren"
-    >Match2One Pixel deaktivieren</a
-><br />
-<a href="#" data-disable="etracker" data-message="etracker aktivieren">etracker deaktivieren</a
-><br />
-<a href="#" data-disable="smartlook" data-message="Smartlook aktivieren">Smartlook deaktivieren</a>
+<a href="#" data-disable="facebook" data-message="Facebook Pixel aktivieren">Facebook Pixel deaktivieren</a><br />
+<a href="#" data-disable="twitter" data-message="Twitter Pixel aktivieren">Twitter Pixel deaktivieren</a><br />
+<a href="#" data-disable="taboola" data-message="Taboola Pixel aktivieren">Taboola Pixel deaktivieren</a><br />
+<a href="#" data-disable="match2one" data-message="Match2One Pixel aktivieren">Match2One Pixel deaktivieren</a><br />
+<a href="#" data-disable="etracker" data-message="etracker aktivieren">etracker deaktivieren</a><br />
+<a href="#" data-disable="smartlook" data-message="Smartlook aktivieren">Smartlook deaktivieren</a><br />
+<a href="#" data-disable="google_maps" data-message="Google Maps aktivieren">Google Maps deaktivieren</a><br />
+<a href="#" data-disable="google_recaptcha" data-message="Google reCAPTCHA aktivieren">Google reCAPTCHA deaktivieren</a>
 ```
 
 #### backdoor
