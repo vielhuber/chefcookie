@@ -184,6 +184,7 @@ export default class chefcookie {
             .chefcookie__message a:hover
             {
                 opacity:0.5;
+                color: inherit;
             }
             .chefcookie__message a:active
             {
@@ -211,6 +212,7 @@ export default class chefcookie {
             {
                 opacity:0.5;
                 text-decoration:none;
+                color: inherit;
             }
             .chefcookie__button:active
             {
