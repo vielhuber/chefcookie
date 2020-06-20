@@ -1,11 +1,20 @@
 const cc = new chefcookie({
-    message:
-        '\
-        <h2>Wir verwenden Cookies</h2>\
-        <p>\
-        Unsere Website verwendet Cookies, die uns helfen, unsere Website zu verbessern, den bestmöglichen Service zu bieten und ein optimales Kundenerlebnis zu ermöglichen. <a href="#chefcookie__settings">Hier</a> können Sie Ihre Einstellungen verwalten. Indem Sie auf "<a href="#chefcookie__accept">Einverstanden</a>" klicken, erklären Sie sich damit einverstanden, dass Ihre Cookies für diesen Zweck verwendet werden. Weitere Informationen dazu finden Sie in unserer <a href="/privacy">Datenschutzerklärung</a>. Sollten Sie hiermit nicht einverstanden sein, können Sie die Verwendung von Cookies hier <a href="#chefcookie__decline">ablehnen</a>.\
-        </p>\
-    ',
+    message: {
+        de:
+            '\
+            <h2>Wir verwenden Cookies</h2>\
+            <p>\
+                Unsere Website verwendet Cookies, die uns helfen, unsere Website zu verbessern, den bestmöglichen Service zu bieten und ein optimales Kundenerlebnis zu ermöglichen. <a href="#chefcookie__settings">Hier</a> können Sie Ihre Einstellungen verwalten. Indem Sie auf "<a href="#chefcookie__accept">Einverstanden</a>" klicken, erklären Sie sich damit einverstanden, dass Ihre Cookies für diesen Zweck verwendet werden. Weitere Informationen dazu finden Sie in unserer <a href="/datenschutz">Datenschutzerklärung</a>. Sollten Sie hiermit nicht einverstanden sein, können Sie die Verwendung von Cookies hier <a href="#chefcookie__decline">ablehnen</a>.\
+            </p>\
+        ',
+        en:
+            '\
+            <h2>We use cookies</h2>\
+            <p>\
+                Our website uses cookies that help us to improve our website, provide the best possible service and enable an optimal customer experience. <a href="#chefcookie__settings">Here</a> you can manage your settings. By clicking on "<a href="#chefcookie__accept">Agree</a>", you agree that your cookies may be used for this purpose. You can find further information on this in our <a href="/privacy">data protection declaration</a>. If you do not agree to this, you can refuse the use of cookies here <a href="#chefcookie__decline">reject</a> the use of cookies.\
+            </p>\
+        '
+    },
     initial_tracking: false,
     expiration: 1,
     style: {
@@ -17,11 +26,12 @@ const cc = new chefcookie({
         blur: true
     },
     labels: {
-        accept: 'Einverstanden',
-        settings_open: 'Meine Einstellungen festlegen',
-        settings_close: 'Einstellungen schliessen'
+        accept: { de: 'Einverstanden', en: 'Agree' },
+        settings_open: { de: 'Meine Einstellungen festlegen', en: 'Change settings' },
+        settings_close: { de: 'Einstellungen schliessen', en: 'Close settings' }
     },
     exclude: [
+        '/datenschutz',
         '/privacy',
         function() {
             return document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1;
@@ -29,9 +39,13 @@ const cc = new chefcookie({
     ],
     settings: [
         {
-            title: 'Analysen',
-            description:
-                'Tools, die anonyme Daten über Website-Nutzung und -Funktionalität sammeln. Wir nutzen die Erkenntnisse, um unsere Produkte, Dienstleistungen und das Benutzererlebnis zu verbessern.',
+            title: { de: 'Analysen', en: 'Analyses' },
+            description: {
+                de:
+                    'Tools, die anonyme Daten über Website-Nutzung und -Funktionalität sammeln. Wir nutzen die Erkenntnisse, um unsere Produkte, Dienstleistungen und das Benutzererlebnis zu verbessern.',
+                en:
+                    'Tools that collect anonymous data about website usage and functionality. We use this information to improve our products, services and user experience.'
+            },
             active: true,
             hidden: false,
             trackers: {
@@ -39,9 +53,12 @@ const cc = new chefcookie({
             }
         },
         {
-            title: 'Werbung',
-            description:
-                'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
+            title: { de: 'Werbung', en: 'Advertising' },
+            description: {
+                de:
+                    'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
+                en: 'Anonymous information that we collect in order to recommend useful products and services to you.'
+            },
             active: true,
             hidden: false,
             trackers: {
@@ -55,15 +72,22 @@ const cc = new chefcookie({
             }
         },
         {
-            title: 'Support',
-            description: 'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
+            title: { de: 'Support', en: 'Support' },
+            description: {
+                de: 'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
+                en: 'Tools that support interactive services such as chat support and customer feedback tools.'
+            },
             active: true,
             hidden: false
         },
         {
-            title: 'Grundlegendes',
-            description:
-                'Tools, die wesentliche Services und Funktionen ermöglichen, einschließlich Identitätsprüfung, Servicekontinuität und Standortsicherheit. Diese Option kann nicht abgelehnt werden.',
+            title: { de: 'Grundlegendes', en: 'Basics' },
+            description: {
+                de:
+                    'Tools, die wesentliche Services und Funktionen ermöglichen, einschließlich Identitätsprüfung, Servicekontinuität und Standortsicherheit. Diese Option kann nicht abgelehnt werden.',
+                en:
+                    'Tools that enable essential services and functions, including identity verification, service continuity, and site security. This option cannot be declined.'
+            },
             active: true,
             hidden: true,
             trackers: {

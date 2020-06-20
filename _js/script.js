@@ -1,4 +1,5 @@
 import 'mdn-polyfills/Object.entries';
+import 'mdn-polyfills/Object.values';
 import 'mdn-polyfills/Number.isInteger';
 import 'mdn-polyfills/Number.isInteger';
 import Promise from 'promise-polyfill';
@@ -170,11 +171,15 @@ export default class chefcookie {
                 font-weight:700;
                 text-align:left;
             }
+            .chefcookie__message p {
+                font-size: 1em;
+            }
             .chefcookie__message a
             {
                 color:inherit;
                 transition: all 0.25s ease-in-out;
                 text-decoration:underline;
+                font-size: 1em;
             }
             .chefcookie__message a:hover
             {
@@ -489,7 +494,7 @@ export default class chefcookie {
             <div class="chefcookie chefcookie--${this.config.style.layout}">
                 <div class="chefcookie__inner">
                     <div class="chefcookie__box">
-                        <div class="chefcookie__message">${this.config.message}</div>
+                        <div class="chefcookie__message">${this.translate(this.config.message)}</div>
                         <div class="chefcookie__settings-container">
                             <ul class="chefcookie__groups chefcookie__groups--count-${this.config.settings.length}">
                                 ${this.config.settings
@@ -504,9 +509,11 @@ export default class chefcookie {
                                             } class="chefcookie__group-checkbox" id="chefcookie_group_${i}" type="checkbox" name="chefcookie_group[]" value="${i}"${
                                             group.active ? ` checked="checked"` : ``
                                         } />
-                                            <span class="chefcookie__group-title">${group.title}</span>
+                                            <span class="chefcookie__group-title">${this.translate(group.title)}</span>
                                             <span class="chefcookie__group-checkbox-icon"></span>                                                                                  
-                                            <span class="chefcookie__group-description">${group.description}</span>
+                                            <span class="chefcookie__group-description">${this.translate(
+                                                group.description
+                                            )}</span>
                                         </label>
                                     </li>
                                 `
@@ -533,7 +540,7 @@ export default class chefcookie {
         if (this.config.labels[label] === undefined) {
             return '';
         }
-        return this.config.labels[label];
+        return this.translate(this.config.labels[label]);
     }
 
     bindButtons() {
@@ -1043,6 +1050,28 @@ export default class chefcookie {
         } else {
             return Promise.all(promises);
         }
+    }
+
+    translate(obj) {
+        if (typeof obj === 'string' || obj instanceof String) {
+            return obj;
+        }
+        let lng = this.lng();
+        if (!(lng in obj)) {
+            return Object.values(obj)[0];
+        }
+        return obj[lng];
+    }
+
+    lng() {
+        let lng = 'en';
+        if (document.documentElement.hasAttribute('lang')) {
+            lng = document.documentElement
+                .getAttribute('lang')
+                .substring(0, 2)
+                .toLowerCase();
+        }
+        return lng;
     }
 }
 
