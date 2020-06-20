@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 #### multi language support
 
-instead of plain text you can provide objects for any label:
+instead of plain text you can provide language objects for any label:
 
 ```js
 {
