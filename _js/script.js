@@ -1005,11 +1005,14 @@ export default class chefcookie {
         return scroll;
     }
 
-    waitFor(provider) {
+    waitFor(provider, callback = null) {
         return new Promise((resolve, reject) => {
             let timeout = setInterval(() => {
                 if ('chefcookie_loaded' in window && window.chefcookie_loaded.indexOf(provider) > -1) {
                     window.clearInterval(timeout);
+                    if (callback !== null && typeof callback === 'function') {
+                        callback();
+                    }
                     resolve();
                 }
             }, 30);

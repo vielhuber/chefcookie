@@ -221,6 +221,7 @@ if your javascript is dependent on a specific script loaded by chefcookie, you s
 
 ```js
 cc.waitFor('google_recaptcha').then(() => {});
+cc.waitFor('google_recaptcha', function() {}); // also supported
 ```
 
 this only gets executed when you call `resolve()` inside your custom tracking function.

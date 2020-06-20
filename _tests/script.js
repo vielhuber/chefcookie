@@ -88,7 +88,7 @@ const cc = new chefcookie({
 });
 document.addEventListener('DOMContentLoaded', function() {
     cc.init();
-    cc.waitFor('google_recaptcha').then(function() {
+    cc.waitFor('google_recaptcha', function() {
         alert('google_recaptcha');
     });
 });
