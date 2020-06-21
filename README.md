@@ -144,7 +144,7 @@ const cc = new chefcookie({
             trackers: {
                 // add custom trackers
                 custom: (resolve, load) => {
-                    load(['script1.js', 'script2.js'], function() {
+                    load(['script1.js', 'script2.js']).then(() => {
                         resolve();
                     });
                 },

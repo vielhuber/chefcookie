@@ -2,7 +2,7 @@ import 'mdn-polyfills/Object.entries';
 import 'mdn-polyfills/Object.values';
 import 'mdn-polyfills/Number.isInteger';
 import 'mdn-polyfills/Number.isInteger';
-import Promise from 'promise-polyfill';
+import * as Promise from 'bluebird';
 import helper from './_helper';
 
 export default class chefcookie {
