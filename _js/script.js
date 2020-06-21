@@ -2,8 +2,7 @@ import 'mdn-polyfills/Object.entries';
 import 'mdn-polyfills/Object.values';
 import 'mdn-polyfills/Number.isInteger';
 import 'mdn-polyfills/Number.isInteger';
-import Promise from 'promise-polyfill'; // this is for browserify
-import '@babel/polyfill/noConflict'; // this is for babel
+import '@babel/polyfill/noConflict'; // ie11 support
 import helper from './_helper';
 
 export default class chefcookie {
