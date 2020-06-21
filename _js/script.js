@@ -2,7 +2,8 @@ import 'mdn-polyfills/Object.entries';
 import 'mdn-polyfills/Object.values';
 import 'mdn-polyfills/Number.isInteger';
 import 'mdn-polyfills/Number.isInteger';
-import * as Promise from 'bluebird';
+import Promise from 'promise-polyfill'; // this is for browserify
+import '@babel/polyfill/noConflict'; // this is for babel
 import helper from './_helper';
 
 export default class chefcookie {
