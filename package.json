@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "1.5.8",
+    "version": "1.5.9",
     "main": "_js/_build/script.js",
     "files": [
         "_js/_build/*.js",
@@ -21,16 +21,13 @@
         "prod": "npm-run-all --parallel js"
     },
     "dependencies": {
-        "mdn-polyfills": "^5.20.0",
-        "@babel/polyfill": "^7.8.7"
-    },
-    "devDependencies": {
         "@babel/cli": "^7.8.4",
         "@babel/core": "^7.9.0",
         "@babel/plugin-proposal-class-properties": "^7.8.3",
         "@babel/plugin-proposal-object-rest-spread": "^7.9.0",
         "@babel/plugin-proposal-optional-chaining": "^7.9.0",
         "@babel/plugin-transform-runtime": "^7.9.0",
+        "@babel/polyfill": "^7.8.7",
         "@babel/preset-env": "^7.9.0",
         "@babel/runtime": "^7.9.2",
         "@prettier/plugin-php": "^0.11.2",
@@ -102,6 +99,7 @@
         "vue-template-compiler": "^2.6.11",
         "vueify": "^9.4.1",
         "vueify-insert-css": "^1.0.0",
+        "mdn-polyfills": "^5.20.0",
         "whatwg-fetch": "^3.0.0"
     },
     "browserslist": [
