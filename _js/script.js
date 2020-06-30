@@ -46,13 +46,13 @@ export default class chefcookie {
         if (document.querySelector('[data-disable]') !== null) {
             [].forEach.call(document.querySelectorAll('[data-disable]'), el => {
                 el.setAttribute('data-message-original', el.textContent);
-                if (!this.isEnabled(el.getAttribute('data-disable'))) {
+                if (!this.isAccepted(el.getAttribute('data-disable'))) {
                     el.textContent = el.getAttribute('data-message');
                 } else {
                     el.textContent = el.getAttribute('data-message-original');
                 }
                 el.addEventListener('click', e => {
-                    if (!this.isEnabled(el.getAttribute('data-disable'))) {
+                    if (!this.isAccepted(el.getAttribute('data-disable'))) {
                         e.currentTarget.textContent = e.currentTarget.getAttribute('data-message-original');
                         this.addToCookie(e.currentTarget.getAttribute('data-disable'));
                     } else {
@@ -68,7 +68,7 @@ export default class chefcookie {
     updateOptOut() {
         if (document.querySelector('[data-disable]') !== null) {
             [].forEach.call(document.querySelectorAll('[data-disable]'), el => {
-                if (!this.isEnabled(el.getAttribute('data-disable'))) {
+                if (!this.isAccepted(el.getAttribute('data-disable'))) {
                     el.textContent = el.getAttribute('data-message');
                 } else {
                     el.textContent = el.getAttribute('data-message-original');
@@ -692,6 +692,30 @@ export default class chefcookie {
         });
     }
 
+    addScript(provider) {
+        if (!helper.cookieExists('chefcookie')) {
+            return;
+        }
+        let settings = helper.cookieGet('chefcookie');
+        if (settings == 'null') {
+            return;
+        }
+        settings = settings.split(',');
+        this.config.settings.forEach(settings__value => {
+            if (settings__value.trackers !== undefined) {
+                Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) => {
+                    if (trackers__key !== provider) {
+                        return;
+                    }
+                    if (settings.indexOf(trackers__key) === -1) {
+                        return;
+                    }
+                    this.addScript(trackers__key, trackers__value);
+                });
+            }
+        });
+    }
+
     addAllScripts() {
         this.config.settings.forEach(settings__value => {
             if (settings__value.trackers !== undefined) {
@@ -814,7 +838,7 @@ export default class chefcookie {
         console.log('added script ' + provider);
     }
 
-    isEnabled(provider) {
+    isAccepted(provider) {
         if (!helper.cookieExists('chefcookie')) {
             return false;
         }
@@ -864,7 +888,7 @@ export default class chefcookie {
     }
 
     eventAnalytics(category, action) {
-        if (!this.isEnabled('analytics') && !this.isEnabled('tagmanager')) {
+        if (!this.isAccepted('analytics') && !this.isAccepted('tagmanager')) {
             return;
         }
         if (typeof gtag != 'function') {
@@ -884,7 +908,7 @@ export default class chefcookie {
     }
 
     eventFacebook(action) {
-        if (!this.isEnabled('facebook')) {
+        if (!this.isAccepted('facebook')) {
             return;
         }
         if (typeof fbq != 'function') {
@@ -895,7 +919,7 @@ export default class chefcookie {
     }
 
     eventTwitter(action) {
-        if (!this.isEnabled('twitter')) {
+        if (!this.isAccepted('twitter')) {
             return;
         }
         if (
@@ -910,7 +934,7 @@ export default class chefcookie {
     }
 
     eventTaboola(event) {
-        if (!this.isEnabled('taboola')) {
+        if (!this.isAccepted('taboola')) {
             return;
         }
         if (typeof _tfa != 'object') {
@@ -921,7 +945,7 @@ export default class chefcookie {
     }
 
     eventMatch2one(id) {
-        if (!this.isEnabled('match2one')) {
+        if (!this.isAccepted('match2one')) {
             return;
         }
         if (typeof m2o == 'undefined') {
@@ -934,7 +958,7 @@ export default class chefcookie {
     }
 
     eventEtracker(category, action) {
-        if (!this.isEnabled('etracker')) {
+        if (!this.isAccepted('etracker')) {
             return;
         }
         if (typeof _etracker == 'undefined') {
@@ -1075,6 +1099,15 @@ export default class chefcookie {
                 .toLowerCase();
         }
         return lng;
+    }
+
+    accept(provider) {
+        this.addToCookie(provider);
+        this.addScript(provider);
+    }
+
+    decline(provider) {
+        this.deleteFromCookie(provider);
     }
 }
 

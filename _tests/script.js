@@ -115,6 +115,17 @@ document.addEventListener('DOMContentLoaded', function() {
     cc.waitFor('google_recaptcha', function() {
         alert('google_recaptcha');
     });
+    document.querySelector('.manual').innerText = cc.isAccepted('analytics') ? 'Ablehnen' : 'Akzeptieren';
+    document.querySelector('.manual').addEventListener('click', function(e) {
+        if (cc.isAccepted('analytics')) {
+            cc.decline('analytics');
+            e.currentTarget.innerText = 'Akzeptieren';
+        } else {
+            cc.accept('analytics');
+            e.currentTarget.innerText = 'Ablehnen';
+        }
+        e.preventDefault();
+    });
 });
 
 window.addEventListener('load', function() {

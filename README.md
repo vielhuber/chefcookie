@@ -206,6 +206,14 @@ chefcookie will find out the current language and show the appropriate strings.
 <a href="#" data-disable="smartlook" data-message="Smartlook aktivieren">Smartlook deaktivieren</a>
 ```
 
+#### manually accept/decline
+
+```js
+cc.accept('analytics');
+cc.decline('analytics');
+cc.isAccepted('analytics'); // true|false
+```
+
 #### backdoor
 
 just add `?accept=1` to your urls to completely bypass chefcookie.
