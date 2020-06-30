@@ -98,8 +98,8 @@ const cc = new chefcookie({
                         });
                     }
                 },
-                google_recaptcha: function(resolve, load) {
-                    load(
+                google_recaptcha: function(cc, resolve) {
+                    cc.loadJs(
                         'https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit',
                         function() {
                             resolve();

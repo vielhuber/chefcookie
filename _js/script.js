@@ -51,18 +51,21 @@ export default class chefcookie {
                 } else {
                     el.textContent = el.getAttribute('data-message-original');
                 }
-                el.addEventListener('click', e => {
-                    if (!this.isAccepted(el.getAttribute('data-disable'))) {
-                        e.currentTarget.textContent = e.currentTarget.getAttribute('data-message-original');
-                        this.addToCookie(e.currentTarget.getAttribute('data-disable'));
-                    } else {
-                        e.currentTarget.textContent = e.currentTarget.getAttribute('data-message');
-                        this.deleteFromCookie(e.currentTarget.getAttribute('data-disable'));
-                    }
-                    e.preventDefault();
-                });
             });
         }
+        document.addEventListener('click', e => {
+            if (e.target.closest('[data-disable]')) {
+                let el = e.target.closest('[data-disable]');
+                if (!this.isAccepted(el.getAttribute('data-disable'))) {
+                    el.textContent = el.getAttribute('data-message-original');
+                    this.addToCookie(el.getAttribute('data-disable'));
+                } else {
+                    el.textContent = el.getAttribute('data-message');
+                    this.deleteFromCookie(el.getAttribute('data-disable'));
+                }
+                e.preventDefault();
+            }
+        });
     }
 
     updateOptOut() {
@@ -829,7 +832,7 @@ export default class chefcookie {
             document.head.appendChild(script);
         } else if (typeof id === 'function') {
             new Promise(resolve => {
-                id(resolve, this.loadJs);
+                id(this, resolve);
             }).then(() => {
                 window.chefcookie_loaded.push(provider);
             });

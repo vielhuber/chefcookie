@@ -143,8 +143,8 @@ const cc = new chefcookie({
             hidden: true,
             trackers: {
                 // add custom trackers
-                custom: (resolve, load) => {
-                    load(['script1.js', 'script2.js']).then(() => {
+                custom: (cc, resolve) => {
+                    cc.loadJs(['script1.js', 'script2.js']).then(() => {
                         resolve();
                     });
                 },
@@ -153,9 +153,9 @@ const cc = new chefcookie({
                         document.querySelectorAll('iframe[alt-src*="google.com/maps"]').forEach(el => {
                             el.setAttribute('src', el.getAttribute('alt-src'));
                         });
-                    }
+                    },
                 },
-                google_recaptcha: resolve => {
+                google_recaptcha: (cc, resolve) => {
                     let script = document.createElement('script');
                     script.setAttribute(
                         'src',
@@ -255,14 +255,14 @@ chefcookie is flexible and very well works together with e.g. [yett](https://git
 chefcookie provides a `load`-helper, where you can provide one or multiple urls to load:
 
 ```js
-load(['script1.js', 'script2.js']);
+cc.loadJs(['script1.js', 'script2.js']);
 ```
 
 in order to call `resolve()` (see below), you can use:
 
 ```js
-load(['script1.js', 'script2.js']).then(() => { resolve(); };
-load(['script1.js', 'script2.js'], function() { resolve(); }); // also supported
+cc.loadJs(['script1.js', 'script2.js']).then(() => { resolve(); };
+cc.loadJs(['script1.js', 'script2.js'], () => { resolve(); }); // also supported
 ```
 
 #### wait for a tracker
@@ -271,7 +271,7 @@ if your javascript is dependent on a specific script loaded by chefcookie, you s
 
 ```js
 cc.waitFor('google_recaptcha').then(() => {});
-cc.waitFor('google_recaptcha', function() {}); // also supported
+cc.waitFor('google_recaptcha', () => {}); // also supported
 ```
 
 this only gets executed when you call `resolve()` inside your custom tracking function.
