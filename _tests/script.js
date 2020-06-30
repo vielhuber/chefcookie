@@ -61,7 +61,8 @@ const cc = new chefcookie({
                 twitter: 'single',
                 taboola: '1117744',
                 match2one: '11538693',
-                smartlook: 'e63141d523562364440934be8a0d418f17f5123b'
+                smartlook: 'e63141d523562364440934be8a0d418f17f5123b',
+                google_maps: 'AIzaSyA6vG4lM68kiwiM8Vh2Mg24vXj057gC8QM'
             }
         },
         {
@@ -89,7 +90,7 @@ const cc = new chefcookie({
                         cc.load('etracker', 'OBVSQs');
                     }
                 },
-                google_maps: {
+                google_maps_iframe: {
                     accept: function() {
                         if (document.querySelector('iframe[alt-src*="google.com/maps"]') !== null) {
                             [].forEach.call(document.querySelectorAll('iframe[alt-src*="google.com/maps"]'), function(

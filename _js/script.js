@@ -819,6 +819,15 @@ export default class chefcookie {
                 id +
                 "');";
             document.head.appendChild(script);
+        } else if (provider === 'google_maps') {
+            let script = document.createElement('script');
+            script.src = 'https://maps.googleapis.com/maps/api/js?key=' + id + '&callback=initMap';
+            script.defer = true;
+            script.async = true;
+            window.initMap = function() {
+                window.chefcookie_loaded.push(provider);
+            };
+            document.head.appendChild(script);
         } else if (provider === 'etracker') {
             let script = document.createElement('script');
             script.onload = () => {

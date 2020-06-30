@@ -27,6 +27,7 @@ chefcookie is a gdpr cookie solution without compromises.
 -   [match2one ads](https://www.match2one.com)
 -   [etracker](https://www.etracker.com)
 -   [smartlook](https://www.smartlook.com)
+-   [google maps](https://developers.google.com/maps/documentation/javascript/tutorial)
 
 ## installation
 
@@ -119,7 +120,8 @@ const cc = new chefcookie({
                 taboola: 'xxxxxxx',
                 match2one: 'xxxxxxxx',
                 etracker: 'xxxxxx',
-                smartlook: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                smartlook: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                google_maps: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
             }
         },
         {
@@ -154,6 +156,7 @@ const cc = new chefcookie({
                         cc.load('match2one', 'xxxxxxxx');
                         cc.load('etracker', 'xxxxxx');
                         cc.load('smartlook', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+                        cc.load('google_maps', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
 
                         /* example 2 */
                         cc.loadJs(['script1.js', 'script2.js']).then(() => { resolve(); });
@@ -218,6 +221,7 @@ chefcookie will find out the current language and show the appropriate strings.
 <a href="#" data-disable="match2one" data-message="Match2One Pixel aktivieren">Match2One Pixel deaktivieren</a>
 <a href="#" data-disable="etracker" data-message="etracker aktivieren">etracker deaktivieren</a>
 <a href="#" data-disable="smartlook" data-message="Smartlook aktivieren">Smartlook deaktivieren</a>
+<a href="#" data-disable="google_maps" data-message="Google Maps aktivieren">Google Maps deaktivieren</a>
 ```
 
 #### manually accept/decline
@@ -242,8 +246,9 @@ the following keywords are reserved:
 -   `twitter`
 -   `taboola`
 -   `match2one`
--   `smartlook`
 -   `etracker`
+-   `smartlook`
+-   `google_maps`
 
 however, you can use any other keyword as described above and execute your own functions.
 
