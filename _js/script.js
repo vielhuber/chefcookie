@@ -1121,6 +1121,10 @@ export default class chefcookie {
         return lng;
     }
 
+    url() {
+        return window.location.protocol + '//' + window.location.host + window.location.pathname;
+    }
+
     accept(provider) {
         this.addToCookie(provider);
         this.addScript(provider);

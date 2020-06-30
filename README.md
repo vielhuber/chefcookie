@@ -178,6 +178,10 @@ const cc = new chefcookie({
                             resolve();
                         };
                         document.head.appendChild(script);
+
+                        /* some other helpers */
+                        cc.url(); // gets the current url
+                        cc.lng(); // gets the current lng
                     },
                     exclude: () => {
                         return document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1;
