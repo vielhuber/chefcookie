@@ -65,7 +65,7 @@ const cc = new chefcookie({
         `
     },
     initial_tracking: false,
-    expiration: 30, // days
+    expiration: 7, // days
     style: {
         layout: 'overlay', // options: overlay, bottombar
         size: 3, // 1,2,3,4,5
@@ -163,7 +163,7 @@ const cc = new chefcookie({
                             document.querySelectorAll('iframe[alt-src*="google.com/maps"]').forEach(el => {
                                 el.setAttribute('src', el.getAttribute('alt-src'));
                             });
-                        },
+                        }
 
                         /* example 4 */
                         let script = document.createElement('script');
