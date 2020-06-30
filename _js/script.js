@@ -26,7 +26,7 @@ export default class chefcookie {
         }
 
         if (this.cookieExists()) {
-            this.addEnabledScripts();
+            this.addEnabledScripts(false);
         } else {
             this.addStyle();
             this.buildDom();
@@ -570,7 +570,7 @@ export default class chefcookie {
                     }
                     this.saveInCookie();
                     if (!('initial_tracking' in this.config) || this.config.initial_tracking !== true) {
-                        this.addEnabledScripts();
+                        this.addEnabledScripts(true);
                     }
                     this.hideOverlay();
                     this.updateOptOut();
@@ -622,12 +622,10 @@ export default class chefcookie {
         let providers = [];
         [].forEach.call(document.querySelectorAll('.chefcookie__group-checkbox'), el => {
             if (el.checked === true) {
-                if (this.config.settings[el.value].trackers !== undefined) {
-                    Object.entries(this.config.settings[el.value].trackers).forEach(
-                        ([trackers__key, trackers__value]) => {
-                            providers.push(trackers__key);
-                        }
-                    );
+                if (this.config.settings[el.value].scripts !== undefined) {
+                    Object.entries(this.config.settings[el.value].scripts).forEach(([scripts__key, scripts__value]) => {
+                        providers.push(scripts__key);
+                    });
                 }
             }
         });
@@ -675,7 +673,7 @@ export default class chefcookie {
         return expiration;
     }
 
-    addEnabledScripts() {
+    addEnabledScripts(isInit = false) {
         if (!helper.cookieExists('chefcookie')) {
             return;
         }
@@ -685,18 +683,18 @@ export default class chefcookie {
         }
         settings = settings.split(',');
         this.config.settings.forEach(settings__value => {
-            if (settings__value.trackers !== undefined) {
-                Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) => {
-                    if (settings.indexOf(trackers__key) === -1) {
+            if (settings__value.scripts !== undefined) {
+                Object.entries(settings__value.scripts).forEach(([scripts__key, scripts__value]) => {
+                    if (settings.indexOf(scripts__key) === -1) {
                         return;
                     }
-                    this.load(trackers__key, trackers__value);
+                    this.load(scripts__key, scripts__value, isInit);
                 });
             }
         });
     }
 
-    addScript(provider) {
+    addScript(provider, isInit = false) {
         if (!helper.cookieExists('chefcookie')) {
             return;
         }
@@ -706,15 +704,15 @@ export default class chefcookie {
         }
         settings = settings.split(',');
         this.config.settings.forEach(settings__value => {
-            if (settings__value.trackers !== undefined) {
-                Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) => {
-                    if (trackers__key !== provider) {
+            if (settings__value.scripts !== undefined) {
+                Object.entries(settings__value.scripts).forEach(([scripts__key, scripts__value]) => {
+                    if (scripts__key !== provider) {
                         return;
                     }
-                    if (settings.indexOf(trackers__key) === -1) {
+                    if (settings.indexOf(scripts__key) === -1) {
                         return;
                     }
-                    this.load(trackers__key, trackers__value);
+                    this.load(scripts__key, scripts__value, isInit);
                 });
             }
         });
@@ -722,9 +720,9 @@ export default class chefcookie {
 
     addAllScripts() {
         this.config.settings.forEach(settings__value => {
-            if (settings__value.trackers !== undefined) {
-                Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) => {
-                    this.load(trackers__key, trackers__value);
+            if (settings__value.scripts !== undefined) {
+                Object.entries(settings__value.scripts).forEach(([scripts__key, scripts__value]) => {
+                    this.load(scripts__key, scripts__value, false);
                 });
             }
         });
@@ -733,9 +731,9 @@ export default class chefcookie {
     addAllProvidersToCookie() {
         let providers = [];
         this.config.settings.forEach(settings__value => {
-            if (settings__value.trackers !== undefined) {
-                Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) => {
-                    providers.push(trackers__key);
+            if (settings__value.scripts !== undefined) {
+                Object.entries(settings__value.scripts).forEach(([scripts__key, scripts__value]) => {
+                    providers.push(scripts__key);
                 });
             }
         });
@@ -743,7 +741,7 @@ export default class chefcookie {
         helper.cookieSet('chefcookie', providers, this.getCookieExpiration());
     }
 
-    load(provider, id) {
+    load(provider, id, isInit = false) {
         if (provider === 'analytics' || provider === 'google') {
             let script = document.createElement('script');
             script.onload = () => {
@@ -848,14 +846,14 @@ export default class chefcookie {
             }
             if ('accept' in id && typeof id.accept === 'function') {
                 new Promise(resolve => {
-                    id.accept(this, resolve);
+                    id.accept(this, resolve, isInit);
                 }).then(() => {
                     window.chefcookie_loaded.push(provider);
                 });
             }
         }
 
-        console.log('added script ' + provider);
+        this.log('added script ' + provider);
     }
 
     isAccepted(provider) {
@@ -916,10 +914,10 @@ export default class chefcookie {
         }
         if (action === undefined) {
             gtag('event', category);
-            console.log('analytics ' + category);
+            this.log('analytics ' + category);
         } else {
             gtag('event', action, { event_category: category });
-            console.log('analytics ' + category + ' ' + action);
+            this.log('analytics ' + category + ' ' + action);
         }
     }
 
@@ -935,7 +933,7 @@ export default class chefcookie {
             return;
         }
         fbq('trackCustom', action);
-        console.log('facebook ' + action);
+        this.log('facebook ' + action);
     }
 
     eventTwitter(action) {
@@ -950,7 +948,7 @@ export default class chefcookie {
             return;
         }
         twttr.conversion.trackPid(action);
-        console.log('twitter ' + action);
+        this.log('twitter ' + action);
     }
 
     eventTaboola(event) {
@@ -961,7 +959,7 @@ export default class chefcookie {
             return;
         }
         _tfa.push({ notify: 'event', name: event });
-        console.log('taboola ' + event);
+        this.log('taboola ' + event);
     }
 
     eventMatch2one(id) {
@@ -974,7 +972,7 @@ export default class chefcookie {
         let script = document.createElement('script');
         script.src = 'https://secure.adnxs.com/px?' + id + '&t=1';
         document.head.appendChild(script);
-        console.log('match2one ' + id);
+        this.log('match2one ' + id);
     }
 
     eventEtracker(category, action) {
@@ -986,10 +984,10 @@ export default class chefcookie {
         }
         if (action === undefined) {
             _etracker.sendEvent(new et_UserDefinedEvent(null, null, category, null));
-            console.log('etracker ' + category);
+            this.log('etracker ' + category);
         } else {
             _etracker.sendEvent(new et_UserDefinedEvent(null, category, action, null));
-            console.log('etracker ' + category + ' ' + action);
+            this.log('etracker ' + category + ' ' + action);
         }
     }
 
@@ -1127,11 +1125,18 @@ export default class chefcookie {
 
     accept(provider) {
         this.addToCookie(provider);
-        this.addScript(provider);
+        this.addScript(provider, true);
     }
 
     decline(provider) {
         this.deleteFromCookie(provider);
+    }
+
+    log(msg) {
+        if (!('debug_log' in this.config) || this.config.debug_log !== true) {
+            return;
+        }
+        console.log(msg);
     }
 }
 

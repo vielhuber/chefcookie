@@ -66,6 +66,7 @@ const cc = new chefcookie({
         `
     },
     initial_tracking: false,
+    debug_log: false,
     expiration: 7, // days
     style: {
         layout: 'overlay', // options: overlay, bottombar
@@ -100,7 +101,7 @@ const cc = new chefcookie({
             },
             active: true,
             hidden: false,
-            trackers: {
+            scripts: {
                 analytics: 'UA-xxxxxxxx-1'
             }
         },
@@ -113,7 +114,7 @@ const cc = new chefcookie({
             },
             active: true,
             hidden: false,
-            trackers: {
+            scripts: {
                 tagmanager: 'GTM-XXXXXXX',
                 facebook: 'xxxxxxxxxxxxxxx',
                 twitter: 'single',
@@ -132,7 +133,7 @@ const cc = new chefcookie({
             },
             active: true,
             hidden: false,
-            trackers: {}
+            scripts: {}
         },
         {
             title: { de: 'Grundlegendes', en: 'Basics' },
@@ -144,9 +145,9 @@ const cc = new chefcookie({
             },
             active: true,
             hidden: true,
-            trackers: {
+            scripts: {
                 example: {
-    	            accept: (cc, resolve) => {
+    	            accept: (cc, resolve, isInit) => {
                         /* example 1 */
                         cc.load('analytics', 'UA-xxxxxxxx-1');
                         cc.load('tagmanager', 'GTM-XXXXXXX');
@@ -182,6 +183,7 @@ const cc = new chefcookie({
                         /* some other helpers */
                         cc.url(); // gets the current url
                         cc.lng(); // gets the current lng
+                        isInit; // true|false (accepted initially)
                     },
                     exclude: () => {
                         return document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1;
@@ -240,7 +242,7 @@ cc.isAccepted('analytics'); // true|false
 
 just add `?accept=1` to your urls to completely bypass chefcookie.
 
-#### custom trackers
+#### custom scripts
 
 the following keywords are reserved:
 
@@ -271,7 +273,7 @@ if you cannot do that (e.g. when you cannot manipulate the page content), there 
 chefcookie is flexible and very well works together with e.g. [yett](https://github.com/snipsco/yett):
 
 -   init `yett` before chefcookie to block scripts
--   call `unblock()` inside chefcookies custom trackers
+-   call `unblock()` inside chefcookies custom scripts
 
 #### dynamically load a script
 

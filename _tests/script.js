@@ -16,6 +16,7 @@ const cc = new chefcookie({
         '
     },
     initial_tracking: false,
+    debug_log: true,
     expiration: 1,
     style: {
         layout: 'bottombar', // options: overlay, bottombar
@@ -42,7 +43,7 @@ const cc = new chefcookie({
             },
             active: true,
             hidden: false,
-            trackers: {
+            scripts: {
                 analytics: 'UA-77674501-1'
             }
         },
@@ -55,7 +56,7 @@ const cc = new chefcookie({
             },
             active: true,
             hidden: false,
-            trackers: {
+            scripts: {
                 tagmanager: 'GTM-N667H38',
                 facebook: '687761448085259',
                 twitter: 'single',
@@ -84,7 +85,7 @@ const cc = new chefcookie({
             },
             active: true,
             hidden: true,
-            trackers: {
+            scripts: {
                 etracker_custom: {
                     accept: function(cc) {
                         cc.load('etracker', 'OBVSQs');
@@ -102,13 +103,16 @@ const cc = new chefcookie({
                     }
                 },
                 google_recaptcha: {
-                    accept: function(cc, resolve) {
+                    accept: function(cc, resolve, isInit) {
                         cc.loadJs(
                             'https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit',
                             function() {
                                 resolve();
                             }
                         );
+                        if (isInit === true) {
+                            console.log('google maps initially loaded');
+                        }
                     }
                 }
             }
