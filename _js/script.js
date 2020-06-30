@@ -2,6 +2,7 @@ import 'mdn-polyfills/Object.entries';
 import 'mdn-polyfills/Object.values';
 import 'mdn-polyfills/Number.isInteger';
 import 'mdn-polyfills/Number.isInteger';
+import 'mdn-polyfills/Element.prototype.closest';
 import '@babel/polyfill/noConflict'; // ie11 support
 import helper from './_helper';
 
@@ -689,7 +690,7 @@ export default class chefcookie {
                     if (settings.indexOf(trackers__key) === -1) {
                         return;
                     }
-                    this.addScript(trackers__key, trackers__value);
+                    this.load(trackers__key, trackers__value);
                 });
             }
         });
@@ -713,7 +714,7 @@ export default class chefcookie {
                     if (settings.indexOf(trackers__key) === -1) {
                         return;
                     }
-                    this.addScript(trackers__key, trackers__value);
+                    this.load(trackers__key, trackers__value);
                 });
             }
         });
@@ -723,7 +724,7 @@ export default class chefcookie {
         this.config.settings.forEach(settings__value => {
             if (settings__value.trackers !== undefined) {
                 Object.entries(settings__value.trackers).forEach(([trackers__key, trackers__value]) => {
-                    this.addScript(trackers__key, trackers__value);
+                    this.load(trackers__key, trackers__value);
                 });
             }
         });
@@ -742,7 +743,7 @@ export default class chefcookie {
         helper.cookieSet('chefcookie', providers, this.getCookieExpiration());
     }
 
-    addScript(provider, id) {
+    load(provider, id) {
         if (provider === 'analytics' || provider === 'google') {
             let script = document.createElement('script');
             script.onload = () => {
@@ -830,12 +831,19 @@ export default class chefcookie {
             script.setAttribute('data-secure-code', id);
             script.src = '//static.etracker.com/code/e.js';
             document.head.appendChild(script);
-        } else if (typeof id === 'function') {
-            new Promise(resolve => {
-                id(this, resolve);
-            }).then(() => {
-                window.chefcookie_loaded.push(provider);
-            });
+        } else if (typeof id === 'object' && id !== null) {
+            if ('exclude' in id && typeof id.exclude === 'function') {
+                if (id.exclude() === true) {
+                    return;
+                }
+            }
+            if ('accept' in id && typeof id.accept === 'function') {
+                new Promise(resolve => {
+                    id.accept(this, resolve);
+                }).then(() => {
+                    window.chefcookie_loaded.push(provider);
+                });
+            }
         }
 
         console.log('added script ' + provider);

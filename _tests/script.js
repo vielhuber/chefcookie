@@ -30,13 +30,7 @@ const cc = new chefcookie({
         settings_open: { de: 'Meine Einstellungen festlegen', en: 'Change settings' },
         settings_close: { de: 'Einstellungen schliessen', en: 'Close settings' }
     },
-    exclude: [
-        '/de/datenschutz',
-        '/en/privacy',
-        function() {
-            return document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1;
-        }
-    ],
+    exclude: ['/de/datenschutz', '/en/privacy'],
     settings: [
         {
             title: { de: 'Analysen', en: 'Analyses' },
@@ -67,8 +61,7 @@ const cc = new chefcookie({
                 twitter: 'single',
                 taboola: '1117744',
                 match2one: '11538693',
-                smartlook: 'e63141d523562364440934be8a0d418f17f5123b',
-                etracker: 'OBVSQs'
+                smartlook: 'e63141d523562364440934be8a0d418f17f5123b'
             }
         },
         {
@@ -91,20 +84,31 @@ const cc = new chefcookie({
             active: true,
             hidden: true,
             trackers: {
-                google_maps: function() {
-                    if (document.querySelector('iframe[alt-src*="google.com/maps"]') !== null) {
-                        [].forEach.call(document.querySelectorAll('iframe[alt-src*="google.com/maps"]'), function(el) {
-                            el.setAttribute('src', el.getAttribute('alt-src'));
-                        });
+                etracker_custom: {
+                    accept: function(cc) {
+                        cc.load('etracker', 'OBVSQs');
                     }
                 },
-                google_recaptcha: function(cc, resolve) {
-                    cc.loadJs(
-                        'https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit',
-                        function() {
-                            resolve();
+                google_maps: {
+                    accept: function() {
+                        if (document.querySelector('iframe[alt-src*="google.com/maps"]') !== null) {
+                            [].forEach.call(document.querySelectorAll('iframe[alt-src*="google.com/maps"]'), function(
+                                el
+                            ) {
+                                el.setAttribute('src', el.getAttribute('alt-src'));
+                            });
                         }
-                    );
+                    }
+                },
+                google_recaptcha: {
+                    accept: function(cc, resolve) {
+                        cc.loadJs(
+                            'https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit',
+                            function() {
+                                resolve();
+                            }
+                        );
+                    }
                 }
             }
         }
@@ -113,9 +117,9 @@ const cc = new chefcookie({
 document.addEventListener('DOMContentLoaded', function() {
     cc.init();
     cc.waitFor('google_recaptcha', function() {
-        alert('google_recaptcha');
+        console.log('google_recaptcha fully loaded');
     });
-    document.querySelector('.manual').innerText = cc.isAccepted('analytics') ? 'Ablehnen' : 'Akzeptieren';
+    document.querySelector('.manual').innerText = 'Akzeptieren/Ablehnen';
     document.querySelector('.manual').addEventListener('click', function(e) {
         if (cc.isAccepted('analytics')) {
             cc.decline('analytics');

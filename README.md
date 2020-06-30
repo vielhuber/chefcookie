@@ -15,6 +15,7 @@ chefcookie is a gdpr cookie solution without compromises.
 -   ships two layouts (overlay, bottombar)
 -   supports custom tracking scripts
 -   auto disable tracking for logged in wordpress users
+-   ie11 support available
 
 ## included
 
@@ -142,29 +143,42 @@ const cc = new chefcookie({
             active: true,
             hidden: true,
             trackers: {
-                // add custom trackers
-                custom: (cc, resolve) => {
-                    cc.loadJs(['script1.js', 'script2.js']).then(() => {
-                        resolve();
-                    });
-                },
-                google_maps: () => {
-                    if (document.querySelector('iframe[alt-src*="google.com/maps"]') !== null) {
-                        document.querySelectorAll('iframe[alt-src*="google.com/maps"]').forEach(el => {
-                            el.setAttribute('src', el.getAttribute('alt-src'));
-                        });
+                example: {
+    	            accept: (cc, resolve) => {
+                        /* example 1 */
+                        cc.load('analytics', 'UA-xxxxxxxx-1');
+                        cc.load('tagmanager', 'GTM-XXXXXXX');
+                        cc.load('facebook', 'xxxxxxxxxxxxxxx');
+                        cc.load('twitter', 'single');
+                        cc.load('taboola', 'xxxxxxx');
+                        cc.load('match2one', 'xxxxxxxx');
+                        cc.load('etracker', 'xxxxxx');
+                        cc.load('smartlook', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+
+                        /* example 2 */
+                        cc.loadJs(['script1.js', 'script2.js']).then(() => { resolve(); });
+
+                        /* example 3 */
+                        if (document.querySelector('iframe[alt-src*="google.com/maps"]') !== null) {
+                            document.querySelectorAll('iframe[alt-src*="google.com/maps"]').forEach(el => {
+                                el.setAttribute('src', el.getAttribute('alt-src'));
+                            });
+                        },
+
+                        /* example 4 */
+                        let script = document.createElement('script');
+                        script.setAttribute(
+                            'src',
+                            'https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit'
+                        );
+                        script.onload = () => {
+                            resolve();
+                        };
+                        document.head.appendChild(script);
                     },
-                },
-                google_recaptcha: (cc, resolve) => {
-                    let script = document.createElement('script');
-                    script.setAttribute(
-                        'src',
-                        'https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit'
-                    );
-                    script.onload = () => {
-                        resolve();
-                    };
-                    document.head.appendChild(script);
+                    exclude: () => {
+                        return document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1;
+                    }
                 }
             }
         }
