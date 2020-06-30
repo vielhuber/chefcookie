@@ -1069,7 +1069,7 @@ export default class chefcookie {
                     }
                     resolve();
                 }
-            }, 30);
+            }, 1000);
         });
     }
 
