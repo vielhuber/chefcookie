@@ -742,7 +742,20 @@ export default class chefcookie {
     }
 
     load(provider, id, isInit = false) {
-        if (provider === 'analytics' || provider === 'google') {
+        if (typeof id === 'object' && id !== null) {
+            if ('exclude' in id && typeof id.exclude === 'function') {
+                if (id.exclude() === true) {
+                    return;
+                }
+            }
+            if ('accept' in id && typeof id.accept === 'function') {
+                new Promise(resolve => {
+                    id.accept(this, resolve, isInit);
+                }).then(() => {
+                    window.chefcookie_loaded.push(provider);
+                });
+            }
+        } else if (provider === 'analytics' || provider === 'google') {
             let script = document.createElement('script');
             script.onload = () => {
                 window.chefcookie_loaded.push(provider);
@@ -838,19 +851,6 @@ export default class chefcookie {
             script.setAttribute('data-secure-code', id);
             script.src = '//static.etracker.com/code/e.js';
             document.head.appendChild(script);
-        } else if (typeof id === 'object' && id !== null) {
-            if ('exclude' in id && typeof id.exclude === 'function') {
-                if (id.exclude() === true) {
-                    return;
-                }
-            }
-            if ('accept' in id && typeof id.accept === 'function') {
-                new Promise(resolve => {
-                    id.accept(this, resolve, isInit);
-                }).then(() => {
-                    window.chefcookie_loaded.push(provider);
-                });
-            }
         }
 
         this.log('added script ' + provider);

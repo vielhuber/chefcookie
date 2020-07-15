@@ -147,7 +147,7 @@ const cc = new chefcookie({
             hidden: true,
             scripts: {
                 example: {
-    	            accept: (cc, resolve, isInit) => {
+                    accept: (cc, resolve, isInit) => {
                         /* example 1 */
                         cc.load('analytics', 'UA-xxxxxxxx-1');
                         cc.load('tagmanager', 'GTM-XXXXXXX');
@@ -160,7 +160,9 @@ const cc = new chefcookie({
                         cc.load('google_maps', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
 
                         /* example 2 */
-                        cc.loadJs(['script1.js', 'script2.js']).then(() => { resolve(); });
+                        cc.loadJs(['script1.js', 'script2.js']).then(() => {
+                            resolve();
+                        });
 
                         /* example 3 */
                         if (document.querySelector('iframe[alt-src*="google.com/maps"]') !== null) {
@@ -244,7 +246,7 @@ just add `?accept=1` to your urls to completely bypass chefcookie.
 
 #### custom scripts
 
-the following keywords are reserved:
+the following keywords as keys are reserved:
 
 -   `analytics`
 -   `tagmanager`
@@ -256,7 +258,9 @@ the following keywords are reserved:
 -   `smartlook`
 -   `google_maps`
 
-however, you can use any other keyword as described above and execute your own functions.
+if you provide strings as values, chefcookie interprets them appropriately.\
+however, you can execute your own functions in either overwriting the keywords\
+(and provide an object) or use any other keyword.
 
 #### script blocking
 
