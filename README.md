@@ -258,9 +258,7 @@ the following keywords as keys are reserved:
 -   `smartlook`
 -   `google_maps`
 
-if you provide strings as values, chefcookie interprets them appropriately.\
-however, you can execute your own functions in either overwriting the keywords\
-(and provide an object) or use any other keyword.
+if you provide strings as values, chefcookie interprets them appropriately. however, you can execute your own functions in either overwriting the keywords (and provide an object) or use any other keyword.
 
 #### script blocking
 
