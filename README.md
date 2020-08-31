@@ -71,7 +71,8 @@ const cc = new chefcookie({
     style: {
         layout: 'overlay', // options: overlay, bottombar
         size: 3, // 1,2,3,4,5
-        color: '#e4042d',
+        color: '#ff0000',
+        highlight_accept: true,
         noscroll: true,
         fade: true,
         blur: true

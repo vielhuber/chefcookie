@@ -234,9 +234,15 @@ export default class chefcookie {
             }
             .chefcookie__button--accept
             {
+                ${
+                    this.config.style.highlight_accept === undefined || this.config.style.highlight_accept === true
+                        ? `
                 background-color:${this.config.style.color};
                 border-color:transparent;
                 color:#fff;
+                `
+                        : ``
+                }
             }
             .chefcookie__settings-container
             {
