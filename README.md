@@ -55,23 +55,25 @@ const cc = new chefcookie({
         de: `
             <h2>Wir verwenden Cookies</h2>
             <p>
-                Unsere Website verwendet Cookies, die uns helfen, unsere Website zu verbessern, den bestmöglichen Service zu bieten und ein optimales Kundenerlebnis zu ermöglichen. <a href="#chefcookie__settings">Hier</a> können Sie Ihre Einstellungen verwalten. Indem Sie auf "<a href="#chefcookie__accept">Einverstanden</a>" klicken, erklären Sie sich damit einverstanden, dass Ihre Cookies für diesen Zweck verwendet werden. Weitere Informationen dazu finden Sie in unserer <a href="/de/datenschutz">Datenschutzerklärung</a>. Sollten Sie hiermit nicht einverstanden sein, können Sie die Verwendung von Cookies hier <a href="#chefcookie__decline">ablehnen</a>.
+                Unsere Website verwendet Cookies, die uns helfen, unsere Website zu verbessern, den bestmöglichen Service zu bieten und ein optimales Kundenerlebnis zu ermöglichen. <a href="#chefcookie__settings">Hier</a> können Sie Ihre Einstellungen verwalten. Indem Sie auf "<a href="#chefcookie__accept">Einverstanden</a>" klicken, erklären Sie sich damit einverstanden, dass Ihre Cookies für diesen Zweck verwendet werden. Weitere Informationen dazu finden Sie in unserer <a href="/de/datenschutz">Datenschutzerklärung</a> sowie im <a href="/de/impressum">Impressum</a>. Sollten Sie hiermit nicht einverstanden sein, können Sie die Verwendung von Cookies hier <a href="#chefcookie__decline">ablehnen</a>.
             </p>
         `,
         en: `
             <h2>We use cookies</h2>
             <p>
-                Our website uses cookies that help us to improve our website, provide the best possible service and enable an optimal customer experience. <a href="#chefcookie__settings">Here</a> you can manage your settings. By clicking on "<a href="#chefcookie__accept">Agree</a>", you agree that your cookies may be used for this purpose. You can find further information on this in our <a href="/en/privacy">data protection declaration</a>. If you do not agree to this, you can refuse the use of cookies here <a href="#chefcookie__decline">reject</a> the use of cookies.
+                Our website uses cookies that help us to improve our website, provide the best possible service and enable an optimal customer experience. <a href="#chefcookie__settings">Here</a> you can manage your settings. By clicking on "<a href="#chefcookie__accept">Agree</a>", you agree that your cookies may be used for this purpose. You can find further information on this in our <a href="/en/privacy">data protection declaration</a> and in the <a href="/en/imprint">imprint</a>. If you do not agree to this, you can refuse the use of cookies here <a href="#chefcookie__decline">reject</a> the use of cookies.
             </p>
         `
     },
-    initial_tracking: false,
+    accept_all_if_settings_closed: false,
     debug_log: false,
     expiration: 7, // days
     style: {
         layout: 'overlay', // options: overlay, bottombar
         size: 3, // 1,2,3,4,5
-        color: '#ff0000',
+        color_text: '#595f60',
+        color_highlight: '#ff0000',
+        color_background: '#eeeeee',
         highlight_accept: true,
         noscroll: true,
         fade: true,
@@ -86,6 +88,8 @@ const cc = new chefcookie({
         // exclude privacy site if needed
         '/de/datenschutz',
         '/en/privacy',
+        '/de/impressum',
+        '/en/imprint',
         // exclude wordpress users
         () => {
             return document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1;
@@ -100,8 +104,9 @@ const cc = new chefcookie({
                 en:
                     'Tools that collect anonymous data about website usage and functionality. We use this information to improve our products, services and user experience.'
             },
-            active: true,
-            hidden: false,
+            checked_by_default: true,
+            cannot_be_modified: false,
+            initial_tracking: false,
             scripts: {
                 analytics: 'UA-xxxxxxxx-1'
             }
@@ -113,8 +118,9 @@ const cc = new chefcookie({
                     'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
                 en: 'Anonymous information that we collect in order to recommend useful products and services to you.'
             },
-            active: true,
-            hidden: false,
+            checked_by_default: true,
+            cannot_be_modified: false,
+            initial_tracking: false,
             scripts: {
                 tagmanager: 'GTM-XXXXXXX',
                 facebook: 'xxxxxxxxxxxxxxx',
@@ -132,8 +138,9 @@ const cc = new chefcookie({
                 de: 'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
                 en: 'Tools that support interactive services such as chat support and customer feedback tools.'
             },
-            active: true,
-            hidden: false,
+            checked_by_default: true,
+            cannot_be_modified: false,
+            initial_tracking: false,
             scripts: {}
         },
         {
@@ -144,8 +151,9 @@ const cc = new chefcookie({
                 en:
                     'Tools that enable essential services and functions, including identity verification, service continuity, and site security. This option cannot be declined.'
             },
-            active: true,
-            hidden: true,
+            checked_by_default: true,
+            cannot_be_modified: true,
+            initial_tracking: true,
             scripts: {
                 example: {
                     accept: (cc, resolve, isInit) => {
@@ -170,6 +178,11 @@ const cc = new chefcookie({
                             document.querySelectorAll('iframe[alt-src*="google.com/maps"]').forEach(el => {
                                 el.setAttribute('src', el.getAttribute('alt-src'));
                             });
+                            if (document.querySelector('[data-disable="google_maps_iframe"]') !== null) {
+                                document.querySelector('[data-disable="google_maps_iframe"]').forEach(el => {
+                                    el.remove();
+                                });
+                            }
                         }
 
                         /* example 4 */
@@ -186,7 +199,7 @@ const cc = new chefcookie({
                         /* some other helpers */
                         cc.url(); // gets the current url
                         cc.lng(); // gets the current lng
-                        isInit; // true|false (accepted initially)
+                        isInit; // true|false (accepted actively through click and not via cookie)
                     },
                     exclude: () => {
                         return document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1;
@@ -259,7 +272,7 @@ the following keywords as keys are reserved:
 -   `smartlook`
 -   `google_maps`
 
-if you provide strings as values, chefcookie interprets them appropriately. however, you can execute your own functions in either overwriting the keywords (and provide an object) or use any other keyword.
+if you provide strings as values, chefcookie interprets them appropriately. however, you can execute your own functions in either overwriting the values of these reserved keywords (and provide an object) or use any other keyword.
 
 #### script blocking
 
@@ -304,9 +317,16 @@ cc.waitFor('google_recaptcha', () => {}); // also supported
 
 this only gets executed when you call `resolve()` inside your custom tracking function.
 
+#### reopening
+
+the cookie banner is shown always, if no consent is saved.\
+if done so, it is shown again, after the cookie expired (see the `expiration` setting).\
+you can open the banner manually again by calling `cc.open()`.
+
 #### event tracking
 
-chefcookie additionally comes with event tracking for all major analytics platforms:
+chefcookie additionally comes with event tracking for all major analytics platforms.\
+you can even use this feature with side loaded scripts.
 
 ```js
 window.addEventListener('load', e => {
