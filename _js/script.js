@@ -258,11 +258,11 @@ export default class chefcookie {
             {
                 margin-right:3em;
             }
+            ${
+                this.config.style.highlight_accept === undefined || this.config.style.highlight_accept === true
+                    ? `
             .chefcookie__button--accept
-            {
-                ${
-                    this.config.style.highlight_accept === undefined || this.config.style.highlight_accept === true
-                        ? `
+            {                
                 background-color:${this.config.style.color_highlight ?? this.config.style.color ?? '#ff0000'};
                 border-color:transparent;
             }
@@ -270,9 +270,9 @@ export default class chefcookie {
             .chefcookie__button--accept:hover
             {
                 color:${this.config.style.color_background ?? '#eeeeee'};
+            }
                 `
-                        : ``
-                }
+                    : ``
             }
             .chefcookie__settings-container
             {
@@ -325,7 +325,12 @@ export default class chefcookie {
             }
             .chefcookie__group--disabled .chefcookie__group-checkbox-icon
             {
-                display:none;
+            ${
+                this.config.style.show_disabled_checkbox === undefined ||
+                this.config.style.show_disabled_checkbox === false
+                    ? `display:none;`
+                    : `opacity: 0.5 !important;`
+            }
             }
             .chefcookie__group-checkbox-icon
             {
@@ -580,7 +585,10 @@ export default class chefcookie {
                                 'settings_open'
                             )}</a>
                             <a href="#chefcookie__accept" class="chefcookie__button chefcookie__button--accept">${this.getLabel(
-                                'accept'
+                                this.config.accept_all_if_settings_closed === undefined ||
+                                    this.config.accept_all_if_settings_closed === false
+                                    ? 'accept'
+                                    : 'accept_all'
                             )}</a>
                         </div>
                     </div>
@@ -648,10 +656,16 @@ export default class chefcookie {
 
     switchLabelsOpen() {
         document.querySelector('.chefcookie__button--settings').textContent = this.getLabel('settings_close');
+        if (this.config.accept_all_if_settings_closed === true) {
+            document.querySelector('.chefcookie__button--accept').textContent = this.getLabel('accept');
+        }
     }
 
     switchLabelsClose() {
         document.querySelector('.chefcookie__button--settings').textContent = this.getLabel('settings_open');
+        if (this.config.accept_all_if_settings_closed === true) {
+            document.querySelector('.chefcookie__button--accept').textContent = this.getLabel('accept_all');
+        }
     }
 
     checkAllOptIns() {

@@ -65,7 +65,7 @@ const cc = new chefcookie({
             </p>
         `
     },
-    accept_all_if_settings_closed: false,
+    accept_all_if_settings_closed: true,
     debug_log: false,
     expiration: 7, // days
     style: {
@@ -75,12 +75,14 @@ const cc = new chefcookie({
         color_highlight: '#ff0000',
         color_background: '#eeeeee',
         highlight_accept: true,
+        show_disabled_checkbox: false,
         noscroll: true,
         fade: true,
         blur: true
     },
     labels: {
-        accept: { de: 'Einverstanden', en: 'Agree' },
+        accept: { de: 'Bestätigen', en: 'Confirm' },
+        accept_all: { de: 'Alles akzeptieren', en: 'Accept all' },
         settings_open: { de: 'Meine Einstellungen festlegen', en: 'Change settings' },
         settings_close: { de: 'Einstellungen schliessen', en: 'Close settings' }
     },
