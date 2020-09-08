@@ -19,6 +19,7 @@ export default class chefcookie {
 
     init() {
         if (this.isExcluded()) {
+            this.initOptOut();
             return;
         }
 
