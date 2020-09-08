@@ -1177,7 +1177,9 @@ export default class chefcookie {
 
     accept(provider, isInit = false) {
         this.addToCookie(provider);
-        this.addScript(provider, isInit);
+        if (!this.isExcluded()) {
+            this.addScript(provider, isInit);
+        }
     }
 
     decline(provider) {
