@@ -19,7 +19,7 @@ export default class chefcookie {
 
     init() {
         if (this.isExcluded()) {
-            this.initOptOut();
+            this.initUpdateOptOutOptInOptIn();
             return;
         }
 
@@ -35,7 +35,7 @@ export default class chefcookie {
             this.open();
         }
 
-        this.initOptOut();
+        this.initUpdateOptOutOptInOptIn();
     }
 
     open() {
@@ -70,39 +70,80 @@ export default class chefcookie {
         return helper.getParam('accept') === '1';
     }
 
-    initOptOut() {
+    initUpdateOptOutOptInOptIn() {
+        // legacy: support old attribute names
         if (document.querySelector('[data-disable]') !== null) {
             [].forEach.call(document.querySelectorAll('[data-disable]'), el => {
-                el.setAttribute('data-message-original', el.textContent);
-                if (!this.isAccepted(el.getAttribute('data-disable'))) {
-                    el.textContent = el.getAttribute('data-message');
-                } else {
-                    el.textContent = el.getAttribute('data-message-original');
-                }
+                el.setAttribute('data-cc-disable', el.getAttribute('data-disable'));
             });
         }
+        if (document.querySelector('[data-message]') !== null) {
+            [].forEach.call(document.querySelectorAll('[data-message]'), el => {
+                el.setAttribute('data-cc-message', el.getAttribute('data-message'));
+            });
+        }
+
+        // init opt out
+        if (document.querySelector('[data-cc-disable]') !== null) {
+            [].forEach.call(document.querySelectorAll('[data-cc-disable]'), el => {
+                el.setAttribute('data-cc-message-original', el.textContent);
+            });
+        }
+
+        // bind opt out
         document.addEventListener('click', e => {
-            if (e.target.closest('[data-disable]')) {
-                let el = e.target.closest('[data-disable]');
-                if (!this.isAccepted(el.getAttribute('data-disable'))) {
-                    el.textContent = el.getAttribute('data-message-original');
-                    this.accept(el.getAttribute('data-disable'), true);
+            if (
+                e.target.hasAttribute('data-cc-disable') ||
+                (e.target.tagName !== 'A' && e.target.closest('[data-cc-disable]'))
+            ) {
+                let el = e.target.closest('[data-cc-disable]');
+                if (!this.isAccepted(el.getAttribute('data-cc-disable'))) {
+                    this.accept(el.getAttribute('data-cc-disable'), true);
                 } else {
-                    el.textContent = el.getAttribute('data-message');
-                    this.decline(el.getAttribute('data-disable'), true);
+                    this.decline(el.getAttribute('data-cc-disable'), true);
                 }
+                this.updateOptOutOptIn();
                 e.preventDefault();
             }
         });
+
+        // bind opt in
+        document.addEventListener('click', e => {
+            if (
+                e.target.hasAttribute('data-cc-enable') ||
+                (e.target.tagName !== 'A' && e.target.closest('[data-cc-enable]'))
+            ) {
+                let el = e.target.closest('[data-cc-enable]');
+                if (!this.isAccepted(el.getAttribute('data-cc-enable'))) {
+                    this.accept(el.getAttribute('data-cc-enable'), true);
+                }
+                this.updateOptOutOptIn();
+                e.preventDefault();
+            }
+        });
+
+        this.updateOptOutOptIn();
     }
 
-    updateOptOut() {
-        if (document.querySelector('[data-disable]') !== null) {
-            [].forEach.call(document.querySelectorAll('[data-disable]'), el => {
-                if (!this.isAccepted(el.getAttribute('data-disable'))) {
-                    el.textContent = el.getAttribute('data-message');
+    updateOptOutOptIn() {
+        // update opt out
+        if (document.querySelector('[data-cc-disable]') !== null) {
+            [].forEach.call(document.querySelectorAll('[data-cc-disable]'), el => {
+                if (this.isAccepted(el.getAttribute('data-cc-disable'))) {
+                    el.textContent = el.getAttribute('data-cc-message-original');
+                    el.classList.remove('disabled');
                 } else {
-                    el.textContent = el.getAttribute('data-message-original');
+                    el.textContent = el.getAttribute('data-cc-message');
+                    el.classList.add('disabled');
+                }
+            });
+        }
+
+        // update opt in
+        if (document.querySelector('[data-cc-enable]') !== null) {
+            [].forEach.call(document.querySelectorAll('[data-cc-enable]'), el => {
+                if (this.isAccepted(el.getAttribute('data-cc-enable'))) {
+                    el.remove();
                 }
             });
         }
@@ -614,7 +655,7 @@ export default class chefcookie {
                     this.saveInCookie();
                     this.close();
                     this.setCookieToHideOverlay();
-                    this.updateOptOut();
+                    this.updateOptOutOptIn();
                     e.preventDefault();
                 });
             });
@@ -634,7 +675,7 @@ export default class chefcookie {
                     this.addEnabledScripts(true);
                     this.close();
                     this.setCookieToHideOverlay();
-                    this.updateOptOut();
+                    this.updateOptOutOptIn();
                     e.preventDefault();
                 });
             });

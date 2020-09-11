@@ -60,13 +60,6 @@ const cc = new chefcookie({
                                 el.setAttribute('src', el.getAttribute('alt-src'));
                             });
                         }
-                        if (document.querySelector('[data-disable="google_maps_iframe"]') !== null) {
-                            [].forEach.call(document.querySelector('[data-disable="google_maps_iframe"]'), function(
-                                el
-                            ) {
-                                el.remove();
-                            });
-                        }
                     }
                 },
                 google_recaptcha: {

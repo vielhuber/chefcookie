@@ -180,11 +180,6 @@ const cc = new chefcookie({
                             document.querySelectorAll('iframe[alt-src*="google.com/maps"]').forEach(el => {
                                 el.setAttribute('src', el.getAttribute('alt-src'));
                             });
-                            if (document.querySelector('[data-disable="google_maps_iframe"]') !== null) {
-                                document.querySelector('[data-disable="google_maps_iframe"]').forEach(el => {
-                                    el.remove();
-                                });
-                            }
                         }
 
                         /* example 4 */
@@ -236,17 +231,43 @@ chefcookie will find out the current language and show the appropriate strings.
 
 #### opt out links
 
+its recommended to place those kind of links inside your privacy page:
+
 ```html
-<a href="#" data-disable="analytics" data-message="Google Analytics aktivieren">Google Analytics deaktivieren</a>
-<a href="#" data-disable="tagmanager" data-message="Google Tag Manager aktivieren">Google Tag Manager deaktivieren</a>
-<a href="#" data-disable="facebook" data-message="Facebook Pixel aktivieren">Facebook Pixel deaktivieren</a>
-<a href="#" data-disable="twitter" data-message="Twitter Pixel aktivieren">Twitter Pixel deaktivieren</a>
-<a href="#" data-disable="taboola" data-message="Taboola Pixel aktivieren">Taboola Pixel deaktivieren</a>
-<a href="#" data-disable="match2one" data-message="Match2One Pixel aktivieren">Match2One Pixel deaktivieren</a>
-<a href="#" data-disable="etracker" data-message="etracker aktivieren">etracker deaktivieren</a>
-<a href="#" data-disable="smartlook" data-message="Smartlook aktivieren">Smartlook deaktivieren</a>
-<a href="#" data-disable="google_maps" data-message="Google Maps aktivieren">Google Maps deaktivieren</a>
+<a href="#" data-cc-disable="analytics" data-cc-message="Google Analytics aktivieren">Google Analytics deaktivieren</a>
+<a href="#" data-cc-disable="tagmanager" data-cc-message="Google Tag Manager aktivieren"
+    >Google Tag Manager deaktivieren</a
+>
+<a href="#" data-cc-disable="facebook" data-cc-message="Facebook Pixel aktivieren">Facebook Pixel deaktivieren</a>
+<a href="#" data-cc-disable="twitter" data-cc-message="Twitter Pixel aktivieren">Twitter Pixel deaktivieren</a>
+<a href="#" data-cc-disable="taboola" data-cc-message="Taboola Pixel aktivieren">Taboola Pixel deaktivieren</a>
+<a href="#" data-cc-disable="match2one" data-cc-message="Match2One Pixel aktivieren">Match2One Pixel deaktivieren</a>
+<a href="#" data-cc-disable="etracker" data-cc-message="etracker aktivieren">etracker deaktivieren</a>
+<a href="#" data-cc-disable="smartlook" data-cc-message="Smartlook aktivieren">Smartlook deaktivieren</a>
+<a href="#" data-cc-disable="google_maps" data-cc-message="Google Maps aktivieren">Google Maps deaktivieren</a>
 ```
+
+you can style those links with:
+
+```css
+[data-cc-disable] {
+}
+[data-cc-disable].disabled {
+}
+```
+
+#### (one time) opt in links
+
+these links self destroy if the respective script is accepted:
+
+```html
+<div data-cc-enable="google_maps">
+    Ich möchte Google Maps-Inhalte aktivieren und stimme zu, dass Daten von Google geladen werden (siehe
+    <a href="/de/datenschutz" target="_blank">Datenschutz</a>).
+</div>
+```
+
+it is recommended to place them inside your via js populated divs (like a google maps wrapper).
 
 #### manually accept/decline
 
