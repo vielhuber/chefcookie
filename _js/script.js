@@ -246,7 +246,8 @@ export default class chefcookie {
             .chefcookie__message p {
                 font-size: 1em;
             }
-            .chefcookie__message a
+            .chefcookie__message a,
+            .chefcookie__message a:focus
             {
                 color:inherit;
                 transition: all 0.25s ease-in-out;
@@ -261,12 +262,14 @@ export default class chefcookie {
             .chefcookie__message a:active
             {
                 opacity:0.1;
+                color: inherit;
             }
             .chefcookie__buttons
             {
                 margin-top:0.5em;
             }
-            .chefcookie__button
+            .chefcookie__button,
+            .chefcookie__button:focus
             {
                 padding: 1em 0.5em;
                 border: 2px solid ${this.config.style.color_text ?? '#595f60'};
@@ -289,6 +292,7 @@ export default class chefcookie {
             .chefcookie__button:active
             {
                 opacity:0.1;
+                color: inherit;
             }
             .chefcookie__buttons:after
             {            
@@ -309,7 +313,8 @@ export default class chefcookie {
                 border-color:transparent;
             }
             .chefcookie__button--accept,
-            .chefcookie__button--accept:hover
+            .chefcookie__button--accept:hover,
+            .chefcookie__button--accept:focus
             {
                 color:${this.config.style.color_background ?? '#eeeeee'};
             }
