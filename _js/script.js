@@ -486,6 +486,7 @@ export default class chefcookie {
             }
             .chefcookie--overlay .chefcookie__box
             {
+                width: 95%;
                 max-width: 60em;
                 box-shadow: 0 1em 5em -0.5em #000;
                 background-color: ${this.config.style.color_background ?? '#eeeeee'};
