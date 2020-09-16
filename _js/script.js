@@ -457,7 +457,8 @@ export default class chefcookie {
                 width: 100%;
                 overflow:hidden;
             }
-            .chefcookie--fade body:after
+            .chefcookie--fade body:after,
+            .chefcookie--blur body:after
             {
                 content:"";
                 position:fixed;
@@ -466,12 +467,14 @@ export default class chefcookie {
                 left:0;
                 width:100%;
                 height:100%;
+            }
+            .chefcookie--fade body:after
+            {
                 background-color: rgba(0, 0, 0, 0.65);
             }
-            .chefcookie--blur .chefcookie ~ *
+            .chefcookie--blur body:after
             {
-                filter: grayscale(50%) blur(5px);
-                -webkit-filter: grayscale(50%) blur(5px);
+                backdrop-filter: grayscale(50%) blur(5px);
             }
             .chefcookie--overlay
             {

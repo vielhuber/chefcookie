@@ -28,7 +28,7 @@ const cc = new chefcookie({
         show_disabled_checkbox: true,
         noscroll: true,
         fade: true,
-        blur: false
+        blur: true
     },
     labels: {
         accept: { de: 'Akzeptieren', en: 'Accept' },
