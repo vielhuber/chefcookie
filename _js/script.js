@@ -878,6 +878,9 @@ export default class chefcookie {
                     window.chefcookie_loaded.push(provider);
                 });
             }
+            if (!('accept' in id)) {
+                window.chefcookie_loaded.push(provider);
+            }
         } else if (provider === 'analytics' || provider === 'google') {
             let script = document.createElement('script');
             script.onload = () => {

@@ -157,7 +157,8 @@ const cc = new chefcookie({
             cannot_be_modified: true,
             initial_tracking: true,
             scripts: {
-                example: {
+                example_script1: {}, // this immediately gets "resolved"
+                example_script2: {
                     accept: (cc, resolve, isInit) => {
                         /* example: load default scripts inside custom script */
                         cc.load('analytics', 'UA-xxxxxxxx-1');
@@ -199,6 +200,9 @@ const cc = new chefcookie({
                             resolve();
                         };
                         cc.loadJs('https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit');
+
+                        /* example: if you don't want the logic to be in here, just resolve() and use waitFor outside this file */
+                        resolve();
 
                         /* some other helpers */
                         cc.url(); // gets the current url

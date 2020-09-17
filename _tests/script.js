@@ -136,7 +136,8 @@ const cc = new chefcookie({
                     accept: function(cc) {
                         cc.load('etracker', 'OBVSQs');
                     }
-                }
+                },
+                test_custom: {}
             }
         }
     ]
