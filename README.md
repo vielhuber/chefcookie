@@ -159,7 +159,7 @@ const cc = new chefcookie({
             scripts: {
                 example: {
                     accept: (cc, resolve, isInit) => {
-                        /* example 1 */
+                        /* example: load default scripts inside custom script */
                         cc.load('analytics', 'UA-xxxxxxxx-1');
                         cc.load('tagmanager', 'GTM-XXXXXXX');
                         cc.load('facebook', 'xxxxxxxxxxxxxxx');
@@ -170,28 +170,35 @@ const cc = new chefcookie({
                         cc.load('smartlook', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
                         cc.load('google_maps', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
 
-                        /* example 2 */
-                        cc.loadJs(['script1.js', 'script2.js']).then(() => {
+                        /* example: load (multiple) custom javascripts */
+                        cc.loadJs([
+                            'script1.js',
+                            'script2.js',
+                            'https://www.googletagmanager.com/gtag/js?id=UA-xxxxxxxx-1'
+                        ]).then(() => {
                             resolve();
                         });
 
-                        /* example 3 */
+                        /* example: enable uninitialized iframes */
                         if (document.querySelector('iframe[alt-src*="google.com/maps"]') !== null) {
                             document.querySelectorAll('iframe[alt-src*="google.com/maps"]').forEach(el => {
                                 el.setAttribute('src', el.getAttribute('alt-src'));
                             });
                         }
 
-                        /* example 4 */
+                        /* example: load scripts manually */
                         let script = document.createElement('script');
-                        script.setAttribute(
-                            'src',
-                            'https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit'
-                        );
+                        script.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=UA-xxxxxxxx-1');
                         script.onload = () => {
                             resolve();
                         };
                         document.head.appendChild(script);
+
+                        /* example: load scripts manually (with custom callback) */
+                        window.captchaCallback = () => {
+                            resolve();
+                        };
+                        cc.loadJs('https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit');
 
                         /* some other helpers */
                         cc.url(); // gets the current url
@@ -295,7 +302,7 @@ the following keywords as keys are reserved:
 -   `smartlook`
 -   `google_maps`
 
-if you provide strings as values, chefcookie interprets them appropriately. however, you can execute your own functions in either overwriting the values of these reserved keywords (and provide an object) or use any other keyword.
+if you provide strings as values, chefcookie interprets them appropriately. chefcookie then loads the libraries with reasonable default settings. however, you can execute your own functions in either overwriting the values of these reserved keywords (and provide an object) or use any other keyword.
 
 #### script blocking
 

@@ -64,12 +64,25 @@ const cc = new chefcookie({
                 },
                 google_recaptcha: {
                     accept: function(cc, resolve, isInit) {
-                        cc.loadJs(
-                            'https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit',
-                            function() {
-                                resolve();
-                            }
-                        );
+                        window.captchaCallback = function() {
+                            [].forEach.call(document.querySelectorAll('.recaptcha'), function(el) {
+                                var holderId = grecaptcha.render(el, {
+                                    sitekey: 'XXX',
+                                    badge: 'inline',
+                                    type: 'image',
+                                    size: 'invisible',
+                                    callback: function(token) {
+                                        HTMLFormElement.prototype.submit.call(el.closest('form'));
+                                    }
+                                });
+                                el.closest('form').onsubmit = function(e) {
+                                    e.preventDefault();
+                                    grecaptcha.execute(holderId);
+                                };
+                            });
+                            resolve();
+                        };
+                        cc.loadJs('https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit');
                         if (isInit === true) {
                             console.log('google recaptcha initially loaded');
                         }

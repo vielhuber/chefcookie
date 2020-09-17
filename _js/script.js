@@ -955,10 +955,10 @@ export default class chefcookie {
             document.head.appendChild(script);
         } else if (provider === 'google_maps') {
             let script = document.createElement('script');
-            script.src = 'https://maps.googleapis.com/maps/api/js?key=' + id + '&callback=initMap';
+            script.src = 'https://maps.googleapis.com/maps/api/js?key=' + id + '&callback=initMapCC';
             script.defer = true;
             script.async = true;
-            window.initMap = function() {
+            window.initMapCC = function() {
                 window.chefcookie_loaded.push(provider);
             };
             document.head.appendChild(script);
