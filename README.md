@@ -363,7 +363,7 @@ chefcookie additionally comes with event tracking for all major analytics platfo
 you can even use this feature with side loaded scripts.
 
 ```js
-window.addEventListener('load', e => {
+window.addEventListener('load', () => {
     // track duration (sends action "xxs" in 30 second intervals)
     cc.trackDuration();
     // track scroll depth (sends "xx%" in scroll steps 1, 10, 25, 50, 75, 100)
@@ -377,7 +377,7 @@ window.addEventListener('load', e => {
         cc.eventAnalytics('25%');
     });
     // custom tracking
-    document.querySelector('.conversion').addEventListener('click', () => {
+    document.querySelector('.conversion').addEventListener('click', e => {
         cc.eventAnalytics('custom_category', 'custom_action');
         cc.eventAnalytics('custom_action');
         cc.eventFacebook('custom_action_name');
