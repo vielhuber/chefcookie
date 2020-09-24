@@ -254,6 +254,10 @@ export default class chefcookie {
                 text-decoration:underline;
                 font-size: 1em;
             }
+            .chefcookie__message a:focus
+            {
+                outline:none;
+            }
             .chefcookie__message a:hover
             {
                 opacity:0.5;
@@ -282,6 +286,10 @@ export default class chefcookie {
                 float: left;
                 min-width: 21em;
                 text-align: center;
+            }
+            .chefcookie__button:focus
+            {
+                outline:none;
             }
             .chefcookie__button:hover
             {
