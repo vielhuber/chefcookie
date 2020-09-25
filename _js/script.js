@@ -529,36 +529,58 @@ export default class chefcookie {
             {
                 padding: 1em 1.25em;
             }
-            .chefcookie--bottombar
+            .chefcookie--bottombar,
+            .chefcookie--topbar
             {
-                top: auto;
                 background-color:${this.config.style.color_background ?? '#eeeeee'};
                 box-shadow: 0 1em 5em -0.5em #000;
             }
-            .chefcookie--bottombar .chefcookie__box
+            .chefcookie--bottombar
+            {
+                bottom:0;
+                top:auto;
+            }
+            .chefcookie--topbar
+            {
+                bottom:auto;
+                top:0;
+            }
+            .chefcookie--bottombar .chefcookie__box,
+            .chefcookie--topbar .chefcookie__box
             {
                 max-width: 1280px;
             }
-            .chefcookie--bottombar .chefcookie__group
+            .chefcookie--bottombar .chefcookie__group,
+            .chefcookie--topbar .chefcookie__group
             {
                 margin-bottom: 40px;
                 margin-top: 40px;
                 width: 22%;
                 margin-right: 4%;
             }
-            .chefcookie--bottombar .chefcookie__group:last-child
+            .chefcookie--bottombar .chefcookie__group:last-child,
+            .chefcookie--topbar .chefcookie__group:last-child
             {
                 margin-right:0;
             }
-            .chefcookie--bottombar .chefcookie__groups--count-9 .chefcookie__group { width: 7.55%; }
-            .chefcookie--bottombar .chefcookie__groups--count-8 .chefcookie__group { width: 9.00%; }
-            .chefcookie--bottombar .chefcookie__groups--count-7 .chefcookie__group { width: 10.85%; }
-            .chefcookie--bottombar .chefcookie__groups--count-6 .chefcookie__group { width: 13.33%; }
-            .chefcookie--bottombar .chefcookie__groups--count-5 .chefcookie__group { width: 16.80%; }
-            .chefcookie--bottombar .chefcookie__groups--count-4 .chefcookie__group { width: 22.00%; }
-            .chefcookie--bottombar .chefcookie__groups--count-3 .chefcookie__group { width: 30.66%; }
-            .chefcookie--bottombar .chefcookie__groups--count-2 .chefcookie__group { width: 48%; }
-            .chefcookie--bottombar .chefcookie__groups--count-1 .chefcookie__group { width: 100%; }
+            .chefcookie--bottombar .chefcookie__groups--count-9 .chefcookie__group,
+            .chefcookie--topbar .chefcookie__groups--count-9 .chefcookie__group { width: 7.55%; }
+            .chefcookie--bottombar .chefcookie__groups--count-8 .chefcookie__group,
+            .chefcookie--topbar .chefcookie__groups--count-8 .chefcookie__group { width: 9.00%; }
+            .chefcookie--bottombar .chefcookie__groups--count-7 .chefcookie__group,
+            .chefcookie--topbar .chefcookie__groups--count-7 .chefcookie__group { width: 10.85%; }
+            .chefcookie--bottombar .chefcookie__groups--count-6 .chefcookie__group,
+            .chefcookie--topbar .chefcookie__groups--count-6 .chefcookie__group { width: 13.33%; }
+            .chefcookie--bottombar .chefcookie__groups--count-5 .chefcookie__group,
+            .chefcookie--topbar .chefcookie__groups--count-5 .chefcookie__group { width: 16.80%; }
+            .chefcookie--bottombar .chefcookie__groups--count-4 .chefcookie__group,
+            .chefcookie--topbar .chefcookie__groups--count-4 .chefcookie__group { width: 22.00%; }
+            .chefcookie--bottombar .chefcookie__groups--count-3 .chefcookie__group,
+            .chefcookie--topbar .chefcookie__groups--count-3 .chefcookie__group { width: 30.66%; }
+            .chefcookie--bottombar .chefcookie__groups--count-2 .chefcookie__group,
+            .chefcookie--topbar .chefcookie__groups--count-2 .chefcookie__group { width: 48%; }
+            .chefcookie--bottombar .chefcookie__groups--count-1 .chefcookie__group,
+            .chefcookie--topbar .chefcookie__groups--count-1 .chefcookie__group { width: 100%; }
             @media screen and (max-width: 840px)
             {
                 .chefcookie__box
@@ -579,7 +601,8 @@ export default class chefcookie {
                 }
                 .chefcookie .chefcookie__group,
                 .chefcookie--overlay .chefcookie__group,
-                .chefcookie--bottombar .chefcookie__group
+                .chefcookie--bottombar .chefcookie__group,
+                .chefcookie--topbar .chefcookie__group
                 {
                     float:none;
                     margin-right:0;
@@ -911,7 +934,9 @@ export default class chefcookie {
             };
             let html = '';
             html +=
-                "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','"+id+"');";
+                "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','" +
+                id +
+                "');";
             // this is not part of the default tagmanager code, because events are tracked via "dataLayer" or directly inside tag manager
             // we make this also available here
             html += 'function gtag(){dataLayer.push(arguments);}';

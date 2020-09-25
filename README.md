@@ -12,7 +12,7 @@ chefcookie is a gdpr cookie solution without compromises.
 -   scroll depth tracking
 -   includes basic styling
 -   multi language support
--   ships two layouts (overlay, bottombar)
+-   ships multiple layouts (overlay, bottombar, topbar)
 -   supports custom tracking scripts
 -   auto disable tracking for logged in wordpress users
 -   ie11 support available
@@ -69,8 +69,8 @@ const cc = new chefcookie({
     debug_log: false,
     expiration: 7, // days
     style: {
-        layout: 'overlay', // options: overlay, bottombar
-        size: 3, // 1,2,3,4,5
+        layout: 'overlay', // overlay|bottombar|topbar
+        size: 3, // 1|2|3|4|5
         color_text: '#595f60',
         color_highlight: '#ff0000',
         color_background: '#eeeeee',
