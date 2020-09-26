@@ -67,7 +67,7 @@ const cc = new chefcookie({
     },
     accept_all_if_settings_closed: true,
     debug_log: false,
-    expiration: 7, // days
+    expiration: 7, // in days
     style: {
         layout: 'overlay', // overlay|bottombar|topbar
         size: 3, // 1|2|3|4|5
