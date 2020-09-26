@@ -600,7 +600,8 @@ export default class chefcookie {
                 {
                     font-size:1.5em;
                 }
-                .chefcookie__button
+                .chefcookie__button,
+                .chefcookie__button:focus
                 {
                     float: none;
                     margin: 0 0 1em;
