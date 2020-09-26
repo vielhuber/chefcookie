@@ -19,7 +19,7 @@ const cc = new chefcookie({
     debug_log: true,
     expiration: 1,
     style: {
-        layout: 'topbar',
+        layout: 'overlay',
         size: 3,
         color_text: '#eee',
         color_highlight: 'blue',
