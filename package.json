@@ -1,9 +1,9 @@
 {
     "name": "chefcookie",
     "version": "1.8.5",
-    "main": "_js/_build/script.js",
+    "main": "_build/script.js",
     "files": [
-        "_js/_build/*.js",
+        "_build/*.js",
         "chefcookie.min.js"
     ],
     "repository": "git@github.com:vielhuber/chefcookie.git",
@@ -13,7 +13,7 @@
     "scripts": {
         "js:browserify": "browserify ./_js/script.js --outfile ./chefcookie.min.js --debug --transform babelify",
         "js:minify": "terser --compress --mangle --output ./chefcookie.min.js ./chefcookie.min.js",
-        "js:babel": "npx babel ./_js/ --out-dir ./_js/_build/",
+        "js:babel": "npx babel ./_js/ --out-dir ./_build/",
         "js": "npm-run-all --sequential js:browserify js:minify js:babel",
         "js:dev": "npm-run-all --sequential js:browserify js:babel",
         "watch:js": "onchange ./_js/*.js --initial --wait --delay 100 --await-write-finish 200 -- onerror \"npm run js:dev\" --title \"watch:js\" --message \"build failed\" --sound mute",

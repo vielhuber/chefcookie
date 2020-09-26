@@ -794,8 +794,7 @@ export default class chefcookie {
         if (providers.length === 0) {
             providers.push('null');
         }
-        providers.join(',');
-        helper.cookieSet('cc_accepted_providers', providers, this.getCookieExpiration());
+        helper.cookieSet('cc_accepted_providers', providers.join(','), this.getCookieExpiration());
     }
 
     addToCookie(provider) {
