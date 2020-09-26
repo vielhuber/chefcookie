@@ -75,7 +75,7 @@ const cc = new chefcookie({
         color_highlight: '#ff0000',
         color_background: '#eeeeee',
         highlight_accept: true,
-        show_disabled_checkbox: false,
+        show_disabled_checkbox: true,
         noscroll: true,
         fade: true,
         blur: true
