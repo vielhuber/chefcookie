@@ -616,7 +616,7 @@ export default class chefcookie {
                 {
                     float:none;
                     margin-right:0;
-                    width:100%;
+                    width:100% !important;
                     height:auto;
                 }
             }
