@@ -188,12 +188,18 @@ const cc = new chefcookie({
                         }
 
                         /* example: load scripts manually */
-                        let script = document.createElement('script');
-                        script.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=UA-xxxxxxxx-1');
-                        script.onload = () => {
+                        let script1 = document.createElement('script');
+                        script1.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=UA-xxxxxxxx-1');
+                        script1.onload = () => {
                             resolve();
                         };
-                        document.head.appendChild(script);
+                        document.head.appendChild(script1);
+
+                        /* example: load scripts manually */
+                        let script2 = document.createElement('script');
+                        let html = 'alert(\'OK\');';
+                        script2.innerHTML = html;
+                        document.head.appendChild(script2);
 
                         /* example: load scripts manually (with custom callback) */
                         window.captchaCallback = () => {
