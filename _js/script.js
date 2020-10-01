@@ -11,10 +11,21 @@ export default class chefcookie {
     constructor(config = {}) {
         this.config = config;
         this.alreadyLoadedOnce = [];
+        this.isDestroyed = false;
         this.isOpened = false;
         if (!('chefcookie_loaded' in window)) {
             window.chefcookie_loaded = [];
         }
+        this.scrollDepthTriggeredOnce = false;
+        this.scrollDepthTriggered = {
+            1: false,
+            10: false,
+            25: false,
+            50: false,
+            75: false,
+            100: false
+        };
+        this.eventListeners = [];
     }
 
     init() {
@@ -61,17 +72,30 @@ export default class chefcookie {
         document.documentElement.classList.remove('chefcookie--blur');
         document.querySelector('.chefcookie').classList.add('chefcookie--hidden');
         if (this.config.style.layout === 'topbar') {
-            document.querySelector('.chefcookie').style.marginTop = (-1 * document.querySelector('.chefcookie').offsetHeight) + 'px';
+            document.querySelector('.chefcookie').style.marginTop =
+                -1 * document.querySelector('.chefcookie').offsetHeight + 'px';
         }
         if (this.config.style.layout === 'bottombar') {
             document.querySelector('.chefcookie').style.marginBottom =
-                (-1 * document.querySelector('.chefcookie').offsetHeight) +
-                'px';
+                -1 * document.querySelector('.chefcookie').offsetHeight + 'px';
         }
         setTimeout(() => {
             document.querySelector('.chefcookie').remove();
             document.querySelector('.chefcookie-styles').remove();
         }, 500);
+    }
+
+    destroy() {
+        this.close();
+        this.config = {};
+        this.alreadyLoadedOnce = [];
+        this.isDestroyed = true;
+        this.isOpened = false;
+        if ('chefcookie_loaded' in window) {
+            delete window.chefcookie_loaded;
+        }
+        this.unregisterAllEventListeners();
+        this.eventListeners = [];
     }
 
     forceAccept() {
@@ -99,7 +123,7 @@ export default class chefcookie {
         }
 
         // bind opt out
-        document.addEventListener('click', e => {
+        this.registerEventListener(document, 'click', e => {
             if (
                 e.target.hasAttribute('data-cc-disable') ||
                 (e.target.tagName !== 'A' && e.target.closest('[data-cc-disable]'))
@@ -116,7 +140,7 @@ export default class chefcookie {
         });
 
         // bind opt in
-        document.addEventListener('click', e => {
+        this.registerEventListener(document, 'click', e => {
             if (
                 e.target.hasAttribute('data-cc-enable') ||
                 (e.target.tagName !== 'A' && e.target.closest('[data-cc-enable]'))
@@ -700,7 +724,7 @@ export default class chefcookie {
     bindButtons() {
         if (document.querySelector('a[href="#chefcookie__decline"]') !== null) {
             [].forEach.call(document.querySelectorAll('a[href="#chefcookie__decline"]'), el => {
-                el.addEventListener('click', e => {
+                this.registerEventListener(el, 'click', e => {
                     this.uncheckAllOptIns();
                     this.saveInCookie();
                     this.close();
@@ -712,7 +736,7 @@ export default class chefcookie {
         }
         if (document.querySelector('a[href="#chefcookie__accept"]') !== null) {
             [].forEach.call(document.querySelectorAll('a[href="#chefcookie__accept"]'), el => {
-                el.addEventListener('click', e => {
+                this.registerEventListener(el, 'click', e => {
                     if (
                         !('accept_all_if_settings_closed' in this.config) ||
                         this.config.accept_all_if_settings_closed === true
@@ -732,7 +756,7 @@ export default class chefcookie {
         }
         if (document.querySelector('a[href="#chefcookie__settings"]') !== null) {
             [].forEach.call(document.querySelectorAll('a[href="#chefcookie__settings"]'), el => {
-                el.addEventListener('click', e => {
+                this.registerEventListener(el, 'click', e => {
                     if (!this.settingsVisible()) {
                         this.showSettings();
                         this.switchLabelsOpen();
@@ -1144,6 +1168,9 @@ export default class chefcookie {
         while (timer / 60 <= 8) {
             (function(timer) {
                 window.setTimeout(function() {
+                    if (this.isDestroyed === true) {
+                        return;
+                    }
                     _this.eventAnalytics('duration_time', timer + 's');
                     _this.eventEtracker('duration_time', timer + 's');
                 }, timer * 1000);
@@ -1157,21 +1184,16 @@ export default class chefcookie {
     }
 
     trackScrollDepth() {
-        var scrollDepthTriggered = {
-            1: false,
-            10: false,
-            25: false,
-            50: false,
-            75: false,
-            100: false
-        };
         this.eventAnalytics('scroll_depth', '0%');
         this.eventEtracker('scroll_depth', '0%');
-        window.addEventListener('scroll', () => {
+        this.registerEventListener(window, 'scroll', () => {
             let scroll = this.scrollPos();
-            for (var scrollDepthTriggered__key in scrollDepthTriggered) {
-                if (scrollDepthTriggered[scrollDepthTriggered__key] === false && scroll >= scrollDepthTriggered__key) {
-                    scrollDepthTriggered[scrollDepthTriggered__key] = true;
+            for (var scrollDepthTriggered__key in this.scrollDepthTriggered) {
+                if (
+                    this.scrollDepthTriggered[scrollDepthTriggered__key] === false &&
+                    scroll >= scrollDepthTriggered__key
+                ) {
+                    this.scrollDepthTriggered[scrollDepthTriggered__key] = true;
                     this.eventAnalytics('scroll_depth', scrollDepthTriggered__key + '%');
                     this.eventEtracker('scroll_depth', scrollDepthTriggered__key + '%');
                 }
@@ -1179,12 +1201,22 @@ export default class chefcookie {
         });
     }
 
+    registerEventListener(obj, type, fn) {
+        obj.addEventListener(type, fn);
+        this.eventListeners.push({ obj: obj, type: type, fn: fn });
+    }
+
+    unregisterAllEventListeners() {
+        this.eventListeners.forEach(eventListeners__value => {
+            eventListeners__value.obj.removeEventListener(eventListeners__value.type, eventListeners__value.fn);
+        });
+    }
+
     trackScrollDepthCustom(percent, callback) {
-        var scrollDepthTriggered = false;
-        window.addEventListener('scroll', () => {
+        this.registerEventListener(window, 'scroll', () => {
             let scroll = this.scrollPos();
-            if (scrollDepthTriggered === false && scroll >= percent) {
-                scrollDepthTriggered = true;
+            if (this.scrollDepthTriggeredOnce === false && scroll >= percent) {
+                this.scrollDepthTriggeredOnce = true;
                 callback();
             }
         });

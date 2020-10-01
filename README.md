@@ -197,7 +197,7 @@ const cc = new chefcookie({
 
                         /* example: load scripts manually */
                         let script2 = document.createElement('script');
-                        let html = 'alert(\'OK\');';
+                        let html = "alert('OK');";
                         script2.innerHTML = html;
                         document.head.appendChild(script2);
 
@@ -357,11 +357,16 @@ cc.waitFor('google_recaptcha', () => {}); // also supported
 
 this only gets executed when you call `resolve()` inside your custom tracking function.
 
-#### reopening
+#### more
 
 the cookie banner is shown always, if no consent is saved.\
 if done so, it is shown again, after the cookie expired (see the `expiration` setting).\
 you can open the banner manually again by calling `cc.open()`.
+
+you can also programmatically close and destroy the chefcookie:
+
+-   `cc.close()`
+-   `cc.destroy()`
 
 #### event tracking
 

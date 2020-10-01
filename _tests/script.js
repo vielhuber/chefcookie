@@ -1,4 +1,4 @@
-const cc = new chefcookie({
+let options = {
     message: {
         de:
             '\
@@ -141,8 +141,10 @@ const cc = new chefcookie({
             }
         }
     ]
-});
+};
+let cc = null;
 document.addEventListener('DOMContentLoaded', function() {
+    cc = new chefcookie(options);
     cc.init();
     cc.waitFor('google_recaptcha', function() {
         console.log('google_recaptcha fully loaded');
@@ -158,8 +160,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         e.preventDefault();
     });
-    document.querySelector('.open_again').addEventListener('click', function(e) {
+    document.querySelector('.open').addEventListener('click', function(e) {
         cc.open();
+        e.preventDefault();
+    });
+    document.querySelector('.destroy').addEventListener('click', function(e) {
+        cc.destroy();
         e.preventDefault();
     });
 });
