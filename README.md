@@ -361,7 +361,8 @@ this only gets executed when you call `resolve()` inside your custom tracking fu
 
 the cookie banner is shown always, if no consent is saved.\
 if done so, it is shown again, after the cookie expired (see the `expiration` setting).\
-you can open the banner manually again by calling `cc.open()`.
+you can open the banner manually again by calling `cc.open()`.\
+The current status can be checked with `cc.isOpen()`.
 
 you can also programmatically close and destroy the chefcookie:
 

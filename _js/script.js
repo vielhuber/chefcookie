@@ -78,6 +78,10 @@ export default class chefcookie {
         }, 500);
     }
 
+    isOpen() {
+        return this.isOpened;
+    }
+
     animationIn() {
         if (this.config.style.layout === 'topbar') {
             document.querySelector('.chefcookie').style.marginTop =

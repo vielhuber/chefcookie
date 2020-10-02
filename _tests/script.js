@@ -170,6 +170,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// debug
+window.cc = cc;
+
 window.addEventListener('load', function() {
     cc.trackDuration();
     cc.trackScrollDepth();
