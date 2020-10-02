@@ -88,15 +88,17 @@ export default class chefcookie {
                 -1 * document.querySelector('.chefcookie').offsetHeight + 'px';
         }
         requestAnimationFrame(() => {
-            document.querySelector('.chefcookie').style.transition =
-                'opacity 0.25s ease-in-out, margin 0.25s ease-in-out';
-            document.querySelector('.chefcookie').classList.remove('chefcookie--hidden');
-            if (this.config.style.layout === 'topbar') {
-                document.querySelector('.chefcookie').style.marginTop = 0 + 'px';
-            }
-            if (this.config.style.layout === 'bottombar') {
-                document.querySelector('.chefcookie').style.marginBottom = 0 + 'px';
-            }
+            setTimeout(() => {
+                document.querySelector('.chefcookie').style.transition =
+                    'opacity 0.25s ease-in-out, margin 0.25s ease-in-out';
+                document.querySelector('.chefcookie').classList.remove('chefcookie--hidden');
+                if (this.config.style.layout === 'topbar') {
+                    document.querySelector('.chefcookie').style.marginTop = 0 + 'px';
+                }
+                if (this.config.style.layout === 'bottombar') {
+                    document.querySelector('.chefcookie').style.marginBottom = 0 + 'px';
+                }
+            }, 250);
         });
     }
 
