@@ -10,7 +10,6 @@ import helper from './_helper';
 export default class chefcookie {
     constructor(config = {}) {
         this.config = config;
-        this.alreadyLoadedOnce = [];
         this.isDestroyed = false;
         this.isOpened = false;
         if (!('chefcookie_loaded' in window)) {
@@ -121,12 +120,14 @@ export default class chefcookie {
     destroy() {
         this.close();
         this.config = {};
-        this.alreadyLoadedOnce = [];
         this.isDestroyed = true;
         this.isOpened = false;
+        /* intentionally don't reset loaded scripts */
+        /*
         if ('chefcookie_loaded' in window) {
             delete window.chefcookie_loaded;
         }
+        */
         this.unregisterAllEventListeners();
         this.eventListeners = [];
     }
@@ -960,7 +961,6 @@ export default class chefcookie {
         if (this.isLoaded(provider)) {
             return;
         }
-        this.setLoaded(provider);
         if (typeof id === 'object' && id !== null) {
             if ('exclude' in id && typeof id.exclude === 'function') {
                 if (id.exclude() === true) {
@@ -971,16 +971,16 @@ export default class chefcookie {
                 new Promise(resolve => {
                     id.accept(this, resolve, isInit);
                 }).then(() => {
-                    window.chefcookie_loaded.push(provider);
+                    this.setLoaded(provider);
                 });
             }
             if (!('accept' in id)) {
-                window.chefcookie_loaded.push(provider);
+                this.setLoaded(provider);
             }
         } else if (provider === 'analytics' || provider === 'google') {
             let script = document.createElement('script');
             script.onload = () => {
-                window.chefcookie_loaded.push(provider);
+                this.setLoaded(provider);
             };
             script.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
             document.head.appendChild(script);
@@ -995,7 +995,7 @@ export default class chefcookie {
         } else if (provider === 'tagmanager') {
             let script = document.createElement('script');
             script.onload = () => {
-                window.chefcookie_loaded.push(provider);
+                this.setLoaded(provider);
             };
             let html = '';
             html +=
@@ -1010,7 +1010,7 @@ export default class chefcookie {
         } else if (provider === 'facebook') {
             let script = document.createElement('script');
             script.onload = () => {
-                window.chefcookie_loaded.push(provider);
+                this.setLoaded(provider);
             };
             script.innerHTML =
                 "!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init', '" +
@@ -1020,14 +1020,14 @@ export default class chefcookie {
         } else if (provider === 'twitter') {
             let script = document.createElement('script');
             script.onload = () => {
-                window.chefcookie_loaded.push(provider);
+                this.setLoaded(provider);
             };
             script.src = '//platform.twitter.com/oct.js';
             document.head.appendChild(script);
         } else if (provider === 'taboola') {
             let script = document.createElement('script');
             script.onload = () => {
-                window.chefcookie_loaded.push(provider);
+                this.setLoaded(provider);
             };
             script.innerHTML =
                 "window._tfa = window._tfa || [];window._tfa.push({notify: 'event', name: 'page_view'});!function (t, f, a, x) { if (!document.getElementById(x)) { t.async = 1;t.src = a;t.id=x;f.parentNode.insertBefore(t, f); } }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/unip/" +
@@ -1037,7 +1037,7 @@ export default class chefcookie {
         } else if (provider === 'match2one') {
             let script = document.createElement('script');
             script.onload = () => {
-                window.chefcookie_loaded.push(provider);
+                this.setLoaded(provider);
             };
             script.src = 'https://secure.adnxs.com/seg?add=' + id + '&t=1';
             document.head.appendChild(script);
@@ -1047,7 +1047,7 @@ export default class chefcookie {
         } else if (provider === 'smartlook') {
             let script = document.createElement('script');
             script.onload = () => {
-                window.chefcookie_loaded.push(provider);
+                this.setLoaded(provider);
             };
             script.innerHTML =
                 "window.smartlook||(function(d) {var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);})(document);smartlook('init', '" +
@@ -1060,13 +1060,13 @@ export default class chefcookie {
             script.defer = true;
             script.async = true;
             window.initMapCC = function() {
-                window.chefcookie_loaded.push(provider);
+                this.setLoaded(provider);
             };
             document.head.appendChild(script);
         } else if (provider === 'etracker') {
             let script = document.createElement('script');
             script.onload = () => {
-                window.chefcookie_loaded.push(provider);
+                this.setLoaded(provider);
             };
             script.id = '_etLoader';
             script.type = 'text/javascript';
@@ -1093,11 +1093,11 @@ export default class chefcookie {
     }
 
     isLoaded(provider) {
-        return this.alreadyLoadedOnce.indexOf(provider) > -1;
+        return 'chefcookie_loaded' in window && window.chefcookie_loaded.indexOf(provider) > -1;
     }
 
     setLoaded(provider) {
-        this.alreadyLoadedOnce.push(provider);
+        window.chefcookie_loaded.push(provider);
     }
 
     settingsVisible() {
@@ -1271,7 +1271,7 @@ export default class chefcookie {
     waitFor(provider, callback = null) {
         return new Promise((resolve, reject) => {
             let timeout = setInterval(() => {
-                if ('chefcookie_loaded' in window && window.chefcookie_loaded.indexOf(provider) > -1) {
+                if (this.isLoaded(provider)) {
                     window.clearInterval(timeout);
                     if (callback !== null && typeof callback === 'function') {
                         callback();
