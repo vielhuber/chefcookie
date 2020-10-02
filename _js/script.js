@@ -57,6 +57,7 @@ export default class chefcookie {
         this.addStyle();
         this.buildDom();
         this.addHtmlClasses();
+        this.animationIn();
         this.bindButtons();
         this.fixMaxHeight();
     }
@@ -70,6 +71,36 @@ export default class chefcookie {
         document.documentElement.classList.remove('chefcookie--fade');
         document.documentElement.classList.remove('chefcookie--noscroll');
         document.documentElement.classList.remove('chefcookie--blur');
+        this.animationOut();
+        setTimeout(() => {
+            document.querySelector('.chefcookie').remove();
+            document.querySelector('.chefcookie-styles').remove();
+        }, 500);
+    }
+
+    animationIn() {
+        if (this.config.style.layout === 'topbar') {
+            document.querySelector('.chefcookie').style.marginTop =
+                -1 * document.querySelector('.chefcookie').offsetHeight + 'px';
+        }
+        if (this.config.style.layout === 'bottombar') {
+            document.querySelector('.chefcookie').style.marginBottom =
+                -1 * document.querySelector('.chefcookie').offsetHeight + 'px';
+        }
+        requestAnimationFrame(() => {
+            document.querySelector('.chefcookie').style.transition =
+                'opacity 0.25s ease-in-out, margin 0.25s ease-in-out';
+            document.querySelector('.chefcookie').classList.remove('chefcookie--hidden');
+            if (this.config.style.layout === 'topbar') {
+                document.querySelector('.chefcookie').style.marginTop = 0 + 'px';
+            }
+            if (this.config.style.layout === 'bottombar') {
+                document.querySelector('.chefcookie').style.marginBottom = 0 + 'px';
+            }
+        });
+    }
+
+    animationOut() {
         document.querySelector('.chefcookie').classList.add('chefcookie--hidden');
         if (this.config.style.layout === 'topbar') {
             document.querySelector('.chefcookie').style.marginTop =
@@ -79,10 +110,6 @@ export default class chefcookie {
             document.querySelector('.chefcookie').style.marginBottom =
                 -1 * document.querySelector('.chefcookie').offsetHeight + 'px';
         }
-        setTimeout(() => {
-            document.querySelector('.chefcookie').remove();
-            document.querySelector('.chefcookie-styles').remove();
-        }, 500);
     }
 
     destroy() {
@@ -222,8 +249,7 @@ export default class chefcookie {
                 left: 0;
                 right: 0;
                 bottom: 0;
-                transform: translateZ(0);
-                transition: opacity 0.25s ease-in-out, margin 0.25s ease-in-out;                
+                transform: translateZ(0);             
             }
             .chefcookie--hidden
             {
@@ -666,7 +692,7 @@ export default class chefcookie {
         document.body.insertAdjacentHTML(
             'afterbegin',
             `
-            <div class="chefcookie chefcookie--${this.config.style.layout}">
+            <div class="chefcookie chefcookie--${this.config.style.layout} chefcookie--hidden">
                 <div class="chefcookie__inner">
                     <div class="chefcookie__box">
                         <div class="chefcookie__message">${this.translate(this.config.message)}</div>
