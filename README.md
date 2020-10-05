@@ -361,13 +361,13 @@ this only gets executed when you call `resolve()` inside your custom tracking fu
 
 the cookie banner is shown always, if no consent is saved.\
 if done so, it is shown again, after the cookie expired (see the `expiration` setting).\
-you can open the banner manually again by calling `cc.open()`.\
-The current status can be checked with `cc.isOpen()`.
+you can also programmatically control chefcookie:
 
-you can also programmatically close and destroy the chefcookie:
-
--   `cc.close()`
--   `cc.destroy()`
+-   `cc.open()`: open the cookie banner manually
+-   `cc.isOpen()`: check if cookie banner is opened
+-   `cc.close()`: close the cookie banner manually
+-   `cc.destroy()`: destroy the cookie banner and all event listeners
+-   `cc.updateOptOutOptIn()`: refreshes the state of opt out / opt in buttons
 
 #### event tracking
 
