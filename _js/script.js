@@ -29,7 +29,7 @@ export default class chefcookie {
 
     init() {
         if (this.isExcluded()) {
-            this.initUpdateOptOutOptInOptIn();
+            this.updateOptOutOptIn();
             return;
         }
 
@@ -45,7 +45,7 @@ export default class chefcookie {
             this.open();
         }
 
-        this.initUpdateOptOutOptInOptIn();
+        this.updateOptOutOptIn();
     }
 
     open() {
@@ -136,7 +136,7 @@ export default class chefcookie {
         return helper.getParam('accept') === '1';
     }
 
-    initUpdateOptOutOptInOptIn() {
+    updateOptOutOptIn() {
         // legacy: support old attribute names
         if (document.querySelector('[data-disable]') !== null) {
             [].forEach.call(document.querySelectorAll('[data-disable]'), el => {
