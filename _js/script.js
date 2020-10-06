@@ -29,6 +29,7 @@ export default class chefcookie {
 
     init() {
         if (this.isExcluded()) {
+            this.bindOptOutOptIn();
             this.updateOptOutOptIn();
             return;
         }
@@ -45,6 +46,7 @@ export default class chefcookie {
             this.open();
         }
 
+        this.bindOptOutOptIn();
         this.updateOptOutOptIn();
     }
 
@@ -136,26 +138,7 @@ export default class chefcookie {
         return helper.getParam('accept') === '1';
     }
 
-    updateOptOutOptIn() {
-        // legacy: support old attribute names
-        if (document.querySelector('[data-disable]') !== null) {
-            [].forEach.call(document.querySelectorAll('[data-disable]'), el => {
-                el.setAttribute('data-cc-disable', el.getAttribute('data-disable'));
-            });
-        }
-        if (document.querySelector('[data-message]') !== null) {
-            [].forEach.call(document.querySelectorAll('[data-message]'), el => {
-                el.setAttribute('data-cc-message', el.getAttribute('data-message'));
-            });
-        }
-
-        // init opt out
-        if (document.querySelector('[data-cc-disable]') !== null) {
-            [].forEach.call(document.querySelectorAll('[data-cc-disable]'), el => {
-                el.setAttribute('data-cc-message-original', el.textContent);
-            });
-        }
-
+    bindOptOutOptIn() {
         // bind opt out
         this.registerEventListener(document, 'click', e => {
             if (
@@ -187,11 +170,34 @@ export default class chefcookie {
                 e.preventDefault();
             }
         });
-
-        this.updateOptOutOptIn();
     }
 
     updateOptOutOptIn() {
+        // legacy: support old attribute names
+        if (document.querySelector('[data-disable]') !== null) {
+            [].forEach.call(document.querySelectorAll('[data-disable]'), el => {
+                if (!el.hasAttribute('data-cc-disable')) {
+                    el.setAttribute('data-cc-disable', el.getAttribute('data-disable'));
+                }
+            });
+        }
+        if (document.querySelector('[data-message]') !== null) {
+            [].forEach.call(document.querySelectorAll('[data-message]'), el => {
+                if (!el.hasAttribute('data-cc-message')) {
+                    el.setAttribute('data-cc-message', el.getAttribute('data-message'));
+                }
+            });
+        }
+
+        // store original message
+        if (document.querySelector('[data-cc-disable]') !== null) {
+            [].forEach.call(document.querySelectorAll('[data-cc-disable]'), el => {
+                if (!el.hasAttribute('data-cc-message-original')) {
+                    el.setAttribute('data-cc-message-original', el.textContent);
+                }
+            });
+        }
+
         // update opt out
         if (document.querySelector('[data-cc-disable]') !== null) {
             [].forEach.call(document.querySelectorAll('[data-cc-disable]'), el => {
