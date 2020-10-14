@@ -329,10 +329,12 @@ export default class chefcookie {
             {
                 outline:none;
             }
+            @media (hover: hover) {
             .chefcookie__message a:hover
             {
                 opacity:0.5;
                 color: inherit;
+            }
             }
             .chefcookie__message a:active
             {
@@ -362,11 +364,13 @@ export default class chefcookie {
             {
                 outline:none;
             }
+            @media (hover: hover) {
             .chefcookie__button:hover
             {
                 opacity:0.5;
                 text-decoration:none;
                 color: inherit;
+            }
             }
             .chefcookie__button:active
             {
