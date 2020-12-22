@@ -111,10 +111,10 @@ let options = {
             }
         },
         {
-            title: { de: 'Support', en: 'Support' },
+            title: { de: 'Drittanbieter', en: 'Third-party' },
             description: {
-                de: 'Tools, die interaktive Services wie Chat-Support und Kunden-Feedback-Tools unterstützen.',
-                en: 'Tools that support interactive services such as chat support and customer feedback tools.'
+                de: 'Tools, die interaktive Services wie beispielsweise Video- und Kartendienste unterstützen.',
+                en: 'Tools that support interactive services such as video and map services.'
             },
             checked_by_default: true,
             cannot_be_modified: false,
