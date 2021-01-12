@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "1.9.8",
+    "version": "1.9.9",
     "main": "_build/script.js",
     "files": [
         "_build/*.js",
@@ -67,7 +67,6 @@
         "gulp-sourcemaps": "^2.6.5",
         "gulp-uglify": "^3.0.1",
         "gulp-vueify": "0.0.3",
-        "highlight.js": "^9.18.3",
         "hlp": "^2.7.2",
         "html-minifier": "^4.0.0",
         "ismobilejs": "^1.0.3",

@@ -50,7 +50,7 @@ let options = {
             cannot_be_modified: false,
             initial_tracking: false,
             scripts: {
-                analytics: 'UA-77674501-1',
+                analytics: 'UA-xxxxxxxx-1',
                 google_maps_iframe: {
                     accept: function() {
                         if (document.querySelector('iframe[alt-src*="google.com/maps"]') !== null) {
@@ -101,13 +101,13 @@ let options = {
             cannot_be_modified: false,
             initial_tracking: false,
             scripts: {
-                tagmanager: 'GTM-N667H38',
-                facebook: '687761448085259',
+                tagmanager: 'GTM-xxxxxxx',
+                facebook: 'xxxxxxxxxxxxxxx',
                 twitter: 'single',
-                taboola: '1117744',
-                match2one: '11538693',
-                smartlook: 'e63141d523562364440934be8a0d418f17f5123b',
-                google_maps: 'AIzaSyA6vG4lM68kiwiM8Vh2Mg24vXj057gC8QM'
+                taboola: 'xxxxxxx',
+                match2one: 'xxxxxxxx',
+                smartlook: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                google_maps: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
             }
         },
         {
