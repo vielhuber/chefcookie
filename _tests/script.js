@@ -134,7 +134,7 @@ let options = {
             scripts: {
                 etracker_custom: {
                     accept: function(cc) {
-                        cc.load('etracker', 'OBVSQs');
+                        cc.load('etracker', 'xxxxxx');
                     }
                 },
                 test_custom: {}
