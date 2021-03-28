@@ -4,8 +4,7 @@ chefcookie is a gdpr cookie solution without compromises.
 
 ## features
 
--   opt in
--   opt out
+-   opt in/out
 -   highly customizable
 -   custom event tracking
 -   duration tracking
@@ -16,6 +15,7 @@ chefcookie is a gdpr cookie solution without compromises.
 -   supports custom tracking scripts
 -   auto disable tracking for logged in wordpress users
 -   ie11 support available
+-   script grouping with optional optin on script level
 
 ## included
 
