@@ -16,10 +16,11 @@ let options = {
         '
     },
     accept_all_if_settings_closed: true,
+    scripts_selection: 'collapse',
     debug_log: true,
     expiration: 1,
     style: {
-        layout: 'topbar',
+        layout: 'overlay',
         size: 3,
         color_text: '#eee',
         color_highlight: 'blue',
@@ -33,7 +34,7 @@ let options = {
     labels: {
         accept: { de: 'Akzeptieren', en: 'Accept' },
         accept_all: { de: 'Alles akzeptieren', en: 'Accept all' },
-        settings_open: { de: 'Meine Einstellungen festlegen', en: 'Change settings' },
+        settings_open: { de: 'Einstellungen festlegen', en: 'Change settings' },
         settings_close: { de: 'Einstellungen schliessen', en: 'Close settings' }
     },
     exclude: ['/de/datenschutz', '/en/privacy', '/de/impressum', '/en/imprint'],
@@ -52,30 +53,32 @@ let options = {
             scripts: {
                 analytics: 'UA-xxxxxxxx-1',
                 google_maps_iframe: {
-                    accept: function() {
+                    accept: function (cc, resolve, isInit) {
                         if (document.querySelector('iframe[alt-src*="google.com/maps"]') !== null) {
-                            [].forEach.call(document.querySelectorAll('iframe[alt-src*="google.com/maps"]'), function(
-                                el
-                            ) {
-                                el.setAttribute('src', el.getAttribute('alt-src'));
-                            });
+                            [].forEach.call(
+                                document.querySelectorAll('iframe[alt-src*="google.com/maps"]'),
+                                function (el) {
+                                    el.setAttribute('src', el.getAttribute('alt-src'));
+                                }
+                            );
+                            resolve();
                         }
                     }
                 },
                 google_recaptcha: {
-                    accept: function(cc, resolve, isInit) {
-                        window.captchaCallback = function() {
-                            [].forEach.call(document.querySelectorAll('.recaptcha'), function(el) {
+                    accept: function (cc, resolve, isInit) {
+                        window.captchaCallback = function () {
+                            [].forEach.call(document.querySelectorAll('.recaptcha'), function (el) {
                                 var holderId = grecaptcha.render(el, {
                                     sitekey: 'XXX',
                                     badge: 'inline',
                                     type: 'image',
                                     size: 'invisible',
-                                    callback: function(token) {
+                                    callback: function (token) {
                                         HTMLFormElement.prototype.submit.call(el.closest('form'));
                                     }
                                 });
-                                el.closest('form').onsubmit = function(e) {
+                                el.closest('form').onsubmit = function (e) {
                                     e.preventDefault();
                                     grecaptcha.execute(holderId);
                                 };
@@ -97,13 +100,22 @@ let options = {
                     'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
                 en: 'Anonymous information that we collect in order to recommend useful products and services to you.'
             },
-            checked_by_default: false,
+            checked_by_default: true,
             cannot_be_modified: false,
             initial_tracking: false,
             scripts: {
                 tagmanager: 'GTM-xxxxxxx',
-                facebook: 'xxxxxxxxxxxxxxx',
-                twitter: 'single',
+                facebook: { id: 'xxxxxxxxxxxxxxx' },
+                twitter: {
+                    id: 'single',
+                    title: { de: 'Google Analytics_DE', en: 'Google Analytics_EN' },
+                    description: {
+                        de:
+                            'Die Verwendung der Analyse Cookies erfolgt zu dem Zweck, die Qualität unserer Website und ihre Inhalte zu verbessern und die Funktionsfähigkeit von eingebundenen Diensten unserer Partner sicherzustellen.',
+                        en:
+                            'Google Analytics cookies are used to improve the quality of our website and its content and to ensure the functionality of integrated services of our partners.'
+                    }
+                },
                 taboola: 'xxxxxxx',
                 match2one: 'xxxxxxxx',
                 smartlook: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
@@ -112,11 +124,7 @@ let options = {
         },
         {
             title: { de: 'Drittanbieter', en: 'Third-party' },
-            description: {
-                de: 'Tools, die interaktive Services wie beispielsweise Video- und Kartendienste unterstützen.',
-                en: 'Tools that support interactive services such as video and map services.'
-            },
-            checked_by_default: true,
+            checked_by_default: false,
             cannot_be_modified: false,
             initial_tracking: false
         },
@@ -130,11 +138,12 @@ let options = {
             },
             checked_by_default: true,
             cannot_be_modified: true,
-            initial_tracking: true,
+            initial_tracking: false,
             scripts: {
                 etracker_custom: {
-                    accept: function(cc) {
+                    accept: function (cc, resolve, isInit) {
                         cc.load('etracker', 'xxxxxx');
+                        resolve();
                     }
                 },
                 test_custom: {}
@@ -143,14 +152,14 @@ let options = {
     ]
 };
 let cc = null;
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     cc = new chefcookie(options);
     cc.init();
-    cc.waitFor('google_recaptcha', function() {
+    cc.waitFor('google_recaptcha', function () {
         console.log('google_recaptcha fully loaded');
     });
     document.querySelector('.manual').innerText = 'Akzeptieren/Ablehnen';
-    document.querySelector('.manual').addEventListener('click', function(e) {
+    document.querySelector('.manual').addEventListener('click', function (e) {
         if (cc.isAccepted('analytics')) {
             cc.decline('analytics');
             e.currentTarget.innerText = 'Akzeptieren';
@@ -160,29 +169,37 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         e.preventDefault();
     });
-    document.querySelector('.open').addEventListener('click', function(e) {
+    document.querySelector('.open').addEventListener('click', function (e) {
         cc.open();
         e.preventDefault();
     });
-    document.querySelector('.destroy').addEventListener('click', function(e) {
+    document.querySelector('.destroy').addEventListener('click', function (e) {
         cc.destroy();
         e.preventDefault();
     });
+    window.setInterval(function () {
+        let cookies = document.cookie.split(';');
+        let html = '';
+        for (var i = 1; i <= cookies.length; i++) {
+            html += cookies[i - 1] + '<br/>';
+        }
+        document.querySelector('.cookie-list').innerHTML = html;
+    }, 1000);
 });
 
 // debug
 window.cc = cc;
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     cc.trackDuration();
     cc.trackScrollDepth();
-    cc.trackDurationCustom(60, function() {
+    cc.trackDurationCustom(60, function () {
         cc.eventAnalytics('60s');
     });
-    cc.trackScrollDepthCustom(25, function() {
+    cc.trackScrollDepthCustom(25, function () {
         cc.eventAnalytics('25%');
     });
-    document.querySelector('.conversion').addEventListener('click', function(e) {
+    document.querySelector('.conversion').addEventListener('click', function (e) {
         cc.eventAnalytics('custom_category', 'custom_action');
         cc.eventAnalytics('custom_action');
         cc.eventFacebook('custom_action_name');

@@ -3,7 +3,7 @@
     "tabWidth": 4,
     "printWidth": 120,
     "trailingComma": "none",
-    "trailingCommaPHP": "none",
+    "trailingCommaPHP": false,
     "phpVersion": "7.2",
     "arrowParens": "avoid"
 }

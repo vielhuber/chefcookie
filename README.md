@@ -66,6 +66,7 @@ const cc = new chefcookie({
         `
     },
     accept_all_if_settings_closed: true,
+    scripts_selection: 'collapse', // false|true|'collapse'
     debug_log: false,
     expiration: 7, // in days
     style: {
@@ -83,7 +84,7 @@ const cc = new chefcookie({
     labels: {
         accept: { de: 'Akzeptieren', en: 'Accept' },
         accept_all: { de: 'Alles akzeptieren', en: 'Accept all' },
-        settings_open: { de: 'Meine Einstellungen festlegen', en: 'Change settings' },
+        settings_open: { de: 'Einstellungen festlegen', en: 'Change settings' },
         settings_close: { de: 'Einstellungen schliessen', en: 'Close settings' }
     },
     exclude: [
@@ -110,7 +111,18 @@ const cc = new chefcookie({
             cannot_be_modified: false,
             initial_tracking: false,
             scripts: {
-                analytics: 'UA-xxxxxxxx-1'
+                analytics: 'UA-xxxxxxxx-1',
+                // extended syntax
+                analytics: {
+                    id: 'UA-xxxxxxxx-1',
+                    title: { de: 'Google Analytics', en: 'Google Analytics' },
+                    description: {
+                        de:
+                            'Die Verwendung der Analyse Cookies erfolgt zu dem Zweck, die Qualität unserer Website und ihre Inhalte zu verbessern und die Funktionsfähigkeit von eingebundenen Diensten unserer Partner sicherzustellen.',
+                        en:
+                            'Google Analytics cookies are used to improve the quality of our website and its content and to ensure the functionality of integrated services of our partners.'
+                    }
+                }
             }
         },
         {
@@ -207,7 +219,9 @@ const cc = new chefcookie({
                         };
                         cc.loadJs('https://www.google.com/recaptcha/api.js?onload=captchaCallback&amp;render=explicit');
 
-                        /* example: if you don't want the logic to be in here, just resolve() and use waitFor outside this file */
+                        /*
+                        important: always call resolve to show that the script fully has loaded!
+                        if you don't want the accept logic to be inside this function, only call resolve() and use waitFor outside this function to fire further actions */
                         resolve();
 
                         /* some other helpers */
@@ -217,7 +231,9 @@ const cc = new chefcookie({
                     },
                     exclude: () => {
                         return document.cookie !== undefined && document.cookie.indexOf('wp-settings-time') > -1;
-                    }
+                    },
+                    title: { de: '...', en: '...' },
+                    description: { de: '...', en: '...' }
                 }
             }
         }
