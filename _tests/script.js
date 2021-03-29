@@ -119,6 +119,7 @@ let options = {
                 taboola: 'xxxxxxx',
                 match2one: 'xxxxxxxx',
                 smartlook: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                crazyegg: 'xxxx/xxxx',
                 google_maps: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
             }
         },

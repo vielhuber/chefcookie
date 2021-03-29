@@ -27,6 +27,7 @@ chefcookie is a gdpr cookie solution without compromises.
 -   [match2one ads](https://www.match2one.com)
 -   [etracker](https://www.etracker.com)
 -   [smartlook](https://www.smartlook.com)
+-   [crazy egg](https://www.crazyegg.com)
 -   [google maps](https://developers.google.com/maps/documentation/javascript/tutorial)
 
 ## installation
@@ -143,6 +144,7 @@ const cc = new chefcookie({
                 match2one: 'xxxxxxxx',
                 etracker: 'xxxxxx',
                 smartlook: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                crazyegg: 'xxxx/xxxx',
                 google_maps: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
             }
         },
@@ -181,6 +183,7 @@ const cc = new chefcookie({
                         cc.load('match2one', 'xxxxxxxx');
                         cc.load('etracker', 'xxxxxx');
                         cc.load('smartlook', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+                        cc.load('crazyegg', 'xxxx/xxxx');
                         cc.load('google_maps', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
 
                         /* example: load (multiple) custom javascripts */
@@ -277,6 +280,7 @@ its recommended to place those kind of links inside your privacy page:
 <a href="#" data-cc-disable="match2one" data-cc-message="Match2One Pixel aktivieren">Match2One Pixel deaktivieren</a>
 <a href="#" data-cc-disable="etracker" data-cc-message="etracker aktivieren">etracker deaktivieren</a>
 <a href="#" data-cc-disable="smartlook" data-cc-message="Smartlook aktivieren">Smartlook deaktivieren</a>
+<a href="#" data-cc-disable="crazyegg" data-cc-message="Crazy Egg aktivieren">Crazy Egg deaktivieren</a>
 <a href="#" data-cc-disable="google_maps" data-cc-message="Google Maps aktivieren">Google Maps deaktivieren</a>
 ```
 
@@ -326,6 +330,7 @@ the following keywords as keys are reserved:
 -   `match2one`
 -   `etracker`
 -   `smartlook`
+-   `crazyegg`
 -   `google_maps`
 
 if you provide strings as values, chefcookie interprets them appropriately. chefcookie then loads the libraries with reasonable default settings. however, you can execute your own functions in either overwriting the values of these reserved keywords (and provide an object) or use any other keyword.

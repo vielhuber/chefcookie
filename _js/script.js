@@ -297,7 +297,7 @@ export default class chefcookie {
             }
             .chefcookie--hidden
             {
-                opacity:0;
+                opacity: 0;
                 pointer-events:none;
             }
             .chefcookie__inner
@@ -359,13 +359,13 @@ export default class chefcookie {
             @media (hover: hover) {
             .chefcookie__message a:hover
             {
-                opacity:0.5;
+                opacity: 0.5;
                 color: inherit;
             }
             }
             .chefcookie__message a:active
             {
-                opacity:0.1;
+                opacity: 0.1;
                 color: inherit;
             }
             .chefcookie__buttons
@@ -394,14 +394,14 @@ export default class chefcookie {
             @media (hover: hover) {
             .chefcookie__button:hover
             {
-                opacity:0.5;
+                opacity: 0.5;
                 text-decoration:none;
                 color: inherit;
             }
             }
             .chefcookie__button:active
             {
-                opacity:0.1;
+                opacity: 0.1;
                 color: inherit;
             }
             .chefcookie__buttons:after
@@ -492,7 +492,7 @@ export default class chefcookie {
                 this.config.style.show_disabled_checkbox === undefined ||
                 this.config.style.show_disabled_checkbox === false
                     ? `display:none;`
-                    : `opacity: 0.5 !important;`
+                    : `opacity: 0.75 !important;`
             }
             }
             .chefcookie__group-checkbox-icon
@@ -522,7 +522,7 @@ export default class chefcookie {
                 font-weight: bold;
                 font-size: 1em;
                 line-height: 2;
-                opacity:0.25;
+                opacity: 0.25;
                 color: ${this.config.style.color_text ?? '#595f60'};
             }
             .chefcookie__group-checkbox-icon:after
@@ -544,11 +544,11 @@ export default class chefcookie {
             }
             .chefcookie__group-checkbox[data-status="0"] ~ *
             {
-                opacity:0.5;
+                opacity: 0.75;
             }
             .chefcookie__group-checkbox[data-status="1"] ~ .chefcookie__group-checkbox-icon
             {
-                opacity:0.75;
+                opacity: 0.85;
             }
             .chefcookie__group-checkbox[data-status="1"] ~ .chefcookie__group-checkbox-icon:after
             {
@@ -638,7 +638,7 @@ export default class chefcookie {
                 this.config.style.show_disabled_checkbox === undefined ||
                 this.config.style.show_disabled_checkbox === false
                     ? `display:none;`
-                    : `opacity: 0.5 !important;`
+                    : `opacity: 0.75 !important;`
             }
             }
             .chefcookie__script-checkbox-icon
@@ -667,7 +667,7 @@ export default class chefcookie {
                 text-align: center;
                 font-size: 0.7em;
                 line-height: 2;
-                opacity:0.25;
+                opacity: 0.25;
                 color: ${this.config.style.color_text ?? '#595f60'};
             }
             .chefcookie__script-checkbox-icon:after
@@ -685,7 +685,7 @@ export default class chefcookie {
             }
             .chefcookie__script-checkbox ~ *
             {
-                opacity:0.5;
+                opacity: 0.75;
                 transition: all ${this.animationSpeed / 1000}s ease-in-out;
             }
             .chefcookie__script-checkbox:checked ~ *
@@ -1482,6 +1482,15 @@ export default class chefcookie {
                 "');";
             document.head.appendChild(script);
             this.setLoaded(provider);
+        }
+
+        if (provider === 'crazyegg') {
+            let script = document.createElement('script');
+            script.onload = () => {
+                this.setLoaded(provider);
+            };
+            script.src = '//script.crazyegg.com/pages/scripts/' + id + '.js';
+            document.head.appendChild(script);
         }
 
         if (provider === 'google_maps') {
