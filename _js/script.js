@@ -577,7 +577,8 @@ export default class chefcookie {
                 font-size:0.9em;
                 text-align:justify;
             }
-            .chefcookie__group-collapse {
+            .chefcookie__group-collapse,
+            .chefcookie__group-collapse:focus {
                 color:inherit;
                 text-decoration:underline;
                 padding-top: 0.5em;
