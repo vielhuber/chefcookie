@@ -587,7 +587,7 @@ export default class chefcookie {
             @media (hover: hover) {
             .chefcookie__group-collapse:hover
             {
-                opacity: 0.75;
+                opacity: 0.9;
                 color: inherit;
                 text-decoration:underline;
             }
