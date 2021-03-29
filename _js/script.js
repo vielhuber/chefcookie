@@ -34,6 +34,7 @@ export default class chefcookie {
         };
         this.eventListeners = [];
         this.animationSpeed = 300;
+        this.scrollPosition = 0;
     }
 
     init() {
@@ -80,6 +81,9 @@ export default class chefcookie {
         document.documentElement.classList.remove('chefcookie--visible');
         document.documentElement.classList.remove('chefcookie--fade');
         document.documentElement.classList.remove('chefcookie--noscroll');
+        // reset scroll position
+        document.body.style.top = 'auto';
+        window.scrollTo(0, this.scrollPosition);
         document.documentElement.classList.remove('chefcookie--blur');
         this.animationOut();
         setTimeout(() => {
@@ -735,7 +739,7 @@ export default class chefcookie {
                 text-align: justify;
             }
 
-            .chefcookie--noscroll
+            .chefcookie--noscroll body
             {
                 position:fixed;
                 width: 100%;
@@ -903,6 +907,9 @@ export default class chefcookie {
     addHtmlClasses() {
         document.documentElement.classList.add('chefcookie--visible');
         if (this.config.style.noscroll == true) {
+            // preserve scroll position
+            this.scrollPosition = window.pageYOffset;
+            document.body.style.top = -this.scrollPosition + 'px';
             document.documentElement.classList.add('chefcookie--noscroll');
         }
         if (this.config.style.fade == true) {
