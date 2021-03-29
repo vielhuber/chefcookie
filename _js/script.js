@@ -583,7 +583,14 @@ export default class chefcookie {
                 padding-top: 0.5em;
                 display: block;
             }
-
+            @media (hover: hover) {
+            .chefcookie__group-collapse:hover
+            {
+                opacity: 0.5;
+                color: inherit;
+                text-decoration:underline;
+            }
+            }
             .chefcookie__scripts
             {
                 list-style-type:none;
