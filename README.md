@@ -381,8 +381,16 @@ this only gets executed when you call `resolve()` inside your custom tracking fu
 #### more
 
 the cookie banner is shown always, if no consent is saved.\
-if done so, it is shown again, after the cookie expired (see the `expiration` setting).\
-you can also programmatically control chefcookie:
+if done so, it is shown again, after the cookie expired (see the `expiration`-setting).
+
+it is recommended to include a (re)opening link in the privacy policy, for example.\
+here you can also use the following code:
+
+```html
+<a href="#" data-cc-open>Consent-Einstellungen bearbeiten</a>
+```
+
+you can programmatically control chefcookie via javascript:
 
 -   `cc.open()`: open the cookie banner manually
 -   `cc.isOpen()`: check if cookie banner is opened

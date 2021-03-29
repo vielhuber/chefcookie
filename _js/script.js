@@ -201,6 +201,17 @@ export default class chefcookie {
                 e.preventDefault();
             }
         });
+
+        // bind open
+        this.registerEventListener(document, 'click', e => {
+            if (
+                e.target.hasAttribute('data-cc-open') ||
+                (e.target.tagName !== 'A' && e.target.closest('[data-cc-open]'))
+            ) {
+                this.open();
+                e.preventDefault();
+            }
+        });
     }
 
     updateOptOutOptIn() {
