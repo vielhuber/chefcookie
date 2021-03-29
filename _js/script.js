@@ -82,8 +82,10 @@ export default class chefcookie {
         document.documentElement.classList.remove('chefcookie--fade');
         document.documentElement.classList.remove('chefcookie--noscroll');
         // reset scroll position
-        document.body.style.top = 'auto';
-        window.scrollTo(0, this.scrollPosition);
+        if (this.config.style.layout !== 'topbar') {
+            document.body.style.top = 'auto';
+            window.scrollTo(0, this.scrollPosition);
+        }
         document.documentElement.classList.remove('chefcookie--blur');
         this.animationOut();
         setTimeout(() => {
@@ -908,8 +910,10 @@ export default class chefcookie {
         document.documentElement.classList.add('chefcookie--visible');
         if (this.config.style.noscroll == true) {
             // preserve scroll position
-            this.scrollPosition = window.pageYOffset;
-            document.body.style.top = -this.scrollPosition + 'px';
+            if (this.config.style.layout !== 'topbar') {
+                this.scrollPosition = window.pageYOffset;
+                document.body.style.top = -this.scrollPosition + 'px';
+            }
             document.documentElement.classList.add('chefcookie--noscroll');
         }
         if (this.config.style.fade == true) {
