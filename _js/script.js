@@ -331,8 +331,8 @@ export default class chefcookie {
             .chefcookie__box
             {
                 font-size: ${15 + (this.config.style.size - 3)}px;
-                color:${this.config.style.color_text ?? '#595f60'};
                 line-height:1.6;
+                color:${this.config.style.color_text ?? '#595f60'};
                 width: 100%;
                 margin: 0 auto;
                 display: inline-block;
@@ -347,19 +347,21 @@ export default class chefcookie {
             }
             .chefcookie__message
             {
-                margin-bottom:1em;
+                margin-bottom:1.5em;
                 text-align:justify;
             }
             .chefcookie__message h2
             {
                 margin-bottom:0.5em;
                 font-size:2em;
+                line-height:1.4;
                 text-transform:uppercase;
                 font-weight:700;
                 text-align:left;
             }
             .chefcookie__message p {
                 font-size: 1em;
+                line-height:1.6;
             }
             .chefcookie__message a,
             .chefcookie__message a:focus
@@ -368,6 +370,7 @@ export default class chefcookie {
                 transition: all ${this.animationSpeed / 1000}s ease-in-out;
                 text-decoration:underline;
                 font-size: 1em;
+                line-height:1.6;
             }
             .chefcookie__message a:focus
             {
@@ -477,6 +480,7 @@ export default class chefcookie {
                 display: block;
                 font-weight:bold;
                 font-size:1.2em;
+                line-height:1.7;
                 text-transform:uppercase;
             }
             .chefcookie__group-label
@@ -485,6 +489,8 @@ export default class chefcookie {
                 display:block;
                 width:100%;
                 height:100%;
+                font-size:1em;
+                line-height:1.6;
             }
             .chefcookie__group-label:after
             {
@@ -537,7 +543,7 @@ export default class chefcookie {
                 transition: all ${this.animationSpeed / 1000}s ease-in-out;
                 text-align: center;
                 font-weight: bold;
-                font-size: 1em;
+                font-size: 1em;                
                 line-height: 2;
                 opacity: 0.25;
                 color: ${this.config.style.color_text ?? '#595f60'};
@@ -592,6 +598,7 @@ export default class chefcookie {
                 padding-top:1em;
                 display: block;
                 font-size:0.9em;
+                line-height:1.5;
                 text-align:justify;
             }
             .chefcookie__group-collapse,
@@ -738,6 +745,7 @@ export default class chefcookie {
                 padding-bottom: 0.5em;
                 display: block;
                 font-size: 0.8em;
+                line-height:1.4;
                 text-align: justify;
             }
 
@@ -880,6 +888,7 @@ export default class chefcookie {
                 .chefcookie__message h2
                 {
                     font-size:1.5em;
+                    line-height:2;
                 }
                 .chefcookie__button,
                 .chefcookie__button:focus
