@@ -600,6 +600,7 @@ export default class chefcookie {
                 font-size:0.9em;
                 line-height:1.5;
                 text-align:justify;
+                font-weight: normal;
             }
             .chefcookie__group-collapse,
             .chefcookie__group-collapse:focus {
