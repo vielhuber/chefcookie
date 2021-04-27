@@ -25,6 +25,7 @@ chefcookie is a gdpr cookie solution without compromises.
 -   [twitter ads](https://ads.twitter.com)
 -   [taboola ads](https://www.taboola.com)
 -   [match2one ads](https://www.match2one.com)
+-   [linkedin](https://business.linkedin.com/marketing-solutions/conversion-tracking)
 -   [etracker](https://www.etracker.com)
 -   [smartlook](https://www.smartlook.com)
 -   [crazy egg](https://www.crazyegg.com)
@@ -142,6 +143,7 @@ const cc = new chefcookie({
                 twitter: 'single',
                 taboola: 'xxxxxxx',
                 match2one: 'xxxxxxxx',
+                linkedin: 'xxxxxxx',
                 etracker: 'xxxxxx',
                 smartlook: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
                 crazyegg: 'xxxx/xxxx',
@@ -181,6 +183,7 @@ const cc = new chefcookie({
                         cc.load('twitter', 'single');
                         cc.load('taboola', 'xxxxxxx');
                         cc.load('match2one', 'xxxxxxxx');
+                        cc.load('linkedin', 'xxxxxxx');
                         cc.load('etracker', 'xxxxxx');
                         cc.load('smartlook', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
                         cc.load('crazyegg', 'xxxx/xxxx');
@@ -278,6 +281,7 @@ its recommended to place those kind of links inside your privacy page:
 <a href="#" data-cc-disable="twitter" data-cc-message="Twitter Pixel aktivieren">Twitter Pixel deaktivieren</a>
 <a href="#" data-cc-disable="taboola" data-cc-message="Taboola Pixel aktivieren">Taboola Pixel deaktivieren</a>
 <a href="#" data-cc-disable="match2one" data-cc-message="Match2One Pixel aktivieren">Match2One Pixel deaktivieren</a>
+<a href="#" data-cc-disable="linkedin" data-cc-message="LinkedIn Pixel aktivieren">LinkedIn Pixel deaktivieren</a>
 <a href="#" data-cc-disable="etracker" data-cc-message="etracker aktivieren">etracker deaktivieren</a>
 <a href="#" data-cc-disable="smartlook" data-cc-message="Smartlook aktivieren">Smartlook deaktivieren</a>
 <a href="#" data-cc-disable="crazyegg" data-cc-message="Crazy Egg aktivieren">Crazy Egg deaktivieren</a>
@@ -328,6 +332,7 @@ the following keywords as keys are reserved:
 -   `twitter`
 -   `taboola`
 -   `match2one`
+-   `linkedin`
 -   `etracker`
 -   `smartlook`
 -   `crazyegg`
@@ -425,6 +430,7 @@ window.addEventListener('load', () => {
         cc.eventTwitter('conversion_id');
         cc.eventTaboola('custom_event_name');
         cc.eventMatch2one('id=xxxxxx&seg=xxxxxx');
+        cc.eventLinkedin('id', 'conversion_id');
         cc.eventEtracker('custom_category', 'custom_action');
         cc.eventEtracker('custom_action');
         e.preventDefault();

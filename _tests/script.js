@@ -118,6 +118,7 @@ let options = {
                 },
                 taboola: 'xxxxxxx',
                 match2one: 'xxxxxxxx',
+                linkedin: 'xxxxxxx',
                 smartlook: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
                 crazyegg: 'xxxx/xxxx',
                 google_maps: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
@@ -207,6 +208,7 @@ window.addEventListener('load', function () {
         cc.eventTwitter('conversion_id');
         cc.eventTaboola('custom_action_name');
         cc.eventMatch2one('id=xxxxxx&seg=xxxxxx');
+        cc.eventLinkedin('id', 'conversion_id');
         cc.eventEtracker('custom_category', 'custom_action');
         cc.eventEtracker('custom_action');
         e.preventDefault();

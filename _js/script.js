@@ -1514,6 +1514,31 @@ export default class chefcookie {
             document.head.appendChild(script);
         }
 
+        if (provider === 'linkedin') {
+            let script = document.createElement('script');
+            script.innerHTML = `
+                _linkedin_partner_id = "${id}";
+                window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+                window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+            `;
+            document.body.appendChild(script);
+            script = document.createElement('script');
+            script.innerHTML = `
+                (function(){var s = document.getElementsByTagName("script")[0];
+                var b = document.createElement("script");
+                b.type = "text/javascript";b.async = true;
+                b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+                s.parentNode.insertBefore(b, s);})();
+            `;
+            document.body.appendChild(script);
+            script = document.createElement('noscript');
+            script.innerHTML = `
+                <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=${id}&fmt=gif" />
+            `;
+            document.body.appendChild(script);
+            this.setLoaded(provider);
+        }
+
         if (provider === 'smartlook') {
             let script = document.createElement('script');
             script.innerHTML =
@@ -1684,6 +1709,18 @@ export default class chefcookie {
         script.src = 'https://secure.adnxs.com/px?' + id + '&t=1';
         document.head.appendChild(script);
         this.log('match2one ' + id);
+    }
+
+    eventLinkedin(id, conversion_id) {
+        document.body.insertAdjacentHTML(
+            'beforeend',
+            '<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=' +
+                id +
+                '&conversionId=' +
+                conversion_id +
+                '&fmt=gif" />'
+        );
+        this.log('linkedin ' + id + ' ' + conversion_id);
     }
 
     eventEtracker(category, action) {
