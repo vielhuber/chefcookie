@@ -1539,7 +1539,7 @@ export default class chefcookie {
                 id +
                 "'); gtag('config', '" +
                 id +
-                "', { 'anonymize_ip': true, cookie_flags: 'max-age=7200;secure;samesite=none' });";
+                "', { 'anonymize_ip': true, cookie_flags: 'SameSite=None;Secure' });";
             document.head.appendChild(script);
         }
 
