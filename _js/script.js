@@ -404,8 +404,18 @@ export default class chefcookie {
                 transition: all ${this.animationSpeed / 1000}s ease-in-out;
                 text-transform: uppercase;
                 float: left;
-                min-width: 21em;
                 text-align: center;
+                min-width: 21em;
+                margin-right:3em;
+            }
+            .chefcookie__buttons--count-3 .chefcookie__button,
+            .chefcookie__buttons--count-3 .chefcookie__button:focus {
+                min-width:15rem;
+                margin-right:1em;
+            }
+            .chefcookie__button:last-child
+            {
+                margin-right:0;
             }
             .chefcookie__button:focus
             {
@@ -429,10 +439,6 @@ export default class chefcookie {
                 clear:both;
                 display:table;
                 content:"";
-            }
-            .chefcookie__button--settings
-            {
-                margin-right:3em;
             }
             ${
                 this.config.style.highlight_accept === undefined || this.config.style.highlight_accept === true
@@ -624,6 +630,9 @@ export default class chefcookie {
                 overflow:hidden;
                 transition: height ${this.animationSpeed / 1000}s ease-out;
             }
+            .chefcookie__scripts--visible {
+                height:auto;
+            }
             .chefcookie__script {
                 margin-bottom:0.5em;
             }
@@ -738,6 +747,7 @@ export default class chefcookie {
                 left: 27%;
                 width: 2px;
             }
+
             .chefcookie__script-description
             {
                 width: 100%;
@@ -748,6 +758,39 @@ export default class chefcookie {
                 font-size: 0.8em;
                 line-height:1.4;
                 text-align: justify;
+            }
+            .chefcookie__script-description-collapse,
+            .chefcookie__script-description-collapse:focus {
+                color:inherit;
+                text-decoration:underline;
+                padding-top: 0.25em;
+                padding-bottom: 0.5em;
+                display: block;
+            }
+            @media (hover: hover) {
+            .chefcookie__script-description-collapse:hover
+            {
+                opacity: 0.9;
+                color: inherit;
+                text-decoration:underline;
+            }
+            }
+            .chefcookie__script-description-content {
+                height:0;
+                overflow:hidden;
+                transition: height ${this.animationSpeed / 1000}s ease-out;
+            }
+            .chefcookie__script-description-content > *:not(:last-child) {
+                margin-bottom:0.5em;
+            }
+            .chefcookie__script-description-content table {
+                width:100%;
+                border-collapse: collapse;
+            }
+            .chefcookie__script-description-content table td {
+                border:1px solid ${this.hexToRgbaStr(this.config.style.color_text ?? '#595f60', 0.1)};
+                padding: 0.3em 0.5em;
+                vertical-align:top;
             }
 
             .chefcookie--noscroll body
@@ -880,6 +923,18 @@ export default class chefcookie {
             .chefcookie--topbar .chefcookie__groups--count-2 .chefcookie__group { width: 48%; }
             .chefcookie--bottombar .chefcookie__groups--count-1 .chefcookie__group,
             .chefcookie--topbar .chefcookie__groups--count-1 .chefcookie__group { width: 100%; }
+            @media screen and (max-width: 940px)
+            {
+                .chefcookie__button,
+                .chefcookie__button:focus
+                {
+                    float: none;
+                    margin: 0 0 1em;
+                    text-align: center;
+                    width: 100%;
+                    min-width:0;
+                }
+            }
             @media screen and (max-width: 840px)
             {
                 .chefcookie__box
@@ -890,15 +945,6 @@ export default class chefcookie {
                 {
                     font-size:1.5em;
                     line-height:2;
-                }
-                .chefcookie__button,
-                .chefcookie__button:focus
-                {
-                    float: none;
-                    margin: 0 0 1em;
-                    text-align: center;
-                    width: 100%;
-                    min-width:0;
                 }
                 .chefcookie .chefcookie__group,
                 .chefcookie--overlay .chefcookie__group,
@@ -1030,17 +1076,22 @@ export default class chefcookie {
                                                                         : j
                                                                 }</span>
                                                                 <span class="chefcookie__script-checkbox-icon"></span>
-                                                                ${
-                                                                    typeof group.scripts[j] === 'object' &&
-                                                                    group.scripts[j] !== null &&
-                                                                    'description' in group.scripts[j] &&
-                                                                    group.scripts[j].description != ''
-                                                                        ? `<span class="chefcookie__script-description">` +
-                                                                          this.translate(group.scripts[j].description) +
-                                                                          `</span>`
-                                                                        : ``
-                                                                }
                                                             </label>
+                                                            ${
+                                                                typeof group.scripts[j] === 'object' &&
+                                                                group.scripts[j] !== null &&
+                                                                'description' in group.scripts[j] &&
+                                                                group.scripts[j].description != ''
+                                                                    ? '<div class="chefcookie__script-description">' +
+                                                                      '<a href="#" class="chefcookie__script-description-collapse">' +
+                                                                      this.getLabel('details_open') +
+                                                                      '</a>' +
+                                                                      '<div class="chefcookie__script-description-content">' +
+                                                                      this.translate(group.scripts[j].description) +
+                                                                      '</div>' +
+                                                                      '</div>'
+                                                                    : ''
+                                                            }
                                                         </li>
                                                     `
                                                         )
@@ -1055,7 +1106,9 @@ export default class chefcookie {
                                     .join('')}
                             </ul>
                         </div>
-                        <div class="chefcookie__buttons">
+                        <div class="chefcookie__buttons chefcookie__buttons--count-${
+                            'show_decline_button' in this.config && this.config.show_decline_button === true ? '3' : '2'
+                        }">
                             <a href="#chefcookie__settings" class="chefcookie__button chefcookie__button--settings">${this.getLabel(
                                 'settings_open'
                             )}</a>
@@ -1065,6 +1118,15 @@ export default class chefcookie {
                                     ? 'accept'
                                     : 'accept_all'
                             )}</a>
+                            ${
+                                'show_decline_button' in this.config && this.config.show_decline_button === true
+                                    ? `
+                                <a href="#chefcookie__decline" class="chefcookie__button chefcookie__button--decline">${this.getLabel(
+                                    'decline'
+                                )}</a>
+                            `
+                                    : ''
+                            }
                         </div>
                     </div>
                 </div>
@@ -1176,6 +1238,21 @@ export default class chefcookie {
                 });
             });
         }
+        if (document.querySelector('.chefcookie__script-description-collapse') !== null) {
+            [].forEach.call(document.querySelectorAll('.chefcookie__script-description-collapse'), el => {
+                this.registerEventListener(el, 'click', e => {
+                    let desc = el.closest('.chefcookie__script-description');
+                    if (!this.scriptDescriptionVisible(desc)) {
+                        this.showScriptDescription(desc);
+                        this.switchScriptDescriptionLabelsOpen(desc);
+                    } else {
+                        this.hideScriptDescription(desc);
+                        this.switchScriptDescriptionLabelsClose(desc);
+                    }
+                    e.preventDefault();
+                });
+            });
+        }
     }
 
     switchSettingsLabelsOpen() {
@@ -1198,6 +1275,14 @@ export default class chefcookie {
 
     switchScriptsLabelsClose(group) {
         group.querySelector('.chefcookie__group-collapse').textContent = this.getLabel('settings_open');
+    }
+
+    switchScriptDescriptionLabelsOpen(desc) {
+        desc.querySelector('.chefcookie__script-description-collapse').textContent = this.getLabel('details_close');
+    }
+
+    switchScriptDescriptionLabelsClose(desc) {
+        desc.querySelector('.chefcookie__script-description-collapse').textContent = this.getLabel('details_open');
     }
 
     checkAllOptIns() {
@@ -1633,8 +1718,8 @@ export default class chefcookie {
 
     showScripts(group) {
         let el = group.querySelector('.chefcookie__scripts');
-        el.classList.add('chefcookie__scripts--visible');
         el.style.height = el.scrollHeight + 'px';
+        el.classList.add('chefcookie__scripts--visible');
         setTimeout(() => {
             if (el.classList.contains('chefcookie__scripts--visible')) {
                 el.style.height = 'auto';
@@ -1645,8 +1730,35 @@ export default class chefcookie {
 
     hideScripts(group) {
         let el = group.querySelector('.chefcookie__scripts');
-        el.classList.remove('chefcookie__scripts--visible');
         el.style.height = el.scrollHeight + 'px';
+        el.classList.remove('chefcookie__scripts--visible');
+        setTimeout(() => {
+            el.style.height = 0;
+        }, 30);
+    }
+
+    scriptDescriptionVisible(desc) {
+        return desc
+            .querySelector('.chefcookie__script-description-content')
+            .classList.contains('chefcookie__script-description-content--visible');
+    }
+
+    showScriptDescription(desc) {
+        let el = desc.querySelector('.chefcookie__script-description-content');
+        el.style.height = el.scrollHeight + 'px';
+        el.classList.add('chefcookie__script-description-content--visible');
+        setTimeout(() => {
+            if (el.classList.contains('chefcookie__script-description-content--visible')) {
+                el.style.height = 'auto';
+            }
+        }, this.animationSpeed);
+        this.fixMaxHeight();
+    }
+
+    hideScriptDescription(desc) {
+        let el = desc.querySelector('.chefcookie__script-description-content');
+        el.style.height = el.scrollHeight + 'px';
+        el.classList.remove('chefcookie__script-description-content--visible');
         setTimeout(() => {
             el.style.height = 0;
         }, 30);
@@ -1889,6 +2001,29 @@ export default class chefcookie {
             return;
         }
         console.log(msg);
+    }
+
+    hexToRgb(hex) {
+        let shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+        hex = hex.replace(shorthandRegex, (m, r, g, b) => {
+            return r + r + g + g + b + b;
+        });
+        let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result
+            ? {
+                  r: parseInt(result[1], 16),
+                  g: parseInt(result[2], 16),
+                  b: parseInt(result[3], 16)
+              }
+            : null;
+    }
+
+    hexToRgbaStr(hex, opacity) {
+        let rgb = this.hexToRgb(hex);
+        if (rgb === null) {
+            return '';
+        }
+        return 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + opacity + ')';
     }
 }
 

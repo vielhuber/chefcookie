@@ -16,6 +16,7 @@ let options = {
         '
     },
     accept_all_if_settings_closed: true,
+    show_decline_button: true,
     scripts_selection: 'collapse',
     debug_log: true,
     expiration: 1,
@@ -35,7 +36,10 @@ let options = {
         accept: { de: 'Akzeptieren', en: 'Accept' },
         accept_all: { de: 'Alles akzeptieren', en: 'Accept all' },
         settings_open: { de: 'Einstellungen festlegen', en: 'Change settings' },
-        settings_close: { de: 'Einstellungen schliessen', en: 'Close settings' }
+        settings_close: { de: 'Einstellungen schliessen', en: 'Close settings' },
+        decline: { de: 'Nur erforderliche Cookies', en: 'Only necessary cookies' },
+        details_open: { de: 'Details anzeigen', en: 'Show details' },
+        details_close: { de: 'Details schliessen', en: 'Close details' }
     },
     exclude: ['/de/datenschutz', '/en/privacy', '/de/impressum', '/en/imprint'],
     settings: [
@@ -113,7 +117,18 @@ let options = {
                         de:
                             'Die Verwendung der Analyse Cookies erfolgt zu dem Zweck, die Qualität unserer Website und ihre Inhalte zu verbessern und die Funktionsfähigkeit von eingebundenen Diensten unserer Partner sicherzustellen.',
                         en:
-                            'Google Analytics cookies are used to improve the quality of our website and its content and to ensure the functionality of integrated services of our partners.'
+                            '\
+                            <p>\
+                                Google Analytics cookies are used to improve the quality of our website and its content and to ensure the functionality of integrated services of our partners.\
+                            </p>\
+                            <table>\
+                                <tr><td>Name:</td><td>_gid</td></tr>\
+                                <tr><td>Host:</td><td>www.tld.com</td></tr>\
+                                <tr><td>Duration:</td><td>Session</td></tr>\
+                                <tr><td>Type:</td><td>1st Party</td></tr>\
+                                <tr><td>Description:</td><td>This is a pattern type cookie name associated with a marketing cloud. It stores an unique visitor identifier, and uses an organisation identifier.</td></tr>\
+                            </table>\
+                        '
                     }
                 },
                 taboola: 'xxxxxxx',
