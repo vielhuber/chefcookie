@@ -944,7 +944,7 @@ export default class chefcookie {
                 .chefcookie__message h2
                 {
                     font-size:1.5em;
-                    line-height:2;
+                    line-height:1.4;
                 }
                 .chefcookie .chefcookie__group,
                 .chefcookie--overlay .chefcookie__group,
