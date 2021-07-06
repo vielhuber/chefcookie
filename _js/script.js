@@ -786,6 +786,7 @@ export default class chefcookie {
             .chefcookie__script-description-content table {
                 width:100%;
                 border-collapse: collapse;
+                table-layout: fixed;
             }
             .chefcookie__script-description-content table td {
                 border:1px solid ${this.hexToRgbaStr(this.config.style.color_text ?? '#595f60', 0.1)};
