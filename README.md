@@ -89,6 +89,8 @@ const cc = new chefcookie({
         accept_all: { de: 'Alles akzeptieren', en: 'Accept all' },
         settings_open: { de: 'Einstellungen festlegen', en: 'Change settings' },
         settings_close: { de: 'Einstellungen schliessen', en: 'Close settings' },
+        group_open: { de: 'Weitere Informationen anzeigen', en: 'Show more information' },
+        group_close: { de: 'Weitere Informationen schliessen', en: 'Close more information' },
         decline: { de: 'Nur erforderliche Cookies', en: 'Only necessary cookies' },
         details_open: { de: 'Details anzeigen', en: 'Show details' },
         details_close: { de: 'Details schliessen', en: 'Close details' }

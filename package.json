@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "2.1.8",
+    "version": "2.1.9",
     "main": "_build/script.js",
     "files": [
         "_build/*.js",

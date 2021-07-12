@@ -1029,9 +1029,7 @@ export default class chefcookie {
                                                 Object.keys(group.scripts).length > 0 &&
                                                 Object.keys(group.scripts)[0].indexOf('dummy_') === -1
                                                     ? `
-                                                        <a href="#" class="chefcookie__group-collapse">${this.getLabel(
-                                                            'settings_open'
-                                                        )}</a>
+                                                        <a href="#" class="chefcookie__group-collapse">${this.getLabel('group_open') != '' ? this.getLabel('group_open') : this.getLabel('settings_open')}</a>
                                                     `
                                                     : ``
                                             }
@@ -1271,11 +1269,11 @@ export default class chefcookie {
     }
 
     switchScriptsLabelsOpen(group) {
-        group.querySelector('.chefcookie__group-collapse').textContent = this.getLabel('settings_close');
+        group.querySelector('.chefcookie__group-collapse').textContent = this.getLabel('group_close') != '' ? this.getLabel('group_close') : this.getLabel('settings_close');
     }
 
     switchScriptsLabelsClose(group) {
-        group.querySelector('.chefcookie__group-collapse').textContent = this.getLabel('settings_open');
+        group.querySelector('.chefcookie__group-collapse').textContent = this.getLabel('group_open') != '' ? this.getLabel('group_open') : this.getLabel('settings_open');
     }
 
     switchScriptDescriptionLabelsOpen(desc) {
