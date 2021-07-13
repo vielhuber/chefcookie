@@ -38,6 +38,14 @@ export default class chefcookie {
     }
 
     init() {
+        if (
+            (this.config.exclude_google_pagespeed === undefined || this.config.exclude_google_pagespeed === true) &&
+            (navigator.userAgent.indexOf('Speed Insights') > -1 ||
+                navigator.userAgent.indexOf('Chrome-Lighthouse') > -1)
+        ) {
+            return;
+        }
+
         if (this.isExcluded()) {
             this.bindOptOutOptIn();
             this.updateOptOutOptIn();
@@ -1029,7 +1037,11 @@ export default class chefcookie {
                                                 Object.keys(group.scripts).length > 0 &&
                                                 Object.keys(group.scripts)[0].indexOf('dummy_') === -1
                                                     ? `
-                                                        <a href="#" class="chefcookie__group-collapse">${this.getLabel('group_open') != '' ? this.getLabel('group_open') : this.getLabel('settings_open')}</a>
+                                                        <a href="#" class="chefcookie__group-collapse">${
+                                                            this.getLabel('group_open') != ''
+                                                                ? this.getLabel('group_open')
+                                                                : this.getLabel('settings_open')
+                                                        }</a>
                                                     `
                                                     : ``
                                             }
@@ -1192,8 +1204,9 @@ export default class chefcookie {
             [].forEach.call(document.querySelectorAll('.chefcookie__script-checkbox'), el => {
                 this.registerEventListener(el, 'change', e => {
                     let group_checkbox = el.closest('.chefcookie__group').querySelector('.chefcookie__group-checkbox'),
-                        c1 = el.closest('.chefcookie__group').querySelectorAll('.chefcookie__script-checkbox:checked')
-                            .length,
+                        c1 = el
+                            .closest('.chefcookie__group')
+                            .querySelectorAll('.chefcookie__script-checkbox:checked').length,
                         c2 = el.closest('.chefcookie__group').querySelectorAll('.chefcookie__script-checkbox').length;
                     if (c1 === c2) {
                         group_checkbox.checked = true;
@@ -1269,11 +1282,13 @@ export default class chefcookie {
     }
 
     switchScriptsLabelsOpen(group) {
-        group.querySelector('.chefcookie__group-collapse').textContent = this.getLabel('group_close') != '' ? this.getLabel('group_close') : this.getLabel('settings_close');
+        group.querySelector('.chefcookie__group-collapse').textContent =
+            this.getLabel('group_close') != '' ? this.getLabel('group_close') : this.getLabel('settings_close');
     }
 
     switchScriptsLabelsClose(group) {
-        group.querySelector('.chefcookie__group-collapse').textContent = this.getLabel('group_open') != '' ? this.getLabel('group_open') : this.getLabel('settings_open');
+        group.querySelector('.chefcookie__group-collapse').textContent =
+            this.getLabel('group_open') != '' ? this.getLabel('group_open') : this.getLabel('settings_open');
     }
 
     switchScriptDescriptionLabelsOpen(desc) {

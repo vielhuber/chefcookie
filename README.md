@@ -72,6 +72,7 @@ const cc = new chefcookie({
     scripts_selection: 'collapse', // false|true|'collapse'
     debug_log: false,
     expiration: 7, // in days
+    exclude_google_pagespeed: true,
     style: {
         layout: 'overlay', // overlay|bottombar|topbar
         size: 3, // 1|2|3|4|5
@@ -110,10 +111,8 @@ const cc = new chefcookie({
         {
             title: { de: 'Analysen', en: 'Analyses' },
             description: {
-                de:
-                    'Tools, die anonyme Daten über Website-Nutzung und -Funktionalität sammeln. Wir nutzen die Erkenntnisse, um unsere Produkte, Dienstleistungen und das Benutzererlebnis zu verbessern.',
-                en:
-                    'Tools that collect anonymous data about website usage and functionality. We use this information to improve our products, services and user experience.'
+                de: 'Tools, die anonyme Daten über Website-Nutzung und -Funktionalität sammeln. Wir nutzen die Erkenntnisse, um unsere Produkte, Dienstleistungen und das Benutzererlebnis zu verbessern.',
+                en: 'Tools that collect anonymous data about website usage and functionality. We use this information to improve our products, services and user experience.'
             },
             checked_by_default: true,
             cannot_be_modified: false,
@@ -125,8 +124,7 @@ const cc = new chefcookie({
                     id: 'UA-xxxxxxxx-1',
                     title: { de: 'Google Analytics', en: 'Google Analytics' },
                     description: {
-                        de:
-                            'Die Verwendung der Analyse Cookies erfolgt zu dem Zweck, die Qualität unserer Website und ihre Inhalte zu verbessern und die Funktionsfähigkeit von eingebundenen Diensten unserer Partner sicherzustellen.',
+                        de: 'Die Verwendung der Analyse Cookies erfolgt zu dem Zweck, die Qualität unserer Website und ihre Inhalte zu verbessern und die Funktionsfähigkeit von eingebundenen Diensten unserer Partner sicherzustellen.',
                         en: `
                             <p>
                                 Google Analytics cookies are used to improve the quality of our website and its content and to ensure the functionality of integrated services of our partners.
@@ -146,8 +144,7 @@ const cc = new chefcookie({
         {
             title: { de: 'Werbung', en: 'Advertising' },
             description: {
-                de:
-                    'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
+                de: 'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
                 en: 'Anonymous information that we collect in order to recommend useful products and services to you.'
             },
             checked_by_default: true,
@@ -180,10 +177,8 @@ const cc = new chefcookie({
         {
             title: { de: 'Grundlegendes', en: 'Basics' },
             description: {
-                de:
-                    'Tools, die wesentliche Services und Funktionen ermöglichen, einschließlich Identitätsprüfung, Servicekontinuität und Standortsicherheit. Diese Option kann nicht abgelehnt werden.',
-                en:
-                    'Tools that enable essential services and functions, including identity verification, service continuity, and site security. This option cannot be declined.'
+                de: 'Tools, die wesentliche Services und Funktionen ermöglichen, einschließlich Identitätsprüfung, Servicekontinuität und Standortsicherheit. Diese Option kann nicht abgelehnt werden.',
+                en: 'Tools that enable essential services and functions, including identity verification, service continuity, and site security. This option cannot be declined.'
             },
             checked_by_default: true,
             cannot_be_modified: true,

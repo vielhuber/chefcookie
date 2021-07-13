@@ -1,14 +1,12 @@
 let options = {
     message: {
-        de:
-            '\
+        de: '\
             <h2>Wir verwenden Cookies</h2>\
             <p>\
                 Unsere Website verwendet Cookies, die uns helfen, unsere Website zu verbessern, den bestmöglichen Service zu bieten und ein optimales Kundenerlebnis zu ermöglichen. <a href="#chefcookie__settings">Hier</a> können Sie Ihre Einstellungen verwalten. Indem Sie auf "<a href="#chefcookie__accept">Akzeptieren</a>" klicken, erklären Sie sich damit einverstanden, dass Ihre Cookies für diesen Zweck verwendet werden. Weitere Informationen dazu finden Sie in unserer <a href="/de/datenschutz">Datenschutzerklärung</a> sowie im <a href="/de/impressum">Impressum</a>. Sollten Sie hiermit nicht einverstanden sein, können Sie die Verwendung von Cookies hier <a href="#chefcookie__decline">ablehnen</a>.\
             </p>\
         ',
-        en:
-            '\
+        en: '\
             <h2>We use cookies</h2>\
             <p>\
                 Our website uses cookies that help us to improve our website, provide the best possible service and enable an optimal customer experience. <a href="#chefcookie__settings">Here</a> you can manage your settings. By clicking on "<a href="#chefcookie__accept">Accept</a>", you agree that your cookies may be used for this purpose. You can find further information on this in our <a href="/en/privacy">data protection declaration</a> and in the <a href="/en/imprint">imprint</a>. If you do not agree to this, you can refuse the use of cookies here <a href="#chefcookie__decline">reject</a> the use of cookies.\
@@ -20,6 +18,7 @@ let options = {
     scripts_selection: 'collapse',
     debug_log: true,
     expiration: 1,
+    exclude_google_pagespeed: true,
     style: {
         layout: 'overlay',
         size: 3,
@@ -48,10 +47,8 @@ let options = {
         {
             title: { de: 'Analysen', en: 'Analyses' },
             description: {
-                de:
-                    'Tools, die anonyme Daten über Website-Nutzung und -Funktionalität sammeln. Wir nutzen die Erkenntnisse, um unsere Produkte, Dienstleistungen und das Benutzererlebnis zu verbessern.',
-                en:
-                    'Tools that collect anonymous data about website usage and functionality. We use this information to improve our products, services and user experience.'
+                de: 'Tools, die anonyme Daten über Website-Nutzung und -Funktionalität sammeln. Wir nutzen die Erkenntnisse, um unsere Produkte, Dienstleistungen und das Benutzererlebnis zu verbessern.',
+                en: 'Tools that collect anonymous data about website usage and functionality. We use this information to improve our products, services and user experience.'
             },
             checked_by_default: false,
             cannot_be_modified: false,
@@ -102,8 +99,7 @@ let options = {
         {
             title: { de: 'Werbung', en: 'Advertising' },
             description: {
-                de:
-                    'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
+                de: 'Anonyme Informationen, die wir sammeln, um Ihnen nützliche Produkte und Dienstleistungen empfehlen zu können.',
                 en: 'Anonymous information that we collect in order to recommend useful products and services to you.'
             },
             checked_by_default: true,
@@ -116,10 +112,8 @@ let options = {
                     id: 'single',
                     title: { de: 'Google Analytics_DE', en: 'Google Analytics_EN' },
                     description: {
-                        de:
-                            'Die Verwendung der Analyse Cookies erfolgt zu dem Zweck, die Qualität unserer Website und ihre Inhalte zu verbessern und die Funktionsfähigkeit von eingebundenen Diensten unserer Partner sicherzustellen.',
-                        en:
-                            '\
+                        de: 'Die Verwendung der Analyse Cookies erfolgt zu dem Zweck, die Qualität unserer Website und ihre Inhalte zu verbessern und die Funktionsfähigkeit von eingebundenen Diensten unserer Partner sicherzustellen.',
+                        en: '\
                             <p>\
                                 Google Analytics cookies are used to improve the quality of our website and its content and to ensure the functionality of integrated services of our partners.\
                             </p>\
@@ -150,10 +144,8 @@ let options = {
         {
             title: { de: 'Grundlegendes', en: 'Basics' },
             description: {
-                de:
-                    'Tools, die wesentliche Services und Funktionen ermöglichen, einschließlich Identitätsprüfung, Servicekontinuität und Standortsicherheit. Diese Option kann nicht abgelehnt werden.',
-                en:
-                    'Tools that enable essential services and functions, including identity verification, service continuity, and site security. This option cannot be declined.'
+                de: 'Tools, die wesentliche Services und Funktionen ermöglichen, einschließlich Identitätsprüfung, Servicekontinuität und Standortsicherheit. Diese Option kann nicht abgelehnt werden.',
+                en: 'Tools that enable essential services and functions, including identity verification, service continuity, and site security. This option cannot be declined.'
             },
             checked_by_default: true,
             cannot_be_modified: true,
