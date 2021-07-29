@@ -2110,7 +2110,7 @@ export default class chefcookie {
                 ('0' + new Date().getMinutes()).slice(-2) +
                 ':' +
                 ('0' + new Date().getSeconds()).slice(-2),
-            page: this.urlFull()
+            url: this.urlFull()
         };
         xhr.open('POST', url, true);
         xhr.setRequestHeader('Content-type', 'application/json');
