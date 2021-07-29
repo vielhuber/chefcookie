@@ -71,6 +71,7 @@ const cc = new chefcookie({
     show_decline_button: false,
     scripts_selection: 'collapse', // false|true|'collapse'
     debug_log: false,
+    consent_tracking: null, // '/wp-json/v1/track-consent.php'
     expiration: 7, // in days
     exclude_google_pagespeed: true,
     style: {
@@ -413,6 +414,29 @@ you can programmatically control chefcookie via javascript:
 -   `cc.close()`: close the cookie banner manually
 -   `cc.destroy()`: destroy the cookie banner and all event listeners
 -   `cc.updateOptOutOptIn()`: refreshes the state of opt out / opt in buttons
+
+#### consent manager tracking
+
+to test the acceptance of the consent manager, it is recommended to use the `consent_tracking`-option. if you specify an url (relative or absolute) there, chefcookie sends a post-request with analysis data for every action that a user performs in the consent manager. these requests have the form:
+
+```json
+{
+    "action": "accept_all",
+    "date": "2021-01-01 10:00:00",
+    "page": "https://tld.com"
+}
+```
+
+the action key can have the following values:
+
+-   `open`: the consent manager is shown
+-   `accept_all`: all providers are accepted
+-   `accept_partially`: providers are accepted partially
+-   `decline`: all providers are declined
+-   `settings_open`: settings are opened
+-   `settings_close`: settings are closed
+
+here it makes sense to temporarily store this data in a database and evaluate it – for example, to measure the discrepancy between the real visitor numbers and the numbers in google analytics or to optimize the appearance of the consent manager (e.g. using the `layout`-option).
 
 #### event tracking
 

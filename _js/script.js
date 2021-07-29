@@ -79,6 +79,7 @@ export default class chefcookie {
         this.animationIn();
         this.bindButtons();
         this.fixMaxHeight();
+        this.logTracking('open');
     }
 
     close() {
@@ -1157,6 +1158,7 @@ export default class chefcookie {
         if (document.querySelector('a[href="#chefcookie__decline"]') !== null) {
             [].forEach.call(document.querySelectorAll('a[href="#chefcookie__decline"]'), el => {
                 this.registerEventListener(el, 'click', e => {
+                    this.logTracking('decline');
                     this.uncheckAllOptIns();
                     this.saveInCookie();
                     this.close();
@@ -1452,16 +1454,21 @@ export default class chefcookie {
             return;
         }
         settings = settings.split(',');
+        let accept_all = true;
         this.config.settings.forEach(settings__value => {
             if (settings__value.scripts !== undefined) {
                 Object.entries(settings__value.scripts).forEach(([scripts__key, scripts__value]) => {
                     if (settings.indexOf(scripts__key) === -1) {
+                        accept_all = false;
                         return;
                     }
                     this.load(scripts__key, scripts__value, isInit);
                 });
             }
         });
+        if (isInit === true) {
+            this.logTracking(accept_all ? 'accept_all' : 'accept_partially');
+        }
     }
 
     addScript(provider, isInit = false) {
@@ -1536,7 +1543,7 @@ export default class chefcookie {
             this.setLoaded(provider);
         }
 
-        this.log('added script ' + provider);
+        this.logDebug('added script ' + provider);
     }
 
     loadAuto(provider, id) {
@@ -1704,6 +1711,7 @@ export default class chefcookie {
     }
 
     showSettings() {
+        this.logTracking('settings_open');
         let el = document.querySelector('.chefcookie__settings-container');
         el.classList.add('chefcookie__settings-container--visible');
         el.style.height = el.scrollHeight + 'px';
@@ -1716,6 +1724,7 @@ export default class chefcookie {
     }
 
     hideSettings() {
+        this.logTracking('settings_close');
         let el = document.querySelector('.chefcookie__settings-container');
         el.classList.remove('chefcookie__settings-container--visible');
         el.style.height = el.scrollHeight + 'px';
@@ -1786,10 +1795,10 @@ export default class chefcookie {
         }
         if (action === undefined) {
             gtag('event', category);
-            this.log('analytics ' + category);
+            this.logDebug('analytics ' + category);
         } else {
             gtag('event', action, { event_category: category });
-            this.log('analytics ' + category + ' ' + action);
+            this.logDebug('analytics ' + category + ' ' + action);
         }
     }
 
@@ -1802,7 +1811,7 @@ export default class chefcookie {
             return;
         }
         fbq('trackCustom', action);
-        this.log('facebook ' + action);
+        this.logDebug('facebook ' + action);
     }
 
     eventTwitter(action) {
@@ -1814,7 +1823,7 @@ export default class chefcookie {
             return;
         }
         twttr.conversion.trackPid(action);
-        this.log('twitter ' + action);
+        this.logDebug('twitter ' + action);
     }
 
     eventTaboola(event) {
@@ -1822,7 +1831,7 @@ export default class chefcookie {
             return;
         }
         _tfa.push({ notify: 'event', name: event });
-        this.log('taboola ' + event);
+        this.logDebug('taboola ' + event);
     }
 
     eventMatch2one(id) {
@@ -1832,7 +1841,7 @@ export default class chefcookie {
         let script = document.createElement('script');
         script.src = 'https://secure.adnxs.com/px?' + id + '&t=1';
         document.head.appendChild(script);
-        this.log('match2one ' + id);
+        this.logDebug('match2one ' + id);
     }
 
     eventLinkedin(id, conversion_id) {
@@ -1844,7 +1853,7 @@ export default class chefcookie {
                 conversion_id +
                 '&fmt=gif" />'
         );
-        this.log('linkedin ' + id + ' ' + conversion_id);
+        this.logDebug('linkedin ' + id + ' ' + conversion_id);
     }
 
     eventEtracker(category, action) {
@@ -1853,10 +1862,10 @@ export default class chefcookie {
         }
         if (action === undefined) {
             _etracker.sendEvent(new et_UserDefinedEvent(null, null, category, null));
-            this.log('etracker ' + category);
+            this.logDebug('etracker ' + category);
         } else {
             _etracker.sendEvent(new et_UserDefinedEvent(null, category, action, null));
-            this.log('etracker ' + category + ' ' + action);
+            this.logDebug('etracker ' + category + ' ' + action);
         }
     }
 
@@ -1997,6 +2006,58 @@ export default class chefcookie {
         return window.location.protocol + '//' + window.location.host + window.location.pathname;
     }
 
+    urlFull() {
+        return window.location.href;
+    }
+
+    trim(str, charlist) {
+        let whitespace = [
+            ' ',
+            '\n',
+            '\r',
+            '\t',
+            '\f',
+            '\x0b',
+            '\xa0',
+            '\u2000',
+            '\u2001',
+            '\u2002',
+            '\u2003',
+            '\u2004',
+            '\u2005',
+            '\u2006',
+            '\u2007',
+            '\u2008',
+            '\u2009',
+            '\u200a',
+            '\u200b',
+            '\u2028',
+            '\u2029',
+            '\u3000'
+        ].join('');
+        let l = 0;
+        let i = 0;
+        str += '';
+        if (charlist) {
+            whitespace = (charlist + '').replace(/([[\]().?/*{}+$^:])/g, '$1');
+        }
+        l = str.length;
+        for (i = 0; i < l; i++) {
+            if (whitespace.indexOf(str.charAt(i)) === -1) {
+                str = str.substring(i);
+                break;
+            }
+        }
+        l = str.length;
+        for (i = l - 1; i >= 0; i--) {
+            if (whitespace.indexOf(str.charAt(i)) === -1) {
+                str = str.substring(0, i + 1);
+                break;
+            }
+        }
+        return whitespace.indexOf(str.charAt(0)) === -1 ? str : '';
+    }
+
     accept(provider, isInit = false) {
         this.addToCookie(provider);
         if (!this.isExcluded()) {
@@ -2008,11 +2069,48 @@ export default class chefcookie {
         this.deleteFromCookie(provider);
     }
 
-    log(msg) {
+    logDebug(msg) {
         if (!('debug_log' in this.config) || this.config.debug_log !== true) {
             return;
         }
         console.log(msg);
+    }
+
+    logTracking(action) {
+        if (
+            !('consent_tracking' in this.config) ||
+            this.config.consent_tracking === false ||
+            this.config.consent_tracking === undefined ||
+            this.config.consent_tracking === null ||
+            this.config.consent_tracking == ''
+        ) {
+            return;
+        }
+        let xhr = new XMLHttpRequest(),
+            data = null,
+            url =
+                (this.config.consent_tracking.indexOf('//') === -1 ? this.trim(this.url(), '/') : '') +
+                '/' +
+                this.trim(this.config.consent_tracking, '/');
+        data = {
+            action: action,
+            date:
+                new Date().getFullYear() +
+                '-' +
+                ('0' + (new Date().getMonth() + 1)).slice(-2) +
+                '-' +
+                ('0' + new Date().getDate()).slice(-2) +
+                ' ' +
+                ('0' + new Date().getHours()).slice(-2) +
+                ':' +
+                ('0' + new Date().getMinutes()).slice(-2) +
+                ':' +
+                ('0' + new Date().getSeconds()).slice(-2),
+            page: this.urlFull()
+        };
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('Content-type', 'application/json');
+        xhr.send(JSON.stringify(data));
     }
 
     hexToRgb(hex) {

@@ -17,6 +17,7 @@ let options = {
     show_decline_button: true,
     scripts_selection: 'collapse',
     debug_log: true,
+    consent_tracking: '/track-consent.php',
     expiration: 1,
     exclude_google_pagespeed: true,
     style: {
