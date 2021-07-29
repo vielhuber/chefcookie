@@ -427,7 +427,7 @@ to test the acceptance of the consent manager, it is recommended to use the `con
 }
 ```
 
-the action key can have the following values:
+the `action`-key can have the following values:
 
 -   `open`: the consent manager is shown
 -   `accept_all`: all providers are accepted
