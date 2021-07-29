@@ -2010,6 +2010,10 @@ export default class chefcookie {
         return window.location.href;
     }
 
+    urlBase() {
+        return window.location.protocol + '//' + window.location.host;
+    }
+
     trim(str, charlist) {
         let whitespace = [
             ' ',
@@ -2089,7 +2093,7 @@ export default class chefcookie {
         let xhr = new XMLHttpRequest(),
             data = null,
             url =
-                (this.config.consent_tracking.indexOf('//') === -1 ? this.trim(this.url(), '/') : '') +
+                (this.config.consent_tracking.indexOf('//') === -1 ? this.trim(this.urlBase(), '/') : '') +
                 '/' +
                 this.trim(this.config.consent_tracking, '/');
         data = {
