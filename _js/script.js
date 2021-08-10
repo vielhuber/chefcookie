@@ -1453,12 +1453,11 @@ export default class chefcookie {
         if (settings == 'null') {
             return;
         }
-        settings = settings.split(',');
         let accept_all = true;
         this.config.settings.forEach(settings__value => {
             if (settings__value.scripts !== undefined) {
                 Object.entries(settings__value.scripts).forEach(([scripts__key, scripts__value]) => {
-                    if (settings.indexOf(scripts__key) === -1) {
+                    if (settings.split(',').indexOf(scripts__key) === -1) {
                         accept_all = false;
                         return;
                     }
@@ -1467,7 +1466,7 @@ export default class chefcookie {
             }
         });
         if (isInit === true) {
-            this.logTracking(accept_all ? 'accept_all' : 'accept_partially');
+            this.logTracking(accept_all ? 'accept_all' : 'accept_partially', settings);
         }
     }
 
@@ -2080,7 +2079,7 @@ export default class chefcookie {
         console.log(msg);
     }
 
-    logTracking(action) {
+    logTracking(action, providers = null) {
         if (
             !('consent_tracking' in this.config) ||
             this.config.consent_tracking === false ||
@@ -2110,7 +2109,8 @@ export default class chefcookie {
                 ('0' + new Date().getMinutes()).slice(-2) +
                 ':' +
                 ('0' + new Date().getSeconds()).slice(-2),
-            url: this.urlFull()
+            url: this.urlFull(),
+            providers: providers
         };
         xhr.open('POST', url, true);
         xhr.setRequestHeader('Content-type', 'application/json');

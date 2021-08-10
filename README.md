@@ -423,7 +423,8 @@ to test the acceptance of the consent manager, it is recommended to use the `con
 {
     "action": "accept_all",
     "date": "2021-01-01 10:00:00",
-    "url": "https://tld.com?foo=bar"
+    "url": "https://tld.com?foo=bar",
+    "providers": "analytics,facebook,twitter"
 }
 ```
 
