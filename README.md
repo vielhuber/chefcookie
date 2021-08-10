@@ -423,9 +423,12 @@ to test the acceptance of the consent manager, it is recommended to use the `con
 {
     "action": "accept_all",
     "date": "2021-01-01 10:00:00",
-    "url": "https://tld.com"
+    "url": "https://tld.com?foo=bar"
 }
 ```
+
+`url` as you can see consists of potential get-paramaters (so that you can analyze e.g. google ads campaigns).\
+take note that nor ip or user agent are posted, but feel free to catch and store these parts with the help of a php endpoint.
 
 the `action`-key can have the following values:
 
