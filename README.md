@@ -424,7 +424,8 @@ to test the acceptance of the consent manager, it is recommended to use the `con
     "action": "accept_all",
     "date": "2021-01-01 10:00:00",
     "url": "https://tld.com?foo=bar",
-    "providers": "analytics,facebook,twitter"
+    "providers": "analytics,facebook,twitter",
+-   "viewport": "the viewport size of the user device"
 }
 ```
 
@@ -439,6 +440,7 @@ the `action`-key can have the following values:
 -   `decline`: all providers are declined
 -   `settings_open`: settings are opened
 -   `settings_close`: settings are closed
+-   `first_user_interaction`: first mouse/touch/scroll interaction happened
 
 here it makes sense to temporarily store this data in a database and evaluate it – for example, to measure the discrepancy between the real visitor numbers and the numbers in google analytics or to optimize the appearance of the consent manager (e.g. using the `layout`-option).
 

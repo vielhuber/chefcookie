@@ -62,6 +62,7 @@ export default class chefcookie {
         } else {
             this.autoAcceptBasicScripts();
             this.open();
+            this.trackFirstUserInteraction();
         }
 
         this.bindOptOutOptIn();
@@ -2079,14 +2080,18 @@ export default class chefcookie {
         console.log(msg);
     }
 
-    logTracking(action, providers = null) {
-        if (
+    logTrackingActive() {
+        return !(
             !('consent_tracking' in this.config) ||
             this.config.consent_tracking === false ||
             this.config.consent_tracking === undefined ||
             this.config.consent_tracking === null ||
             this.config.consent_tracking == ''
-        ) {
+        );
+    }
+
+    logTracking(action, providers = null) {
+        if (!this.logTrackingActive()) {
             return;
         }
         let xhr = new XMLHttpRequest(),
@@ -2110,11 +2115,31 @@ export default class chefcookie {
                 ':' +
                 ('0' + new Date().getSeconds()).slice(-2),
             url: this.urlFull(),
-            providers: providers
+            providers: providers,
+            viewport: window.innerWidth + 'x' + window.innerHeight
         };
         xhr.open('POST', url, true);
         xhr.setRequestHeader('Content-type', 'application/json');
         xhr.send(JSON.stringify(data));
+    }
+
+    trackFirstUserInteraction() {
+        if (!this.logTrackingActive()) {
+            return;
+        }
+        ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart', 'click'].forEach(eventName => {
+            document.addEventListener(
+                eventName,
+                () => {
+                    if (this.first_user_interaction === true) {
+                        return;
+                    }
+                    this.first_user_interaction = true;
+                    this.logTracking('first_user_interaction');
+                },
+                true
+            );
+        });
     }
 
     hexToRgb(hex) {
