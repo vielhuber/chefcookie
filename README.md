@@ -27,6 +27,7 @@ chefcookie is a gdpr cookie solution without compromises.
 -   [match2one ads](https://www.match2one.com)
 -   [linkedin](https://business.linkedin.com/marketing-solutions/conversion-tracking)
 -   [etracker](https://www.etracker.com)
+-   [matomo analytics](https://matomo.org)
 -   [smartlook](https://www.smartlook.com)
 -   [crazy egg](https://www.crazyegg.com)
 -   [google maps](https://developers.google.com/maps/documentation/javascript/tutorial)
@@ -159,6 +160,7 @@ const cc = new chefcookie({
                 match2one: 'xxxxxxxx',
                 linkedin: 'xxxxxxx',
                 etracker: 'xxxxxx',
+                matomo: 'xxxxxx#x', // domain/siteid
                 smartlook: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
                 crazyegg: 'xxxx/xxxx',
                 google_maps: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
@@ -197,6 +199,7 @@ const cc = new chefcookie({
                         cc.load('match2one', 'xxxxxxxx');
                         cc.load('linkedin', 'xxxxxxx');
                         cc.load('etracker', 'xxxxxx');
+                        cc.load('matomo', 'xxxxxx#x');
                         cc.load('smartlook', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
                         cc.load('crazyegg', 'xxxx/xxxx');
                         cc.load('google_maps', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
@@ -295,6 +298,7 @@ its recommended to place those kind of links inside your privacy page:
 <a href="#" data-cc-disable="match2one" data-cc-message="Match2One Pixel aktivieren">Match2One Pixel deaktivieren</a>
 <a href="#" data-cc-disable="linkedin" data-cc-message="LinkedIn Pixel aktivieren">LinkedIn Pixel deaktivieren</a>
 <a href="#" data-cc-disable="etracker" data-cc-message="etracker aktivieren">etracker deaktivieren</a>
+<a href="#" data-cc-disable="matomo" data-cc-message="Matomo aktivieren">Matomo deaktivieren</a>
 <a href="#" data-cc-disable="smartlook" data-cc-message="Smartlook aktivieren">Smartlook deaktivieren</a>
 <a href="#" data-cc-disable="crazyegg" data-cc-message="Crazy Egg aktivieren">Crazy Egg deaktivieren</a>
 <a href="#" data-cc-disable="google_maps" data-cc-message="Google Maps aktivieren">Google Maps deaktivieren</a>
@@ -346,6 +350,7 @@ the following keywords as keys are reserved:
 -   `match2one`
 -   `linkedin`
 -   `etracker`
+-   `matomo`
 -   `smartlook`
 -   `crazyegg`
 -   `google_maps`

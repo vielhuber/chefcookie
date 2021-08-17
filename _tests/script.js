@@ -56,6 +56,7 @@ let options = {
             initial_tracking: false,
             scripts: {
                 analytics: 'UA-xxxxxxxx-1',
+                matomo: 'tld.com#1',
                 google_maps_iframe: {
                     accept: function (cc, resolve, isInit) {
                         if (document.querySelector('iframe[alt-src*="google.com/maps"]') !== null) {
