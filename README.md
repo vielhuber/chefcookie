@@ -430,7 +430,7 @@ to test the acceptance of the consent manager, it is recommended to use the `con
     "date": "2021-01-01 10:00:00",
     "url": "https://tld.com?foo=bar",
     "providers": "analytics,facebook,twitter",
--   "viewport": "the viewport size of the user device"
+    "viewport": "the viewport size of the user device"
 }
 ```
 
