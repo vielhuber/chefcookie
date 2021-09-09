@@ -324,7 +324,8 @@ these links self destroy if the respective script is accepted:
 </div>
 ```
 
-it is recommended to place them inside your via js populated divs (like a google maps wrapper).
+it is recommended to place them inside your via js populated divs (like a google maps wrapper).\
+if you click on it, the script is explicitly accepted.
 
 #### manually accept/decline
 
