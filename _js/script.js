@@ -313,6 +313,12 @@ export default class chefcookie {
                 margin:0;
                 padding:0;
             }
+            /* try to reset styles */
+            .chefcookie h2,
+            .chefcookie a:link, a:hover, a:visited
+            {
+                color:inherit;
+            }
             .chefcookie
             {
                 position: fixed;
