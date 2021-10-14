@@ -464,9 +464,11 @@ export default class chefcookie {
                 background-color:${this.config.style.color_highlight ?? this.config.style.color ?? '#ff0000'};
                 border-color:transparent;
             }
-            .chefcookie__button--accept,
-            .chefcookie__button--accept:hover,
-            .chefcookie__button--accept:focus
+            .chefcookie__button--accept.chefcookie__button--accept,
+            .chefcookie__button--accept.chefcookie__button--accept:hover,
+            .chefcookie__button--accept.chefcookie__button--accept:focus,
+            .chefcookie__button--accept.chefcookie__button--accept:link,
+            .chefcookie__button--accept.chefcookie__button--accept:visited
             {
                 color:${this.config.style.color_background ?? '#eeeeee'};
             }
