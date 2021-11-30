@@ -1455,7 +1455,7 @@ export default class chefcookie {
     }
 
     getCookieName(cookieName) {
-        return (this.cookiePrefix || '') + cookieName;
+        return (this.config.cookiePrefix || '') + cookieName;
     }
 
     addEnabledScripts(isInit = false) {
