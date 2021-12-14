@@ -680,7 +680,7 @@ var cc_basic_style = this_cc => {
             }
 
   `;
-
+};
 export default class chefcookie {
     constructor(config = {}) {
         this.config = config;
