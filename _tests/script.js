@@ -30,7 +30,12 @@ let options = {
         show_disabled_checkbox: true,
         noscroll: true,
         fade: true,
-        blur: true
+        blur: true,
+        cc_custom_css_style : `
+            .chefcookie--overlay .chefcookie__box{
+                background-color:#505050;
+            }
+        `,
     },
     labels: {
         accept: { de: 'Akzeptieren', en: 'Accept' },

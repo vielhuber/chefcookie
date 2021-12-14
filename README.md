@@ -85,7 +85,8 @@ const cc = new chefcookie({
         show_disabled_checkbox: true,
         noscroll: true,
         fade: true,
-        blur: true
+        blur: true,
+        cc_custom_css_style: `` // allow to override basic plugin's styles
     },
     labels: {
         accept: { de: 'Akzeptieren', en: 'Accept' },
