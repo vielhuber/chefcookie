@@ -76,6 +76,7 @@ const cc = new chefcookie({
     debug_log: false,
     consent_tracking: null, // '/wp-json/v1/track-consent.php'
     expiration: 7, // in days
+    cookie_prefix: 'cc_', // switch cookie prefix (e.g. for different pages on the same top level domain)
     exclude_google_pagespeed: true,
     style: {
         layout: 'overlay', // overlay|bottombar|topbar

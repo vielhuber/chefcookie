@@ -19,6 +19,7 @@ let options = {
     debug_log: true,
     consent_tracking: '/track-consent.php',
     expiration: 1,
+    cookie_prefix: 'iddqd_',
     exclude_google_pagespeed: true,
     style: {
         layout: 'overlay',
@@ -31,7 +32,7 @@ let options = {
         noscroll: true,
         fade: true,
         blur: true,
-        css_replace: `.chefcookie { color:red; }`,
+        css_replace: ``,
         css_add: `.chefcookie { opacity:0.5; }`
     },
     labels: {

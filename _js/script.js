@@ -1386,11 +1386,11 @@ export default class chefcookie {
     }
 
     setCookieToHideOverlay() {
-        helper.cookieSet(this.getCookieName('cc_hide_prompt'), '1', this.getCookieExpiration());
+        helper.cookieSet(this.getCookieName('hide_prompt'), '1', this.getCookieExpiration());
     }
 
     isCookieSetToHideOverlay() {
-        return helper.cookieExists(this.getCookieName('cc_hide_prompt'));
+        return helper.cookieExists(this.getCookieName('hide_prompt'));
     }
 
     saveInCookie() {
@@ -1426,35 +1426,38 @@ export default class chefcookie {
         if (providers.length === 0) {
             providers.push('null');
         }
-        helper.cookieSet(this.getCookieName('cc_accepted_providers'), providers.join(','), this.getCookieExpiration());
+        helper.cookieSet(this.getCookieName('accepted_providers'), providers.join(','), this.getCookieExpiration());
     }
 
     addToCookie(provider) {
         let providers;
-        if (!helper.cookieExists(this.getCookieName('cc_accepted_providers')) || helper.cookieGet(this.getCookieName('cc_accepted_providers')) === 'null') {
+        if (
+            !helper.cookieExists(this.getCookieName('accepted_providers')) ||
+            helper.cookieGet(this.getCookieName('accepted_providers')) === 'null'
+        ) {
             providers = [];
         } else {
-            providers = helper.cookieGet(this.getCookieName('cc_accepted_providers')).split(',');
+            providers = helper.cookieGet(this.getCookieName('accepted_providers')).split(',');
         }
         if (providers.indexOf(provider) === -1) {
             providers.push(provider);
-            helper.cookieSet(this.getCookieName('cc_accepted_providers'), providers.join(','), this.getCookieExpiration());
+            helper.cookieSet(this.getCookieName('accepted_providers'), providers.join(','), this.getCookieExpiration());
         }
     }
 
     deleteFromCookie(provider) {
-        if (!helper.cookieExists(this.getCookieName('cc_accepted_providers'))) {
+        if (!helper.cookieExists(this.getCookieName('accepted_providers'))) {
             return;
         }
-        let providers = helper.cookieGet(this.getCookieName('cc_accepted_providers')).split(',');
+        let providers = helper.cookieGet(this.getCookieName('accepted_providers')).split(',');
         let index = providers.indexOf(provider);
         if (index !== -1) {
             providers.splice(index, 1);
         }
         if (providers.length > 0) {
-            helper.cookieSet(this.getCookieName('cc_accepted_providers'), providers.join(','), this.getCookieExpiration());
+            helper.cookieSet(this.getCookieName('accepted_providers'), providers.join(','), this.getCookieExpiration());
         } else {
-            helper.cookieSet(this.getCookieName('cc_accepted_providers'), 'null', this.getCookieExpiration());
+            helper.cookieSet(this.getCookieName('accepted_providers'), 'null', this.getCookieExpiration());
         }
     }
 
@@ -1467,14 +1470,14 @@ export default class chefcookie {
     }
 
     getCookieName(cookieName) {
-        return (this.config.cookiePrefix || '') + cookieName;
+        return (this.config.cookie_prefix || 'cc_') + cookieName;
     }
 
     addEnabledScripts(isInit = false) {
-        if (!helper.cookieExists(this.getCookieName('cc_accepted_providers'))) {
+        if (!helper.cookieExists(this.getCookieName('accepted_providers'))) {
             return;
         }
-        let settings = helper.cookieGet(this.getCookieName('cc_accepted_providers'));
+        let settings = helper.cookieGet(this.getCookieName('accepted_providers'));
         if (settings == 'null') {
             return;
         }
@@ -1496,10 +1499,10 @@ export default class chefcookie {
     }
 
     addScript(provider, isInit = false) {
-        if (!helper.cookieExists(this.getCookieName('cc_accepted_providers'))) {
+        if (!helper.cookieExists(this.getCookieName('accepted_providers'))) {
             return;
         }
-        let settings = helper.cookieGet(this.getCookieName('cc_accepted_providers'));
+        let settings = helper.cookieGet(this.getCookieName('accepted_providers'));
         if (settings == 'null') {
             return;
         }
@@ -1733,10 +1736,10 @@ export default class chefcookie {
     }
 
     isAccepted(provider) {
-        if (!helper.cookieExists(this.getCookieName('cc_accepted_providers'))) {
+        if (!helper.cookieExists(this.getCookieName('accepted_providers'))) {
             return false;
         }
-        return helper.cookieGet(this.getCookieName('cc_accepted_providers')).split(',').indexOf(provider) > -1;
+        return helper.cookieGet(this.getCookieName('accepted_providers')).split(',').indexOf(provider) > -1;
     }
 
     isLoaded(provider) {
