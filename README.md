@@ -1,5 +1,7 @@
 # 👻 chefcookie 👻
 
+[![NPM](https://img.shields.io/npm/v/chefcookie.svg)](https://www.npmjs.com/package/chefcookie)
+
 chefcookie is a gdpr cookie solution without compromises.
 
 ## features

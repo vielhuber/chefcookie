@@ -323,7 +323,7 @@ export default class chefcookie {
                 left: 0;
                 right: 0;
                 bottom: 0;
-                transform: translateZ(0);             
+                transform: translateZ(0);
             }
             .chefcookie--hidden
             {
@@ -448,7 +448,7 @@ export default class chefcookie {
                 color: inherit;
             }
             .chefcookie__buttons:after
-            {            
+            {
                 clear:both;
                 display:table;
                 content:"";
@@ -457,7 +457,7 @@ export default class chefcookie {
                 this.config.style.highlight_accept === undefined || this.config.style.highlight_accept === true
                     ? `
             .chefcookie__button--accept
-            {                
+            {
                 background-color:${this.config.style.color_highlight ?? this.config.style.color ?? '#ff0000'};
                 border-color:transparent;
             }
@@ -564,7 +564,7 @@ export default class chefcookie {
                 transition: all ${this.animationSpeed / 1000}s ease-in-out;
                 text-align: center;
                 font-weight: bold;
-                font-size: 1em;                
+                font-size: 1em;
                 line-height: 2;
                 opacity: 0.25;
                 color: ${this.config.style.color_text ?? '#595f60'};
@@ -583,7 +583,7 @@ export default class chefcookie {
                 border-radius: 50%;
             }
             .chefcookie__group-checkbox ~ *
-            {                
+            {
                 transition: all ${this.animationSpeed / 1000}s ease-in-out;
             }
             .chefcookie__group-checkbox[data-status="0"] ~ *
@@ -1032,7 +1032,7 @@ export default class chefcookie {
                                         (group, i) => `
                                     <li class="chefcookie__group${
                                         group.cannot_be_modified ? ` chefcookie__group--disabled` : ``
-                                    }">                                    
+                                    }">
                                         <label class="chefcookie__group-label" for="chefcookie_group_${i}">
                                             <input${
                                                 group.cannot_be_modified ? ` disabled="disabled"` : ``
@@ -1045,7 +1045,7 @@ export default class chefcookie {
                                             <span class="chefcookie__group-checkbox-icon"></span>
                                             ${
                                                 'description' in group && group.description != ''
-                                                    ? `                                                                             
+                                                    ? `
                                             <span class="chefcookie__group-description">${this.translate(
                                                 group.description
                                             )}</span>
@@ -1386,11 +1386,11 @@ export default class chefcookie {
     }
 
     setCookieToHideOverlay() {
-        helper.cookieSet('cc_hide_prompt', '1', this.getCookieExpiration());
+        helper.cookieSet(this.getCookieName('cc_hide_prompt'), '1', this.getCookieExpiration());
     }
 
     isCookieSetToHideOverlay() {
-        return helper.cookieExists('cc_hide_prompt');
+        return helper.cookieExists(this.getCookieName('cc_hide_prompt'));
     }
 
     saveInCookie() {
@@ -1426,35 +1426,35 @@ export default class chefcookie {
         if (providers.length === 0) {
             providers.push('null');
         }
-        helper.cookieSet('cc_accepted_providers', providers.join(','), this.getCookieExpiration());
+        helper.cookieSet(this.getCookieName('cc_accepted_providers'), providers.join(','), this.getCookieExpiration());
     }
 
     addToCookie(provider) {
         let providers;
-        if (!helper.cookieExists('cc_accepted_providers') || helper.cookieGet('cc_accepted_providers') === 'null') {
+        if (!helper.cookieExists(this.getCookieName('cc_accepted_providers')) || helper.cookieGet(this.getCookieName('cc_accepted_providers')) === 'null') {
             providers = [];
         } else {
-            providers = helper.cookieGet('cc_accepted_providers').split(',');
+            providers = helper.cookieGet(this.getCookieName('cc_accepted_providers')).split(',');
         }
         if (providers.indexOf(provider) === -1) {
             providers.push(provider);
-            helper.cookieSet('cc_accepted_providers', providers.join(','), this.getCookieExpiration());
+            helper.cookieSet(this.getCookieName('cc_accepted_providers'), providers.join(','), this.getCookieExpiration());
         }
     }
 
     deleteFromCookie(provider) {
-        if (!helper.cookieExists('cc_accepted_providers')) {
+        if (!helper.cookieExists(this.getCookieName('cc_accepted_providers'))) {
             return;
         }
-        let providers = helper.cookieGet('cc_accepted_providers').split(',');
+        let providers = helper.cookieGet(this.getCookieName('cc_accepted_providers')).split(',');
         let index = providers.indexOf(provider);
         if (index !== -1) {
             providers.splice(index, 1);
         }
         if (providers.length > 0) {
-            helper.cookieSet('cc_accepted_providers', providers.join(','), this.getCookieExpiration());
+            helper.cookieSet(this.getCookieName('cc_accepted_providers'), providers.join(','), this.getCookieExpiration());
         } else {
-            helper.cookieSet('cc_accepted_providers', 'null', this.getCookieExpiration());
+            helper.cookieSet(this.getCookieName('cc_accepted_providers'), 'null', this.getCookieExpiration());
         }
     }
 
@@ -1466,11 +1466,15 @@ export default class chefcookie {
         return expiration;
     }
 
+    getCookieName(cookieName) {
+        return (this.config.cookiePrefix || '') + cookieName;
+    }
+
     addEnabledScripts(isInit = false) {
-        if (!helper.cookieExists('cc_accepted_providers')) {
+        if (!helper.cookieExists(this.getCookieName('cc_accepted_providers'))) {
             return;
         }
-        let settings = helper.cookieGet('cc_accepted_providers');
+        let settings = helper.cookieGet(this.getCookieName('cc_accepted_providers'));
         if (settings == 'null') {
             return;
         }
@@ -1492,10 +1496,10 @@ export default class chefcookie {
     }
 
     addScript(provider, isInit = false) {
-        if (!helper.cookieExists('cc_accepted_providers')) {
+        if (!helper.cookieExists(this.getCookieName('cc_accepted_providers'))) {
             return;
         }
-        let settings = helper.cookieGet('cc_accepted_providers');
+        let settings = helper.cookieGet(this.getCookieName('cc_accepted_providers'));
         if (settings == 'null') {
             return;
         }
@@ -1729,10 +1733,10 @@ export default class chefcookie {
     }
 
     isAccepted(provider) {
-        if (!helper.cookieExists('cc_accepted_providers')) {
+        if (!helper.cookieExists(this.getCookieName('cc_accepted_providers'))) {
             return false;
         }
-        return helper.cookieGet('cc_accepted_providers').split(',').indexOf(provider) > -1;
+        return helper.cookieGet(this.getCookieName('cc_accepted_providers')).split(',').indexOf(provider) > -1;
     }
 
     isLoaded(provider) {
