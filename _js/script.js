@@ -303,10 +303,7 @@ export default class chefcookie {
     }
 
     addStyle() {
-        document.head.insertAdjacentHTML(
-            'beforeend',
-            `
-        <style class="chefcookie-styles">
+        let css = `
             .chefcookie, .chefcookie *
             {
                 box-sizing: border-box;
@@ -976,9 +973,24 @@ export default class chefcookie {
                     height:auto;
                 }
             }
-        </style>
-        `
-        );
+        `;
+        if (
+            'css_replace' in this.config.style &&
+            this.config.style.css_replace !== undefined &&
+            this.config.style.css_replace !== null &&
+            this.config.style.css_replace !== ''
+        ) {
+            css = this.config.style.css_replace;
+        }
+        if (
+            'css_add' in this.config.style &&
+            this.config.style.css_add !== undefined &&
+            this.config.style.css_add !== null &&
+            this.config.style.css_add !== ''
+        ) {
+            css += this.config.style.css_add;
+        }
+        document.head.insertAdjacentHTML('beforeend', '<style class="chefcookie-styles">' + css + '</style>');
     }
 
     addHtmlClasses() {

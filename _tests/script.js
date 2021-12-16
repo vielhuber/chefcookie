@@ -30,7 +30,9 @@ let options = {
         show_disabled_checkbox: true,
         noscroll: true,
         fade: true,
-        blur: true
+        blur: true,
+        css_replace: `.chefcookie { color:red; }`,
+        css_add: `.chefcookie { opacity:0.5; }`
     },
     labels: {
         accept: { de: 'Akzeptieren', en: 'Accept' },
