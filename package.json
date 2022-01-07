@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "2.3.7",
+    "version": "2.3.8",
     "main": "_build/script.js",
     "files": [
         "_build/*.js",
@@ -16,7 +16,7 @@
         "js:babel": "npx babel ./_js/ --out-dir ./_build/",
         "js": "npm-run-all --sequential js:browserify js:minify js:babel",
         "js:dev": "npm-run-all --sequential js:browserify js:babel",
-        "watch:js": "onchange ./_js/*.js --initial --poll 50 --delay 0 --await-write-finish 50 -- onerror \"npm run js:dev\" --title \"watch:js\" --message \"build failed\" --sound mute",
+        "watch:js": "onchange ./_js/*.js --initial --poll 50 --delay 0 --await-write-finish 50 -- npm run js:dev",
         "dev": "npm-run-all --parallel watch:*",
         "prod": "npm-run-all --parallel js"
     },
@@ -35,7 +35,6 @@
         "@babel/runtime": "^7.15.4",
         "babelify": "^10.0.0",
         "browserify": "^17.0.0",
-        "cli-error-notifier": "^2.1.0",
         "npm-run-all": "^4.1.5",
         "terser": "^5.9.0"
     },
