@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "2.3.6",
+    "version": "2.3.7",
     "main": "_build/script.js",
     "files": [
         "_build/*.js",
@@ -32,7 +32,7 @@
         "@babel/plugin-transform-runtime": "^7.15.8",
         "@babel/polyfill": "^7.11.5",
         "@babel/preset-env": "^7.15.8",
-	"@babel/runtime": "^7.15.4",
+        "@babel/runtime": "^7.15.4",
         "babelify": "^10.0.0",
         "browserify": "^17.0.0",
         "cli-error-notifier": "^2.1.0",

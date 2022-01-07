@@ -32,8 +32,8 @@ let options = {
         noscroll: true,
         fade: true,
         blur: true,
-        css_replace: ``,
-        css_add: `.chefcookie { opacity:0.5; }`
+        css_replace: '',
+        css_add: '.chefcookie { opacity:0.5; }'
     },
     labels: {
         accept: { de: 'Akzeptieren', en: 'Accept' },
