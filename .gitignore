@@ -8,7 +8,6 @@
 /_vue/_build/
 /_js/_build/
 /_tests/_build/
-/package-lock.json
 __image_snapshots__
 /.env
 *.css.map
