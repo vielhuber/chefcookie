@@ -18,13 +18,15 @@
         "js:dev": "npm-run-all --sequential js:browserify js:babel",
         "watch:js": "onchange ./_js/*.js --initial --poll 50 --delay 0 --await-write-finish 50 -- npm run js:dev",
         "dev": "npm-run-all --parallel watch:*",
-        "prod": "npm-run-all --parallel js"
+        "prod": "npm-run-all --parallel js",
+        "update-changelog": "auto-changelog --commit-limit false --package"
     },
     "dependencies": {
         "mdn-polyfills": "^5.20.0",
         "onchange": "^7.1.0"
     },
     "devDependencies": {
+        "auto-changelog": "^2.3.0",
         "@babel/cli": "^7.15.7",
         "@babel/core": "^7.15.8",
         "@babel/plugin-proposal-class-properties": "^7.14.5",
