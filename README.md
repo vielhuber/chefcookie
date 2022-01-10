@@ -34,6 +34,10 @@ chefcookie is a gdpr cookie solution without compromises.
 -   [crazy egg](https://www.crazyegg.com)
 -   [google maps](https://developers.google.com/maps/documentation/javascript/tutorial)
 
+## references
+
+-   [changelog](https://github.com/vielhuber/chefcookie/blob/master/CHANGELOG.md)
+
 ## installation
 
 use it as a module:
