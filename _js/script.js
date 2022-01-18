@@ -108,6 +108,10 @@ export default class chefcookie {
         return this.isOpened;
     }
 
+    isClosed() {
+        return !this.isOpened;
+    }
+
     animationIn() {
         document.querySelector('.chefcookie__inner').style.overflowY = 'hidden';
         if (this.config.style.layout === 'topbar') {

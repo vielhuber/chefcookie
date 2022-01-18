@@ -427,6 +427,7 @@ you can programmatically control chefcookie via javascript:
 -   `cc.open()`: open the cookie banner manually
 -   `cc.isOpen()`: check if cookie banner is opened
 -   `cc.close()`: close the cookie banner manually
+-   `cc.isClosed()`: check if cookie banner is closed
 -   `cc.destroy()`: destroy the cookie banner and all event listeners
 -   `cc.updateOptOutOptIn()`: refreshes the state of opt out / opt in buttons
 
