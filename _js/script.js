@@ -429,7 +429,7 @@ export default class chefcookie {
             }
             .chefcookie__buttons--count-3 .chefcookie__button,
             .chefcookie__buttons--count-3 .chefcookie__button:focus {
-                min-width:15rem;
+                min-width:15em;
                 margin-right:1em;
             }
             .chefcookie__button:last-child
