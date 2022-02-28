@@ -395,7 +395,7 @@ export default class chefcookie {
                 transition: all ${this.animationSpeed / 1000}s ease-in-out;
                 text-decoration:underline;
                 font-size: 1em;
-                line-height:1.6;exclude_ua_regex
+                line-height:1.6;
             }
             .chefcookie__message a:focus
             {
