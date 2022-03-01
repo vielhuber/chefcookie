@@ -1379,7 +1379,7 @@ export default class chefcookie {
             {
                 httpOnly: false,
                 maxAge: 60 * 60 * 24 * days,
-                domain: window.location.hostname.endsWith(cookie_domain) ? cookie_domain : undefined,
+                domain: (cookie_domain && window.location.hostname.endsWith(cookie_domain)) ? cookie_domain : undefined,
                 ...options
             }
         );
