@@ -6,10 +6,17 @@ import 'mdn-polyfills/Element.prototype.closest';
 import 'mdn-polyfills/Node.prototype.remove';
 import '@babel/polyfill/noConflict'; // ie11 support
 import helper from './_helper';
+import cookie from 'cookie';
 
 export default class chefcookie {
+    defaults = {
+        domain: helper.urlHostTopLevel(),
+    };
     constructor(config = {}) {
-        this.config = config;
+        this.config = {
+            ...this.defaults,
+            ...config
+        };
         // add dummy entries for empty groups
         this.config.settings.forEach((group, i) => {
             if (!('scripts' in group) || Object.keys(group.scripts).length === 0) {
@@ -316,8 +323,8 @@ export default class chefcookie {
             }
             /* try to reset styles */
             .chefcookie h2,
-            .chefcookie a:link, 
-            .chefcookie a:hover, 
+            .chefcookie a:link,
+            .chefcookie a:hover,
             .chefcookie a:visited
             {
                 color:inherit;
@@ -1345,6 +1352,44 @@ export default class chefcookie {
         );
     }
 
+    getCookieExpiration() {
+        let expiration = 30;
+        if ('expiration' in this.config && Number.isInteger(this.config.expiration)) {
+            expiration = this.config.expiration;
+        }
+        return expiration;
+    }
+
+    getCookieName(cookieName) {
+        return (this.config.cookie_prefix || 'cc_') + cookieName;
+    }
+
+    setCookie(name, value) {
+        const cookie_name = this.getCookieName(name);
+        const days = this.getCookieExpiration();
+        const cookie_domain = this.config.domain;
+        const options = (window.location.protocol.indexOf('https') > -1) ?
+            {
+                secure: true,
+                samesite: 'None',
+            } : {};
+        document.cookie = cookie.serialize(
+            cookie_name,
+            value,
+            {
+                httpOnly: false,
+                maxAge: 60 * 60 * 24 * days,
+                domain: window.location.hostname.endsWith(cookie_domain) ? cookie_domain : undefined,
+                ...options
+            }
+        );
+    }
+
+    getCookie(name) {
+        const cookie_name = this.getCookieName(name);
+        return cookie.parse(document.cookie)[cookie_name];
+    }
+
     isCheckboxActiveForGroup(group_index) {
         let group;
         if (this.config.settings[group_index] !== undefined) {
@@ -1392,11 +1437,11 @@ export default class chefcookie {
     }
 
     setCookieToHideOverlay() {
-        helper.cookieSet(this.getCookieName('hide_prompt'), '1', this.getCookieExpiration());
+        this.setCookie('hide_prompt', '1');
     }
 
     isCookieSetToHideOverlay() {
-        return helper.cookieExists(this.getCookieName('hide_prompt'));
+        return this.getCookie('hide_prompt') !== undefined;
     }
 
     saveInCookie() {
@@ -1432,58 +1477,46 @@ export default class chefcookie {
         if (providers.length === 0) {
             providers.push('null');
         }
-        helper.cookieSet(this.getCookieName('accepted_providers'), providers.join(','), this.getCookieExpiration());
+        this.setCookie('accepted_providers', providers.join(','));
     }
 
     addToCookie(provider) {
         let providers;
         if (
-            !helper.cookieExists(this.getCookieName('accepted_providers')) ||
-            helper.cookieGet(this.getCookieName('accepted_providers')) === 'null'
+            this.getCookie('accepted_providers') === undefined ||
+            this.getCookie('accepted_providers') === 'null'
         ) {
             providers = [];
         } else {
-            providers = helper.cookieGet(this.getCookieName('accepted_providers')).split(',');
+            providers = this.getCookie('accepted_providers').split(',');
         }
         if (providers.indexOf(provider) === -1) {
             providers.push(provider);
-            helper.cookieSet(this.getCookieName('accepted_providers'), providers.join(','), this.getCookieExpiration());
+            this.setCookie('accepted_providers', providers.join(','));
         }
     }
 
     deleteFromCookie(provider) {
-        if (!helper.cookieExists(this.getCookieName('accepted_providers'))) {
+        if (this.getCookie('accepted_providers') === undefined) {
             return;
         }
-        let providers = helper.cookieGet(this.getCookieName('accepted_providers')).split(',');
-        let index = providers.indexOf(provider);
+        const providers = this.getCookie('accepted_providers').split(',');
+        const index = providers.indexOf(provider);
         if (index !== -1) {
             providers.splice(index, 1);
         }
         if (providers.length > 0) {
-            helper.cookieSet(this.getCookieName('accepted_providers'), providers.join(','), this.getCookieExpiration());
+            this.setCookie('accepted_providers', providers.join(','));
         } else {
-            helper.cookieSet(this.getCookieName('accepted_providers'), 'null', this.getCookieExpiration());
+            this.setCookie('accepted_providers', 'null');
         }
-    }
-
-    getCookieExpiration() {
-        let expiration = 30;
-        if ('expiration' in this.config && Number.isInteger(this.config.expiration)) {
-            expiration = this.config.expiration;
-        }
-        return expiration;
-    }
-
-    getCookieName(cookieName) {
-        return (this.config.cookie_prefix || 'cc_') + cookieName;
     }
 
     addEnabledScripts(isInit = false) {
-        if (!helper.cookieExists(this.getCookieName('accepted_providers'))) {
+        if (this.getCookie('accepted_providers') === undefined) {
             return;
         }
-        let settings = helper.cookieGet(this.getCookieName('accepted_providers'));
+        const settings = this.getCookie('accepted_providers');
         if (settings == 'null') {
             return;
         }
@@ -1505,14 +1538,13 @@ export default class chefcookie {
     }
 
     addScript(provider, isInit = false) {
-        if (!helper.cookieExists(this.getCookieName('accepted_providers'))) {
+        if (this.getCookie('accepted_providers') === undefined) {
             return;
         }
-        let settings = helper.cookieGet(this.getCookieName('accepted_providers'));
-        if (settings == 'null') {
+        const settings = this.getCookie('accepted_providers').split(',');
+        if (settings === ['null']) {
             return;
         }
-        settings = settings.split(',');
         this.config.settings.forEach(settings__value => {
             if (settings__value.scripts !== undefined) {
                 Object.entries(settings__value.scripts).forEach(([scripts__key, scripts__value]) => {
@@ -1742,10 +1774,10 @@ export default class chefcookie {
     }
 
     isAccepted(provider) {
-        if (!helper.cookieExists(this.getCookieName('accepted_providers'))) {
+        if (this.getCookie('accepted_providers') === undefined) {
             return false;
         }
-        return helper.cookieGet(this.getCookieName('accepted_providers')).split(',').indexOf(provider) > -1;
+        return this.getCookie('accepted_providers').split(',').indexOf(provider) > -1;
     }
 
     isLoaded(provider) {
