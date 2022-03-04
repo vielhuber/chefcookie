@@ -443,7 +443,7 @@ const cc = new chefcookie({
 });
 ```
 
-Currently the default regex ```/(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/``` excludes Google Speed Insight, Chrome Lightouse, and WebPageSpeed.
+Currently the default regex ```/(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/``` excludes Google Speed Insight, Chrome Lightouse, and WebPageTest.org.
 
 #### consent manager tracking
 
