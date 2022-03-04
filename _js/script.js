@@ -93,8 +93,24 @@ export default class chefcookie {
         document.documentElement.classList.remove('chefcookie--noscroll');
         // reset scroll position
         if (this.config.style.layout !== 'topbar') {
+            let defaultBodyScrollBehavior = null,
+                defaultHtmlScrollBehavior = null;
+            if (window.getComputedStyle(document.body).scrollBehavior !== 'auto') {
+                defaultBodyScrollBehavior = window.getComputedStyle(document.body).scrollBehavior;
+                document.body.style.scrollBehavior = 'auto';
+            }
+            if (window.getComputedStyle(document.documentElement).scrollBehavior !== 'auto') {
+                defaultHtmlScrollBehavior = window.getComputedStyle(document.documentElement).scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
+            }
             document.body.style.top = 'auto';
             window.scrollTo(0, this.scrollPosition);
+            if (defaultBodyScrollBehavior !== null) {
+                document.body.style.scrollBehavior = defaultBodyScrollBehavior;
+            }
+            if (defaultHtmlScrollBehavior !== null) {
+                document.documentElement.style.scrollBehavior = defaultHtmlScrollBehavior;
+            }
         }
         document.documentElement.classList.remove('chefcookie--blur');
         this.animationOut();
@@ -1679,7 +1695,9 @@ export default class chefcookie {
         if (provider === 'smartlook') {
             let script = document.createElement('script');
             script.innerHTML =
-                "window.smartlook||(function(d) {var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);})(document);smartlook('init', '"+id+"', { region: 'eu' });";
+                "window.smartlook||(function(d) {var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);})(document);smartlook('init', '" +
+                id +
+                "', { region: 'eu' });";
             document.head.appendChild(script);
             this.setLoaded(provider);
         }
