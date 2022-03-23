@@ -431,6 +431,20 @@ you can programmatically control chefcookie via javascript:
 -   `cc.destroy()`: destroy the cookie banner and all event listeners
 -   `cc.updateOptOutOptIn()`: refreshes the state of opt out / opt in buttons
 
+#### exclude user agent
+
+You can avoid showing the banner for specific user agent (i.e. bot or crawler), using a regular expression.
+
+```js
+const cc = new chefcookie({
+    ...
+    exclude_ua_regex: /(myBOT)/
+    ...
+});
+```
+
+Currently the default regex ```/(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/``` excludes Google PageSpeed Insight, Chrome Lighthouse, and WebPageTest.org.
+
 #### consent manager tracking
 
 to test the acceptance of the consent manager, it is recommended to use the `consent_tracking`-option. if you specify an url (relative or absolute) there, chefcookie sends a post-request with analysis data for every action that a user performs in the consent manager. these requests have the form:

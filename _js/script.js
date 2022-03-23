@@ -8,8 +8,14 @@ import '@babel/polyfill/noConflict'; // ie11 support
 import helper from './_helper';
 
 export default class chefcookie {
+    defaults = {
+        exclude_ua_regex: /(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/,
+    };
+
     constructor(config = {}) {
-        this.config = config;
+        this.config = {
+            ...this.defaults,
+            ...config};
         // add dummy entries for empty groups
         this.config.settings.forEach((group, i) => {
             if (!('scripts' in group) || Object.keys(group.scripts).length === 0) {
@@ -38,11 +44,11 @@ export default class chefcookie {
     }
 
     init() {
-        if (
-            (this.config.exclude_google_pagespeed === undefined || this.config.exclude_google_pagespeed === true) &&
-            (navigator.userAgent.indexOf('Speed Insights') > -1 ||
-                navigator.userAgent.indexOf('Chrome-Lighthouse') > -1)
-        ) {
+        if (this.config.exclude_google_pagespeed === true) {
+            // deprecated legacy support
+            this.config.exclude_ua_regex = /(Speed Insights|Chrome-Lighthouse)/;
+        }
+        if (this.config.exclude_ua_regex !== undefined && navigator.userAgent.match(this.config.exclude_ua_regex)) {
             return;
         }
 
@@ -332,8 +338,8 @@ export default class chefcookie {
             }
             /* try to reset styles */
             .chefcookie h2,
-            .chefcookie a:link, 
-            .chefcookie a:hover, 
+            .chefcookie a:link,
+            .chefcookie a:hover,
             .chefcookie a:visited
             {
                 color:inherit;
