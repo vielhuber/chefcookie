@@ -81,7 +81,7 @@ const cc = new chefcookie({
     consent_tracking: null, // '/wp-json/v1/track-consent.php'
     expiration: 7, // in days
     cookie_prefix: 'cc_', // switch cookie prefix (e.g. for different pages on the same top level domain)
-    exclude_google_pagespeed: true,
+    exclude_ua_regex: /(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/,
     style: {
         layout: 'overlay', // overlay|bottombar|topbar
         size: 3, // 1|2|3|4|5
@@ -433,7 +433,7 @@ you can programmatically control chefcookie via javascript:
 
 #### exclude user agent
 
-You can avoid showing the banner for specific user agent (i.e. bot or crawler), using a regular expression.
+you can avoid showing the banner for specific user agents (i.e. bots or crawlers), using a regular expression.
 
 ```js
 const cc = new chefcookie({
@@ -443,7 +443,7 @@ const cc = new chefcookie({
 });
 ```
 
-Currently the default regex ```/(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/``` excludes Google PageSpeed Insight, Chrome Lighthouse, and WebPageTest.org.
+currently the default regex `/(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/` excludes Google PageSpeed Insights, Chrome Lighthouse and WebPageTest.org.
 
 #### consent manager tracking
 

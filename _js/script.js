@@ -8,14 +8,15 @@ import '@babel/polyfill/noConflict'; // ie11 support
 import helper from './_helper';
 
 export default class chefcookie {
-    defaults = {
-        exclude_ua_regex: /(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/,
-    };
-
     constructor(config = {}) {
+        let defaults = {
+            exclude_ua_regex: /(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/
+        };
         this.config = {
-            ...this.defaults,
-            ...config};
+            ...defaults,
+            ...config
+        };
+        console.log(this.config);
         // add dummy entries for empty groups
         this.config.settings.forEach((group, i) => {
             if (!('scripts' in group) || Object.keys(group.scripts).length === 0) {
