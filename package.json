@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "2.5.5",
+    "version": "2.5.6",
     "main": "_build/script.js",
     "files": [
         "_build/*.js",
@@ -22,7 +22,7 @@
         "update-changelog": "auto-changelog --commit-limit false --package"
     },
     "dependencies": {
-        "@babel/runtime": "^7.16.7",
+        "@babel/runtime": "^7.17.8",
         "cookie": "^0.4.2",
         "mdn-polyfills": "^5.20.0",
         "onchange": "^7.1.0"
