@@ -415,6 +415,9 @@ this only gets executed when you call `resolve()` inside your custom tracking fu
 the cookie banner is shown always, if no consent is saved.\
 if done so, it is shown again, after the cookie expired (see the `expiration`-setting).
 
+cookies are valid by default for the 2nd level domain of the site. ex. if the banner is on the website www.foo.bar, the cookie domain will be foo.bar, so the user's choices will be valid for www.foo.bar, xxx.foo.bar, ...
+There is an option to customize the domain using the `domain`-settings. Setting the domain to `undefined` means using cookies only for the current site.
+
 it is recommended to include a (re)opening link in the privacy policy, for example.\
 here you can also use the following code:
 
