@@ -1385,21 +1385,19 @@ export default class chefcookie {
         const cookie_name = this.getCookieName(name);
         const days = this.getCookieExpiration();
         const cookie_domain = this.config.domain;
-        const options = (window.location.protocol.indexOf('https') > -1) ?
-            {
-                secure: true,
-                samesite: 'None',
-            } : {};
-        document.cookie = cookie.serialize(
-            cookie_name,
-            value,
-            {
-                httpOnly: false,
-                maxAge: 60 * 60 * 24 * days,
-                domain: (cookie_domain && window.location.hostname.endsWith(cookie_domain)) ? cookie_domain : undefined,
-                ...options
-            }
-        );
+        const options =
+            window.location.protocol.indexOf('https') > -1
+                ? {
+                      secure: true,
+                      samesite: 'None'
+                  }
+                : {};
+        document.cookie = cookie.serialize(cookie_name, value, {
+            httpOnly: false,
+            maxAge: 60 * 60 * 24 * days,
+            domain: cookie_domain && window.location.hostname.endsWith(cookie_domain) ? cookie_domain : undefined,
+            ...options
+        });
     }
 
     getCookie(name) {
@@ -1499,10 +1497,7 @@ export default class chefcookie {
 
     addToCookie(provider) {
         let providers;
-        if (
-            this.getCookie('accepted_providers') === undefined ||
-            this.getCookie('accepted_providers') === 'null'
-        ) {
+        if (this.getCookie('accepted_providers') === undefined || this.getCookie('accepted_providers') === 'null') {
             providers = [];
         } else {
             providers = this.getCookie('accepted_providers').split(',');
