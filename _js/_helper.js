@@ -1,5 +1,4 @@
 export default class helper {
-
     static getParam(variable) {
         let url = window.location.search;
         if (url == '') {
@@ -18,7 +17,7 @@ export default class helper {
 
     static urlHostTopLevel() {
         let host = window.location.hostname;
-        // IPv4 address
+        // ipv4
         if (host.match(/^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/)) {
             return host;
         }
