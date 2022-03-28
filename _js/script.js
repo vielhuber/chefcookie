@@ -9,12 +9,13 @@ import helper from './_helper';
 import cookie from 'cookie';
 
 export default class chefcookie {
-    defaults = {
-        domain: helper.urlHostTopLevel(),
-    };
     constructor(config = {}) {
+        let defaults = {
+            exclude_ua_regex: /(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/,
+            domain: helper.urlHostTopLevel()
+        };
         this.config = {
-            ...this.defaults,
+            ...defaults,
             ...config
         };
         // add dummy entries for empty groups
@@ -45,11 +46,11 @@ export default class chefcookie {
     }
 
     init() {
-        if (
-            (this.config.exclude_google_pagespeed === undefined || this.config.exclude_google_pagespeed === true) &&
-            (navigator.userAgent.indexOf('Speed Insights') > -1 ||
-                navigator.userAgent.indexOf('Chrome-Lighthouse') > -1)
-        ) {
+        if (this.config.exclude_google_pagespeed === true) {
+            // deprecated legacy support
+            this.config.exclude_ua_regex = /(Speed Insights|Chrome-Lighthouse)/;
+        }
+        if (this.config.exclude_ua_regex !== undefined && navigator.userAgent.match(this.config.exclude_ua_regex)) {
             return;
         }
 
@@ -100,8 +101,24 @@ export default class chefcookie {
         document.documentElement.classList.remove('chefcookie--noscroll');
         // reset scroll position
         if (this.config.style.layout !== 'topbar') {
+            let defaultBodyScrollBehavior = null,
+                defaultHtmlScrollBehavior = null;
+            if (window.getComputedStyle(document.body).scrollBehavior !== 'auto') {
+                defaultBodyScrollBehavior = window.getComputedStyle(document.body).scrollBehavior;
+                document.body.style.scrollBehavior = 'auto';
+            }
+            if (window.getComputedStyle(document.documentElement).scrollBehavior !== 'auto') {
+                defaultHtmlScrollBehavior = window.getComputedStyle(document.documentElement).scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
+            }
             document.body.style.top = 'auto';
             window.scrollTo(0, this.scrollPosition);
+            if (defaultBodyScrollBehavior !== null) {
+                document.body.style.scrollBehavior = defaultBodyScrollBehavior;
+            }
+            if (defaultHtmlScrollBehavior !== null) {
+                document.documentElement.style.scrollBehavior = defaultHtmlScrollBehavior;
+            }
         }
         document.documentElement.classList.remove('chefcookie--blur');
         this.animationOut();
@@ -1711,9 +1728,9 @@ export default class chefcookie {
         if (provider === 'smartlook') {
             let script = document.createElement('script');
             script.innerHTML =
-                "window.smartlook||(function(d) {var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);})(document);smartlook('init', '" +
+                "window.smartlook||(function(d) {var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);})(document);smartlook('init', '" +
                 id +
-                "');";
+                "', { region: 'eu' });";
             document.head.appendChild(script);
             this.setLoaded(provider);
         }
