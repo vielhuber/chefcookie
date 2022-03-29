@@ -13,4 +13,6 @@ __image_snapshots__
 *.css.map
 *.js.map
 *.tmp-browserify*
-cypress/videos/
+/cypress/plugins/
+/cypress/support/
+/cypress/videos/
