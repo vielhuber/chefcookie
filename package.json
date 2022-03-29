@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "2.5.8",
+    "version": "2.5.9",
     "main": "_build/script.js",
     "files": [
         "_build/*.js",
@@ -21,6 +21,7 @@
         "prod": "npm-run-all --parallel js",
         "update-changelog": "auto-changelog --commit-limit false --package",
         "start": "serve --listen 8080",
+        "test": "npm run cypress:test",
         "cypress:test": "start-server-and-test start http://localhost:8080 'npx cypress run'",
         "cypress:open": "start-server-and-test start http://localhost:8080 'cypress open'"
     },
