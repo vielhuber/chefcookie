@@ -20,7 +20,8 @@ let options = {
     consent_tracking: '/track-consent.php',
     expiration: 1,
     cookie_prefix: 'iddqd_',
-    exclude_google_pagespeed: true,
+    exclude_ua_regex: /(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/,
+    //domain: undefined,
     style: {
         layout: 'overlay',
         size: 3,

@@ -81,7 +81,8 @@ const cc = new chefcookie({
     consent_tracking: null, // '/wp-json/v1/track-consent.php'
     expiration: 7, // in days
     cookie_prefix: 'cc_', // switch cookie prefix (e.g. for different pages on the same top level domain)
-    exclude_google_pagespeed: true,
+    exclude_ua_regex: /(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/,
+    //domain: undefined,
     style: {
         layout: 'overlay', // overlay|bottombar|topbar
         size: 3, // 1|2|3|4|5
@@ -415,6 +416,9 @@ this only gets executed when you call `resolve()` inside your custom tracking fu
 the cookie banner is shown always, if no consent is saved.\
 if done so, it is shown again, after the cookie expired (see the `expiration`-setting).
 
+cookies are valid by default for the 2nd level domain of the site. e.g if the banner is on www.foo.bar, the cookie domain will be foo.bar, so the user's choices will be valid for www.foo.bar, xxx.foo.bar, ...\
+there is an option to customize the domain using the `domain`-settings. setting the domain to `undefined` means using cookies only for the current site.
+
 it is recommended to include a (re)opening link in the privacy policy, for example.\
 here you can also use the following code:
 
@@ -430,6 +434,20 @@ you can programmatically control chefcookie via javascript:
 -   `cc.isClosed()`: check if cookie banner is closed
 -   `cc.destroy()`: destroy the cookie banner and all event listeners
 -   `cc.updateOptOutOptIn()`: refreshes the state of opt out / opt in buttons
+
+#### exclude user agent
+
+you can avoid showing the banner for specific user agents (i.e. bots or crawlers), using a regular expression.
+
+```js
+const cc = new chefcookie({
+    ...
+    exclude_ua_regex: /(myBOT)/
+    ...
+});
+```
+
+currently the default regex `/(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/` excludes Google PageSpeed Insights, Chrome Lighthouse and WebPageTest.org.
 
 #### consent manager tracking
 

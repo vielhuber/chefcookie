@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "2.5.0",
+    "version": "2.5.7",
     "main": "_build/script.js",
     "files": [
         "_build/*.js",
@@ -25,16 +25,18 @@
         "cypress:open": "start-server-and-test start http://localhost:8080 'cypress open'"
     },
     "dependencies": {
-        "@babel/runtime": "^7.16.7",
+        "@babel/runtime": "^7.17.8",
+        "cookie": "^0.4.2",
         "mdn-polyfills": "^5.20.0",
         "onchange": "^7.1.0"
     },
     "devDependencies": {
-        "@babel/cli": "^7.16.8",
-        "@babel/core": "^7.16.12",
+        "auto-changelog": "^2.4.0",
+        "@babel/cli": "^7.17.6",
+        "@babel/core": "^7.17.8",
         "@babel/plugin-proposal-class-properties": "^7.16.7",
         "@babel/plugin-proposal-optional-chaining": "^7.16.7",
-        "@babel/plugin-transform-runtime": "^7.16.10",
+        "@babel/plugin-transform-runtime": "^7.17.0",
         "@babel/polyfill": "^7.11.5",
         "@babel/preset-env": "^7.16.11",
         "auto-changelog": "^2.3.0",
