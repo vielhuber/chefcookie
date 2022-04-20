@@ -522,6 +522,10 @@ export default class chefcookie {
             {
                 float: left;
             }
+            .chefcookie__group:before
+            {
+                display:none;
+            }
             .chefcookie__group-title
             {
                 float:left;
@@ -680,6 +684,10 @@ export default class chefcookie {
             }
             .chefcookie__script {
                 margin-bottom:0.5em;
+            }
+            .chefcookie__script:before
+            {
+                display:none;
             }
             .chefcookie__script:first-child {
                 margin-top:1em;
