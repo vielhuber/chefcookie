@@ -1403,6 +1403,7 @@ export default class chefcookie {
         document.cookie = cookie.serialize(cookie_name, value, {
             httpOnly: false,
             maxAge: 60 * 60 * 24 * days,
+            path: '/',
             domain: cookie_domain && window.location.hostname.endsWith(cookie_domain) ? cookie_domain : undefined,
             ...options
         });
