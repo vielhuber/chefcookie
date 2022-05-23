@@ -210,7 +210,7 @@ export default class chefcookie {
     }
 
     forceAccept() {
-        return helper.getParam('accept') === '1';
+        return helper.getParam('accept') === '1' || helper.getParam('gtm_debug') !== null;
     }
 
     bindOptOutOptIn() {
