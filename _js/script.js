@@ -322,7 +322,10 @@ export default class chefcookie {
                     exclude__value ===
                         window.location.protocol + '//' + window.location.host + window.location.pathname) ||
                     (exclude__value.indexOf('http') !== 0 && exclude__value === window.location.pathname) ||
-                    (exclude__value.indexOf('http') !== 0 && exclude__value + '/' === window.location.pathname))
+                    (exclude__value.indexOf('http') !== 0 && exclude__value === decodeURI(window.location.pathname)) ||
+                    (exclude__value.indexOf('http') !== 0 && exclude__value + '/' === window.location.pathname) ||
+                    (exclude__value.indexOf('http') !== 0 &&
+                        exclude__value + '/' === decodeURI(window.location.pathname)))
             ) {
                 excluded = true;
             }
