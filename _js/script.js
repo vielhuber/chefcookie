@@ -1186,7 +1186,7 @@ export default class chefcookie {
                             <a href="#chefcookie__settings" class="chefcookie__button chefcookie__button--settings">${this.getLabel(
                                 'settings_open'
                             )}</a>
-                            <a href="#chefcookie__accept" class="chefcookie__button chefcookie__button--accept">${this.getLabel(
+                            <a href="#chefcookie__accept" class="chefcookie__button chefcookie__button--accept cookie-compliance-ok-btn">${this.getLabel(
                                 this.config.accept_all_if_settings_closed === undefined ||
                                     this.config.accept_all_if_settings_closed === false
                                     ? 'accept'
