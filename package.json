@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "2.6.6",
+    "version": "2.6.7",
     "main": "_build/script.js",
     "files": [
         "_build/*.js",
@@ -12,7 +12,7 @@
     "description": "",
     "scripts": {
         "js:browserify": "browserify ./_js/script.js --outfile ./chefcookie.min.js --debug --transform babelify",
-        "js:minify": "terser --compress --mangle --output ./chefcookie.min.js ./chefcookie.min.js",
+        "js:minify": "terser --compress --mangle --comments false --output ./chefcookie.min.js ./chefcookie.min.js",
         "js:babel": "npx babel ./_js/ --out-dir ./_build/",
         "js": "npm-run-all --sequential js:browserify js:minify js:babel",
         "js:dev": "npm-run-all --sequential js:browserify js:babel",
