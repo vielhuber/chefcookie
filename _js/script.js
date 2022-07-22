@@ -1233,6 +1233,9 @@ export default class chefcookie {
         if (document.querySelector('a[href="#chefcookie__accept"]') !== null) {
             [].forEach.call(document.querySelectorAll('a[href="#chefcookie__accept"]'), el => {
                 this.registerEventListener(el, 'click', e => {
+                    if (this.isOpened === false) {
+                        return;
+                    }
                     if (
                         !('accept_all_if_settings_closed' in this.config) ||
                         this.config.accept_all_if_settings_closed === true
@@ -1813,9 +1816,12 @@ export default class chefcookie {
     }
 
     settingsVisible() {
-        return document
-            .querySelector('.chefcookie__settings-container')
-            .classList.contains('chefcookie__settings-container--visible');
+        return (
+            document.querySelector('.chefcookie__settings-container') !== null &&
+            document
+                .querySelector('.chefcookie__settings-container')
+                .classList.contains('chefcookie__settings-container--visible')
+        );
     }
 
     showSettings() {
