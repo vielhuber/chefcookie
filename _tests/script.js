@@ -34,7 +34,7 @@ let options = {
         fade: true,
         blur: true,
         css_replace: '',
-        css_add: '.chefcookie { opacity:0.5; }'
+        css_add: '.chefcookie__box { border:3px solid red; }'
     },
     labels: {
         accept: { de: 'Akzeptieren', en: 'Accept' },

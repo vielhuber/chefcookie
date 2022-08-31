@@ -479,6 +479,15 @@ the `action`-key can have the following values:
 
 here it makes sense to temporarily store this data in a database and evaluate it – for example, to measure the discrepancy between the real visitor numbers and the numbers in google analytics or to optimize the appearance of the consent manager (e.g. using the `layout`-option).
 
+#### etracker optimizer
+
+by default the etracker optimizer is disabled, since it creates a nasty fouc. you can enable it via:
+
+```js
+window._etr = { eoBlocked: false };
+cc.load('etracker', 'xxxxxx');
+```
+
 #### event tracking
 
 chefcookie additionally comes with event tracking for all major analytics platforms.\

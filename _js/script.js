@@ -1766,7 +1766,13 @@ export default class chefcookie {
         }
 
         if (provider === 'etracker') {
-            let script = document.createElement('script');
+            let script;
+
+            script = document.createElement('script');
+            script.innerHTML = `if(window._etr === undefined) { window._etr = {eoBlocked:true}; }`;
+            document.head.appendChild(script);
+
+            script = document.createElement('script');
             script.onload = () => {
                 this.setLoaded(provider);
             };
