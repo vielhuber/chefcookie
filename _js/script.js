@@ -53,7 +53,7 @@ export default class chefcookie {
         if (this.config.exclude_ua_regex !== undefined && navigator.userAgent.match(this.config.exclude_ua_regex)) {
             return;
         }
-        if( document.head === null ) {
+        if( document.head === null || typeof document.head.insertAdjacentHTML === 'undefined' ) {
             return;
         }
 
