@@ -1785,7 +1785,7 @@ export default class chefcookie {
             script.setAttribute('data-block-cookies', 'true');
             script.setAttribute('data-respect-dnt', 'true');
             script.setAttribute('data-secure-code', id);
-            script.src = '//static.etracker.com/code/e.js';
+            script.src = '//code.etracker.com/code/e.js';
             document.head.appendChild(script);
         }
 
