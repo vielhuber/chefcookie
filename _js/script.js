@@ -114,7 +114,9 @@ export default class chefcookie {
                 defaultHtmlScrollBehavior = window.getComputedStyle(document.documentElement).scrollBehavior;
                 document.documentElement.style.scrollBehavior = 'auto';
             }
-            document.body.style.top = 'auto';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.right = '';
             window.scrollTo(0, this.scrollPosition);
             if (defaultBodyScrollBehavior !== null) {
                 document.body.style.scrollBehavior = defaultBodyScrollBehavior;
@@ -1044,6 +1046,8 @@ export default class chefcookie {
             if (this.config.style.layout !== 'topbar') {
                 this.scrollPosition = window.pageYOffset;
                 document.body.style.top = -this.scrollPosition + 'px';
+                document.body.style.left = '0px';
+                document.body.style.right = '0px';
             }
             document.documentElement.classList.add('chefcookie--noscroll');
         }
