@@ -53,7 +53,7 @@ export default class chefcookie {
         if (this.config.exclude_ua_regex !== undefined && navigator.userAgent.match(this.config.exclude_ua_regex)) {
             return;
         }
-        if( document.head === null || typeof document.head.insertAdjacentHTML === 'undefined' ) {
+        if (document.head === null || typeof document.head.insertAdjacentHTML === 'undefined') {
             return;
         }
 
@@ -957,8 +957,8 @@ export default class chefcookie {
             .chefcookie--bottombar .chefcookie__group,
             .chefcookie--topbar .chefcookie__group
             {
-                margin-bottom: 40px;
-                margin-top: 40px;
+                margin-top: 0px;
+                margin-bottom: 1.5em;
                 width: 22%;
                 margin-right: 4%;
             }
