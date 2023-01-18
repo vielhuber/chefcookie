@@ -80,6 +80,7 @@ const cc = new chefcookie({
     scripts_selection: 'collapse', // false|true|'collapse'
     debug_log: false,
     consent_tracking: null, // '/wp-json/v1/track-consent.php'
+    lng_fallback: null, // lng code used in labels when current lng is not found (e.g. "en")
     expiration: 7, // in days
     cookie_prefix: 'cc_', // switch cookie prefix (e.g. for different pages on the same top level domain)
     exclude_ua_regex: /(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/,

@@ -2116,6 +2116,16 @@ export default class chefcookie {
         }
         let lng = this.lng();
         if (!(lng in obj)) {
+            if (
+                'lng_fallback' in this.config &&
+                this.config.lng_fallback !== false &&
+                this.config.lng_fallback !== undefined &&
+                this.config.lng_fallback !== null &&
+                this.config.lng_fallback !== '' &&
+                this.config.lng_fallback in obj
+            ) {
+                return obj[this.config.lng_fallback];
+            }
             return Object.values(obj)[0];
         }
         return obj[lng];

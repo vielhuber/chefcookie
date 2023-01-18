@@ -18,6 +18,7 @@ let options = {
     scripts_selection: 'collapse',
     debug_log: true,
     consent_tracking: '/track-consent.php',
+    lng_fallback: null,
     expiration: 1,
     cookie_prefix: 'iddqd_',
     exclude_ua_regex: /(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/,
