@@ -11,7 +11,8 @@ import cookie from 'cookie';
 export default class chefcookie {
     constructor(config = {}) {
         let defaults = {
-            exclude_ua_regex: /(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/,
+            exclude_ua_regex:
+                /(Mozilla\/5\.0 \(Linux; Android 11; moto g power \(2022\)\) AppleWebKit\/537\.36 \(KHTML, like Gecko\) Chrome\/109\.0.0.0 Mobile Safari\/537\.36)|(Mozilla\/5\.0 \(Macintosh; Intel Mac OS X 10_15_7\) AppleWebKit\/537\.36 \(KHTML, like Gecko\) Chrome\/109\.0\.0\.0 Safari\/537\.36)|(Speed Insights)|(Chrome-Lighthouse)|(PSTS[\d\.]+)/,
             domain: helper.urlHostTopLevel()
         };
         this.config = {
@@ -48,7 +49,8 @@ export default class chefcookie {
     init() {
         if (this.config.exclude_google_pagespeed === true) {
             // deprecated legacy support
-            this.config.exclude_ua_regex = /(Speed Insights|Chrome-Lighthouse)/;
+            this.config.exclude_ua_regex =
+                /(Mozilla\/5\.0 \(Linux; Android 11; moto g power \(2022\)\) AppleWebKit\/537\.36 \(KHTML, like Gecko\) Chrome\/109\.0.0.0 Mobile Safari\/537\.36)|(Mozilla\/5\.0 \(Macintosh; Intel Mac OS X 10_15_7\) AppleWebKit\/537\.36 \(KHTML, like Gecko\) Chrome\/109\.0\.0\.0 Safari\/537\.36)|(Speed Insights)|(Chrome-Lighthouse)|(PSTS[\d\.]+)/;
         }
         if (this.config.exclude_ua_regex !== undefined && navigator.userAgent.match(this.config.exclude_ua_regex)) {
             return;

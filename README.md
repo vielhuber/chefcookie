@@ -83,7 +83,8 @@ const cc = new chefcookie({
     lng_fallback: null, // lng code used in labels when current lng is not found (e.g. "en")
     expiration: 7, // in days
     cookie_prefix: 'cc_', // switch cookie prefix (e.g. for different pages on the same top level domain)
-    exclude_ua_regex: /(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/,
+    exclude_ua_regex:
+        /(Mozilla\/5\.0 \(Linux; Android 11; moto g power \(2022\)\) AppleWebKit\/537\.36 \(KHTML, like Gecko\) Chrome\/109\.0.0.0 Mobile Safari\/537\.36)|(Mozilla\/5\.0 \(Macintosh; Intel Mac OS X 10_15_7\) AppleWebKit\/537\.36 \(KHTML, like Gecko\) Chrome\/109\.0\.0\.0 Safari\/537\.36)|(Speed Insights)|(Chrome-Lighthouse)|(PSTS[\d\.]+)/,
     //domain: undefined,
     style: {
         layout: 'overlay', // overlay|bottombar|topbar
@@ -449,7 +450,7 @@ const cc = new chefcookie({
 });
 ```
 
-currently the default regex `/(Speed Insights|Chrome-Lighthouse|PSTS[\d\.]+)/` excludes Google PageSpeed Insights, Chrome Lighthouse and WebPageTest.org.
+currently the default regex `/(Mozilla\/5\.0 \(Linux; Android 11; moto g power \(2022\)\) AppleWebKit\/537\.36 \(KHTML, like Gecko\) Chrome\/109\.0.0.0 Mobile Safari\/537\.36)|(Mozilla\/5\.0 \(Macintosh; Intel Mac OS X 10_15_7\) AppleWebKit\/537\.36 \(KHTML, like Gecko\) Chrome\/109\.0\.0\.0 Safari\/537\.36)|(Speed Insights)|(Chrome-Lighthouse)|(PSTS[\d\.]+)/` excludes Google PageSpeed Insights, Chrome Lighthouse and WebPageTest.org.
 
 #### consent manager tracking
 
