@@ -137,6 +137,7 @@ let options = {
                 },
                 taboola: 'xxxxxxx',
                 match2one: 'xxxxxxxx',
+                microsoft: 'xxxxxxxx',
                 linkedin: 'xxxxxxx',
                 smartlook: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
                 crazyegg: 'xxxx/xxxx',

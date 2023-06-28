@@ -28,6 +28,7 @@ chefcookie is a gdpr cookie solution without compromises.
 -   [twitter ads](https://ads.twitter.com)
 -   [taboola ads](https://www.taboola.com)
 -   [match2one ads](https://www.match2one.com)
+-   [microsoft ads](https://ads.microsoft.com)
 -   [linkedin](https://business.linkedin.com/marketing-solutions/conversion-tracking)
 -   [etracker](https://www.etracker.com)
 -   [matomo analytics](https://matomo.org)
@@ -171,6 +172,7 @@ const cc = new chefcookie({
                 twitter: 'single',
                 taboola: 'xxxxxxx',
                 match2one: 'xxxxxxxx',
+                microsoft: 'xxxxxxxx',
                 linkedin: 'xxxxxxx',
                 etracker: 'xxxxxx',
                 matomo: 'xxxxxx#x', // domain/siteid
@@ -210,6 +212,7 @@ const cc = new chefcookie({
                         cc.load('twitter', 'single');
                         cc.load('taboola', 'xxxxxxx');
                         cc.load('match2one', 'xxxxxxxx');
+                        cc.load('microsoft', 'xxxxxxxxx');
                         cc.load('linkedin', 'xxxxxxx');
                         cc.load('etracker', 'xxxxxx');
                         cc.load('matomo', 'xxxxxx#x');
@@ -309,6 +312,7 @@ its recommended to place those kind of links inside your privacy page:
 <a href="#" data-cc-disable="twitter" data-cc-message="Twitter Pixel aktivieren">Twitter Pixel deaktivieren</a>
 <a href="#" data-cc-disable="taboola" data-cc-message="Taboola Pixel aktivieren">Taboola Pixel deaktivieren</a>
 <a href="#" data-cc-disable="match2one" data-cc-message="Match2One Pixel aktivieren">Match2One Pixel deaktivieren</a>
+<a href="#" data-cc-disable="microsoft" data-cc-message="Microsoft Ads aktivieren">Microsoft Ads deaktivieren</a>
 <a href="#" data-cc-disable="linkedin" data-cc-message="LinkedIn Pixel aktivieren">LinkedIn Pixel deaktivieren</a>
 <a href="#" data-cc-disable="etracker" data-cc-message="etracker aktivieren">etracker deaktivieren</a>
 <a href="#" data-cc-disable="matomo" data-cc-message="Matomo aktivieren">Matomo deaktivieren</a>
@@ -362,6 +366,7 @@ the following keywords as keys are reserved:
 -   `twitter`
 -   `taboola`
 -   `match2one`
+-   `microsoft`
 -   `linkedin`
 -   `etracker`
 -   `matomo`
