@@ -330,9 +330,12 @@ export default class chefcookie {
                         window.location.protocol + '//' + window.location.host + window.location.pathname) ||
                     (exclude__value.indexOf('http') !== 0 && exclude__value === window.location.pathname) ||
                     (exclude__value.indexOf('http') !== 0 && exclude__value === decodeURI(window.location.pathname)) ||
-                    (exclude__value.indexOf('http') !== 0 && exclude__value + '/' === window.location.pathname) ||
                     (exclude__value.indexOf('http') !== 0 &&
-                        exclude__value + '/' === decodeURI(window.location.pathname)))
+                        '/' + exclude__value.replace(/^\/+|\/+$/g, '') + '/' ===
+                            '/' + window.location.pathname.replace(/^\/+|\/+$/g, '') + '/') ||
+                    (exclude__value.indexOf('http') !== 0 &&
+                        '/' + exclude__value.replace(/^\/+|\/+$/g, '') + '/' ===
+                            '/' + decodeURI(window.location.pathname).replace(/^\/+|\/+$/g, '') + '/'))
             ) {
                 excluded = true;
             }
