@@ -354,7 +354,8 @@ cc.isAccepted('analytics'); // true|false
 
 #### backdoor
 
-just add `?accept=1` to your urls to completely bypass chefcookie.
+add `?accept=1` to your urls to completely bypass chefcookie and\
+ignore user consent which means all scripts are in fact accepted.
 
 #### custom scripts
 
