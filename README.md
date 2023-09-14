@@ -80,6 +80,7 @@ const cc = new chefcookie({
     show_decline_button: false,
     scripts_selection: 'collapse', // false|true|'collapse'
     debug_log: false,
+    bypass_parameter: null, // e.g. {'ignore': '1', 'foo': 'bar'}
     consent_tracking: null, // '/wp-json/v1/track-consent.php'
     lng_fallback: null, // lng code used in labels when current lng is not found (e.g. "en")
     expiration: 7, // in days
@@ -352,10 +353,11 @@ cc.decline('analytics');
 cc.isAccepted('analytics'); // true|false
 ```
 
-#### backdoor
+#### bypass / backdoor
 
 add `?accept=1` to your urls to completely bypass chefcookie and\
-ignore user consent which means all scripts are in fact accepted.
+ignore user consent which means all scripts are in fact accepted.\
+you also can define custom parameter name/value pairs via `bypass_parameter`.
 
 #### custom scripts
 

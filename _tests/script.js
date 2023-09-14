@@ -17,6 +17,7 @@ let options = {
     show_decline_button: true,
     scripts_selection: 'collapse',
     debug_log: true,
+    bypass_parameter: { foo: 'bar', bar: 'baz', ignore: 1 },
     consent_tracking: '/track-consent.php',
     lng_fallback: null,
     expiration: 1,

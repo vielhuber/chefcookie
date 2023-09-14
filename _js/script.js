@@ -217,6 +217,23 @@ export default class chefcookie {
     }
 
     forceAccept() {
+        if (
+            'bypass_parameter' in this.config &&
+            this.config.bypass_parameter !== false &&
+            this.config.bypass_parameter !== undefined &&
+            this.config.bypass_parameter !== null &&
+            this.config.bypass_parameter !== '' &&
+            typeof this.config.bypass_parameter === 'object' &&
+            !Array.isArray(this.config.bypass_parameter)
+        ) {
+            for (const [bypass_parameter__key, bypass_parameter__value] of Object.entries(
+                this.config.bypass_parameter
+            )) {
+                if (helper.getParam(bypass_parameter__key) == bypass_parameter__value) {
+                    return true;
+                }
+            }
+        }
         return helper.getParam('accept') === '1' || helper.getParam('gtm_debug') !== null;
     }
 
