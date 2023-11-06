@@ -96,6 +96,14 @@ export default class chefcookie {
         this.logTracking('open');
     }
 
+    openWithSettings() {
+        this.open();
+        setTimeout(() => {
+            this.showSettings();
+            this.switchSettingsLabelsOpen();
+        }, this.animationSpeed);
+    }
+
     close() {
         if (this.isOpened === false) {
             return;

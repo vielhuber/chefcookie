@@ -440,6 +440,7 @@ here you can also use the following code:
 you can programmatically control chefcookie via javascript:
 
 -   `cc.open()`: open the cookie banner manually
+-   `cc.openWithSettings()`: open the cookie banner including settings manually
 -   `cc.isOpen()`: check if cookie banner is opened
 -   `cc.close()`: close the cookie banner manually
 -   `cc.isClosed()`: check if cookie banner is closed
