@@ -62,7 +62,7 @@ let options = {
             cannot_be_modified: false,
             initial_tracking: false,
             scripts: {
-                analytics: 'UA-xxxxxxxx-1',
+                analytics: 'G-xxxxxxxxxx',
                 matomo: 'tld.com#1',
                 google_maps_iframe: {
                     accept: function (cc, resolve, isInit) {

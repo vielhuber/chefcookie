@@ -135,10 +135,10 @@ const cc = new chefcookie({
             cannot_be_modified: false,
             initial_tracking: false,
             scripts: {
-                analytics: 'UA-xxxxxxxx-1',
+                analytics: 'G-xxxxxxxxxx',
                 // extended syntax
                 analytics: {
-                    id: 'UA-xxxxxxxx-1',
+                    id: 'G-xxxxxxxxxx',
                     title: { de: 'Google Analytics', en: 'Google Analytics' },
                     description: {
                         de: 'Die Verwendung der Analyse Cookies erfolgt zu dem Zweck, die Qualität unserer Website und ihre Inhalte zu verbessern und die Funktionsfähigkeit von eingebundenen Diensten unserer Partner sicherzustellen.',
@@ -207,7 +207,7 @@ const cc = new chefcookie({
                 example_script2: {
                     accept: (cc, resolve, isInit) => {
                         /* example: load default scripts inside custom script */
-                        cc.load('analytics', 'UA-xxxxxxxx-1');
+                        cc.load('analytics', 'G-xxxxxxxxxx');
                         cc.load('tagmanager', 'GTM-XXXXXXX');
                         cc.load('facebook', 'xxxxxxxxxxxxxxx');
                         cc.load('twitter', 'single');
@@ -225,7 +225,7 @@ const cc = new chefcookie({
                         cc.loadJs([
                             'script1.js',
                             'script2.js',
-                            'https://www.googletagmanager.com/gtag/js?id=UA-xxxxxxxx-1'
+                            'https://www.googletagmanager.com/gtag/js?id=G-xxxxxxxxxx'
                         ]).then(() => {
                             resolve();
                         });
@@ -239,7 +239,7 @@ const cc = new chefcookie({
 
                         /* example: load scripts manually */
                         let script1 = document.createElement('script');
-                        script1.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=UA-xxxxxxxx-1');
+                        script1.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=G-xxxxxxxxxx');
                         script1.onload = () => {
                             resolve();
                         };
