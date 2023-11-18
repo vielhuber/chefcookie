@@ -225,9 +225,9 @@ window.addEventListener('load', function () {
         cc.eventAnalytics('custom_action');
         cc.eventFacebook('custom_action_name');
         cc.eventTwitter('conversion_id');
-        cc.eventTaboola('custom_action_name');
+        cc.eventTaboola('custom_event_name');
         cc.eventMatch2one('id=xxxxxx&seg=xxxxxx');
-        cc.eventLinkedin('id', 'conversion_id');
+        cc.eventLinkedin('conversion_id');
         cc.eventEtracker('custom_category', 'custom_action');
         cc.eventEtracker('custom_action');
         e.preventDefault();

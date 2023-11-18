@@ -2027,16 +2027,12 @@ export default class chefcookie {
         this.logDebug('match2one ' + id);
     }
 
-    eventLinkedin(id, conversion_id) {
-        document.body.insertAdjacentHTML(
-            'beforeend',
-            '<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=' +
-                id +
-                '&conversionId=' +
-                conversion_id +
-                '&fmt=gif" />'
-        );
-        this.logDebug('linkedin ' + id + ' ' + conversion_id);
+    eventLinkedin(conversion_id) {
+        if (typeof window.lintrk == 'undefined') {
+            return;
+        }
+        window.lintrk('track', { conversion_id: conversion_id });
+        this.logDebug('linkedin ' + conversion_id);
     }
 
     eventEtracker(category, action) {
