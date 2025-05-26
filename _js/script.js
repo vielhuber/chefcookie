@@ -187,6 +187,9 @@ export default class chefcookie {
                 requestAnimationFrame(() => {
                     setTimeout(() => {
                         document.querySelector('.chefcookie__inner').style.overflowY = 'auto';
+                        if (this.config.style.layout === 'topbar') {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
                     }, this.animationSpeed + 30);
                 });
             }, 30);
@@ -1755,8 +1758,8 @@ export default class chefcookie {
                     var f,n,i;
                     w[u]=w[u]||[],f=function()
                     {
-                    var o={ti:"${id}", enableAutoSpaTracking: true}; 
-                    o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad") 
+                    var o={ti:"${id}", enableAutoSpaTracking: true};
+                    o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")
                     },
                     n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function()
                     {
