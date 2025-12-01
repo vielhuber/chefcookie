@@ -6,7 +6,7 @@ import 'mdn-polyfills/Element.prototype.closest';
 import 'mdn-polyfills/Node.prototype.remove';
 import '@babel/polyfill/noConflict'; // ie11 support
 import helper from './_helper';
-import cookie from 'cookie';
+import * as cookie from 'cookie';
 
 export default class chefcookie {
     constructor(config = {}) {
@@ -1118,10 +1118,10 @@ export default class chefcookie {
                                             <input${
                                                 group.cannot_be_modified ? ` disabled="disabled"` : ``
                                             } class="chefcookie__group-checkbox" data-status="${this.isCheckboxActiveForGroup(
-                                            i
-                                        )}" id="chefcookie_group_${i}" type="checkbox" name="chefcookie_group[]" value="${i}"${
-                                            this.isCheckboxActiveForGroup(i) === 2 ? ` checked="checked"` : ``
-                                        } />
+                                                i
+                                            )}" id="chefcookie_group_${i}" type="checkbox" name="chefcookie_group[]" value="${i}"${
+                                                this.isCheckboxActiveForGroup(i) === 2 ? ` checked="checked"` : ``
+                                            } />
                                             <span class="chefcookie__group-title">${this.translate(group.title)}</span>
                                             <span class="chefcookie__group-checkbox-icon"></span>
                                             ${
@@ -1159,10 +1159,10 @@ export default class chefcookie {
                                                 <ul class="chefcookie__scripts chefcookie__scripts--count-${
                                                     Object.keys(group.scripts).length
                                                 }${
-                                                      this.config.scripts_selection !== 'collapse'
-                                                          ? ` chefcookie__scripts--visible`
-                                                          : ``
-                                                  }">
+                                                    this.config.scripts_selection !== 'collapse'
+                                                        ? ` chefcookie__scripts--visible`
+                                                        : ``
+                                                }">
                                                     ${Object.keys(group.scripts)
                                                         .map(
                                                             j => `
@@ -1177,10 +1177,10 @@ export default class chefcookie {
                                                                         ? ` disabled="disabled"`
                                                                         : ``
                                                                 } class="chefcookie__script-checkbox" id="chefcookie_script_${i}_${j}" type="checkbox" name="chefcookie_script[]" value="${i}|${j}"${
-                                                                this.isCheckboxActiveForProvider(i, j)
-                                                                    ? ` checked="checked"`
-                                                                    : ``
-                                                            } />
+                                                                    this.isCheckboxActiveForProvider(i, j)
+                                                                        ? ` checked="checked"`
+                                                                        : ``
+                                                                } />
                                                                 <span class="chefcookie__script-title">${
                                                                     typeof group.scripts[j] === 'object' &&
                                                                     group.scripts[j] !== null &&
@@ -1446,7 +1446,7 @@ export default class chefcookie {
                       samesite: 'None'
                   }
                 : {};
-        document.cookie = cookie.serialize(cookie_name, value, {
+        document.cookie = cookie.stringifySetCookie(cookie_name, value, {
             httpOnly: false,
             maxAge: 60 * 60 * 24 * days,
             path: '/',
@@ -1457,7 +1457,7 @@ export default class chefcookie {
 
     getCookie(name) {
         const cookie_name = this.getCookieName(name);
-        return cookie.parse(document.cookie)[cookie_name];
+        return cookie.parseCookie(document.cookie)[cookie_name];
     }
 
     isCheckboxActiveForGroup(group_index) {
