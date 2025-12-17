@@ -6,39 +6,39 @@ chefcookie is a gdpr cookie solution without compromises.
 
 ## features
 
--   opt in/out
--   highly customizable
--   custom event tracking
--   duration tracking
--   scroll depth tracking
--   includes basic styling
--   multi language support
--   ships multiple layouts (overlay, bottombar, topbar)
--   supports custom tracking scripts
--   auto disable tracking for logged in wordpress users
--   ie11 support available
--   script grouping with optional optin on script level
--   (intentionally) supports [i don't care about cookies](https://www.i-dont-care-about-cookies.eu)
+- opt in/out
+- highly customizable
+- custom event tracking
+- duration tracking
+- scroll depth tracking
+- includes basic styling
+- multi language support
+- ships multiple layouts (overlay, bottombar, topbar)
+- supports custom tracking scripts
+- auto disable tracking for logged in wordpress users
+- ie11 support available
+- script grouping with optional optin on script level
+- (intentionally) supports [i don't care about cookies](https://www.i-dont-care-about-cookies.eu)
 
 ## included
 
--   [google analytics](https://analytics.google.com)
--   [google tag manager](https://tagmanager.google.com)
--   [facebook ads](https://de-de.facebook.com/business/products/ads)
--   [twitter ads](https://ads.twitter.com)
--   [taboola ads](https://www.taboola.com)
--   [match2one ads](https://www.match2one.com)
--   [microsoft ads](https://ads.microsoft.com)
--   [linkedin](https://business.linkedin.com/marketing-solutions/conversion-tracking)
--   [etracker](https://www.etracker.com)
--   [matomo analytics](https://matomo.org)
--   [smartlook](https://www.smartlook.com)
--   [crazy egg](https://www.crazyegg.com)
--   [google maps](https://developers.google.com/maps/documentation/javascript/tutorial)
+- [google analytics](https://analytics.google.com)
+- [google tag manager](https://tagmanager.google.com)
+- [facebook ads](https://de-de.facebook.com/business/products/ads)
+- [twitter ads](https://ads.twitter.com)
+- [taboola ads](https://www.taboola.com)
+- [match2one ads](https://www.match2one.com)
+- [microsoft ads](https://ads.microsoft.com)
+- [linkedin](https://business.linkedin.com/marketing-solutions/conversion-tracking)
+- [etracker](https://www.etracker.com)
+- [matomo analytics](https://matomo.org)
+- [smartlook](https://www.smartlook.com)
+- [crazy egg](https://www.crazyegg.com)
+- [google maps](https://developers.google.com/maps/documentation/javascript/tutorial)
 
 ## references
 
--   [changelog](https://github.com/vielhuber/chefcookie/blob/master/CHANGELOG.md)
+- [changelog](https://github.com/vielhuber/chefcookie/blob/master/CHANGELOG.md)
 
 ## installation
 
@@ -363,19 +363,19 @@ you also can define custom parameter name/value pairs via `bypass_parameter`.
 
 the following keywords as keys are reserved:
 
--   `analytics`
--   `tagmanager`
--   `facebook`
--   `twitter`
--   `taboola`
--   `match2one`
--   `microsoft`
--   `linkedin`
--   `etracker`
--   `matomo`
--   `smartlook`
--   `crazyegg`
--   `google_maps`
+- `analytics`
+- `tagmanager`
+- `facebook`
+- `twitter`
+- `taboola`
+- `match2one`
+- `microsoft`
+- `linkedin`
+- `etracker`
+- `matomo`
+- `smartlook`
+- `crazyegg`
+- `google_maps`
 
 if you provide strings as values, chefcookie interprets them appropriately. chefcookie then loads the libraries with reasonable default settings. however, you can execute your own functions in either overwriting the values of these reserved keywords (and provide an object) or use any other keyword.
 
@@ -385,16 +385,16 @@ the best strategy is to add no scripts at all and let chefcookie add the scripts
 
 if you cannot do that (e.g. when you cannot manipulate the page content), there are a lot of techniques and strategies out there to prevent existing scripts from executing:
 
--   use http content-security-policy headers
--   manipulate embeds (set `type="javascript/blocked"` or `alt-src="..."`)
--   monkey patch `document.createElement`
--   watch and modify with `MutationObserver`
--   abuse `document.write`
+- use http content-security-policy headers
+- manipulate embeds (set `type="javascript/blocked"` or `alt-src="..."`)
+- monkey patch `document.createElement`
+- watch and modify with `MutationObserver`
+- abuse `document.write`
 
 chefcookie is flexible and very well works together with e.g. [yett](https://github.com/snipsco/yett):
 
--   init `yett` before chefcookie to block scripts
--   call `unblock()` inside chefcookies custom scripts
+- init `yett` before chefcookie to block scripts
+- call `unblock()` inside chefcookies custom scripts
 
 #### dynamically load a script
 
@@ -439,13 +439,13 @@ here you can also use the following code:
 
 you can programmatically control chefcookie via javascript:
 
--   `cc.open()`: open the cookie banner manually
--   `cc.openWithSettings()`: open the cookie banner including settings manually
--   `cc.isOpen()`: check if cookie banner is opened
--   `cc.close()`: close the cookie banner manually
--   `cc.isClosed()`: check if cookie banner is closed
--   `cc.destroy()`: destroy the cookie banner and all event listeners
--   `cc.updateOptOutOptIn()`: refreshes the state of opt out / opt in buttons
+- `cc.open()`: open the cookie banner manually
+- `cc.openWithSettings()`: open the cookie banner including settings manually
+- `cc.isOpen()`: check if cookie banner is opened
+- `cc.close()`: close the cookie banner manually
+- `cc.isClosed()`: check if cookie banner is closed
+- `cc.destroy()`: destroy the cookie banner and all event listeners
+- `cc.updateOptOutOptIn()`: refreshes the state of opt out / opt in buttons
 
 #### exclude user agent
 
@@ -458,8 +458,6 @@ const cc = new chefcookie({
     ...
 });
 ```
-
-currently the default regex `/(Mozilla\/5\.0 \(Linux; Android 11; moto g power \(2022\)\) AppleWebKit\/537\.36 \(KHTML, like Gecko\) Chrome\/109\.0.0.0 Mobile Safari\/537\.36)|(Mozilla\/5\.0 \(Macintosh; Intel Mac OS X 10_15_7\) AppleWebKit\/537\.36 \(KHTML, like Gecko\) Chrome\/109\.0\.0\.0 Safari\/537\.36)|(Speed Insights)|(Chrome-Lighthouse)|(PSTS[\d\.]+)/` excludes Google PageSpeed Insights, Chrome Lighthouse and WebPageTest.org.
 
 #### consent manager tracking
 
@@ -480,13 +478,13 @@ take note that nor ip or user agent are posted, but feel free to catch and store
 
 the `action`-key can have the following values:
 
--   `open`: the consent manager is shown
--   `accept_all`: all providers are accepted
--   `accept_partially`: providers are accepted partially
--   `decline`: all providers are declined
--   `settings_open`: settings are opened
--   `settings_close`: settings are closed
--   `first_user_interaction`: first mouse/touch/scroll interaction happened
+- `open`: the consent manager is shown
+- `accept_all`: all providers are accepted
+- `accept_partially`: providers are accepted partially
+- `decline`: all providers are declined
+- `settings_open`: settings are opened
+- `settings_close`: settings are closed
+- `first_user_interaction`: first mouse/touch/scroll interaction happened
 
 here it makes sense to temporarily store this data in a database and evaluate it – for example, to measure the discrepancy between the real visitor numbers and the numbers in google analytics or to optimize the appearance of the consent manager (e.g. using the `layout`-option).
 

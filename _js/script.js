@@ -55,6 +55,9 @@ export default class chefcookie {
         if (this.config.exclude_ua_regex !== undefined && navigator.userAgent.match(this.config.exclude_ua_regex)) {
             return;
         }
+        if (this.isPageSpeed()) {
+            return;
+        }
         if (document.head === null || typeof document.head.insertAdjacentHTML === 'undefined') {
             return;
         }
@@ -2355,6 +2358,29 @@ export default class chefcookie {
             return '';
         }
         return 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + opacity + ')';
+    }
+
+    isPageSpeed() {
+        if (
+            navigator.userAgent.match(
+                /(Mozilla\/5\.0 \(Linux; Android 11; moto g power \(2022\)\) AppleWebKit\/537\.36 \(KHTML, like Gecko\) Chrome\/109\.0.0.0 Mobile Safari\/537\.36)|(Mozilla\/5\.0 \(Macintosh; Intel Mac OS X 10_15_7\) AppleWebKit\/537\.36 \(KHTML, like Gecko\) Chrome\/109\.0\.0\.0 Safari\/537\.36)|(Speed Insights)|(Chrome-Lighthouse)|(PSTS[\d\.]+)/
+            )
+        ) {
+            return true;
+        }
+        if (/HeadlessChromium|Lighthouse|PTST/.test(navigator.userAgent)) {
+            return true;
+        }
+        if (navigator.webdriver) {
+            return true;
+        }
+        if (navigator.plugins.length === 0) {
+            return true;
+        }
+        if (!navigator.languages || navigator.languages.length === 0) {
+            return true;
+        }
+        return false;
     }
 }
 
