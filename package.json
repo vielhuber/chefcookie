@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "2.9.2",
+    "version": "2.9.3",
     "main": "_build/script.js",
     "files": [
         "_build/*.js",
@@ -45,7 +45,7 @@
         "auto-changelog": "^2.5.0",
         "babelify": "^10.0.0",
         "browserify": "^17.0.1",
-        "cypress": "^15.0.0",
+        "cypress": "^15.8.1",
         "npm-run-all": "^4.1.5",
         "prettier": ">=3",
         "serve": "^14.2.5",
