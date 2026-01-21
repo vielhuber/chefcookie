@@ -38,7 +38,7 @@ chefcookie is a gdpr cookie solution without compromises.
 
 ## references
 
-- [changelog](https://github.com/vielhuber/chefcookie/blob/master/CHANGELOG.md)
+- [changelog](https://github.com/vielhuber/chefcookie/blob/main/CHANGELOG.md)
 
 ## installation
 
