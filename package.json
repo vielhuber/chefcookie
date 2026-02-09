@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "2.9.5",
+    "version": "2.9.6",
     "main": "_build/script.js",
     "files": [
         "_build/*.js",
@@ -11,11 +11,11 @@
     "license": "UNLICENSED",
     "description": "",
     "scripts": {
-        "js:browserify": "browserify ./_js/script.js --outfile ./chefcookie.min.js --debug --transform babelify",
+        "js:vite": "vite build --logLevel error",
         "js:minify": "terser --compress --mangle --comments false --output ./chefcookie.min.js ./chefcookie.min.js",
         "js:babel": "npx babel ./_js/ --out-dir ./_build/",
-        "js": "npm-run-all --sequential js:browserify js:minify js:babel",
-        "js:dev": "npm-run-all --sequential js:browserify js:babel",
+        "js": "npm-run-all --sequential js:vite js:minify js:babel",
+        "js:dev": "npm-run-all --sequential js:vite js:babel",
         "watch:js": "onchange ./_js/*.js --initial --poll 50 --delay 0 --await-write-finish 50 -- npm run js:dev",
         "dev": "npm-run-all --parallel watch:*",
         "prod": "npm-run-all --parallel js",
@@ -28,29 +28,29 @@
     },
     "dependencies": {
         "@babel/polyfill": "^7.12.1",
-        "@babel/runtime": "^7.28.4",
+        "@babel/runtime": "^7.28.6",
         "cookie": "^1.1.1",
         "mdn-polyfills": "^5.20.0",
         "onchange": "^7.1.0"
     },
     "devDependencies": {
-        "@babel/cli": "^7.28.3",
-        "@babel/core": "^7.28.5",
-        "@babel/plugin-transform-class-properties": "^7.27.1",
-        "@babel/plugin-transform-optional-chaining": "^7.28.5",
-        "@babel/plugin-transform-private-methods": "^7.27.1",
-        "@babel/plugin-transform-runtime": "^7.28.5",
-        "@babel/preset-env": "^7.28.5",
+        "@babel/cli": "^7.28.6",
+        "@babel/core": "^7.29.0",
+        "@babel/plugin-transform-class-properties": "^7.28.6",
+        "@babel/plugin-transform-optional-chaining": "^7.28.6",
+        "@babel/plugin-transform-private-methods": "^7.28.6",
+        "@babel/plugin-transform-runtime": "^7.29.0",
+        "@babel/preset-env": "^7.29.0",
         "@prettier/plugin-php": ">=0.24",
         "auto-changelog": "^2.5.0",
         "babelify": "^10.0.0",
-        "browserify": "^17.0.1",
-        "cypress": "^15.8.1",
+        "cypress": "^15.10.0",
         "npm-run-all": "^4.1.5",
         "prettier": ">=3",
         "serve": "^14.2.5",
         "start-server-and-test": "^2.1.3",
-        "terser": "^5.44.1"
+        "terser": "^5.46.0",
+        "vite": "^7.3.1"
     },
     "browserslist": [
         "ie >= 11",
