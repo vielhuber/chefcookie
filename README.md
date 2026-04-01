@@ -2,6 +2,7 @@
 [![Code Style](https://img.shields.io/badge/code_style-psr--12-ff69b4.svg)](https://www.php-fig.org/psr/psr-12/)
 [![License](https://img.shields.io/github/license/vielhuber/chefcookie)](https://github.com/vielhuber/chefcookie/blob/main/LICENSE.md)
 [![Last Commit](https://img.shields.io/github/last-commit/vielhuber/chefcookie)](https://github.com/vielhuber/chefcookie/commits)
+[![node version](https://img.shields.io/node/v/chefcookie)](https://www.npmjs.com/package/chefcookie)
 [![npm Downloads](https://img.shields.io/npm/dt/chefcookie)](https://www.npmjs.com/package/chefcookie)
 
 # 👻 chefcookie 👻
