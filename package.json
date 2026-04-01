@@ -1,12 +1,15 @@
 {
     "name": "chefcookie",
-    "version": "2.9.7",
+    "version": "2.9.8",
     "main": "_build/script.js",
     "files": [
         "_build/*.js",
         "chefcookie.min.js"
     ],
-    "repository": "git@github.com:vielhuber/chefcookie.git",
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/vielhuber/chefcookie.git"
+    },
     "author": "David Vielhuber <david@vielhuber.de>",
     "license": "MIT",
     "description": "",
