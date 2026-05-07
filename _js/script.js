@@ -1,10 +1,3 @@
-import 'mdn-polyfills/Object.entries';
-import 'mdn-polyfills/Object.values';
-import 'mdn-polyfills/Number.isInteger';
-import 'mdn-polyfills/Number.isInteger';
-import 'mdn-polyfills/Element.prototype.closest';
-import 'mdn-polyfills/Node.prototype.remove';
-import '@babel/polyfill/noConflict'; // ie11 support
 import helper from './_helper';
 import * as cookie from 'cookie';
 

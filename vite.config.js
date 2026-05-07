@@ -7,8 +7,7 @@ export default defineConfig({
             input: './_js/script.js',
             output: {
                 entryFileNames: 'chefcookie.min.js',
-                format: 'iife',
-                inlineDynamicImports: true
+                format: 'iife'
             }
         },
         sourcemap: true,
