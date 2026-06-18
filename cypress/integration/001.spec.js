@@ -8,7 +8,14 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 describe('chefcookie test 001', () => {
     beforeEach(() => {
-        cy.visit('/_tests/index.html');
+        cy.clearCookies();
+        cy.visit('/_tests/index.html', {
+            onBeforeLoad(win) {
+                Object.defineProperty(win.navigator, 'webdriver', { value: false });
+                Object.defineProperty(win.navigator, 'plugins', { value: [1] });
+                Object.defineProperty(win.navigator, 'languages', { value: ['en'] });
+            }
+        });
     });
 
     it('displays popup', () => {

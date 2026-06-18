@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "main": "_build/script.js",
     "files": [
         "_build/*.js",
@@ -17,42 +17,42 @@
         "preinstall": "node -e \"if(+process.versions.node.split('.')[0]<20){console.error('chefcookie requires Node >=20 (current LTS).');process.exit(1)}\"",
         "js:vite": "vite build --logLevel error",
         "js:minify": "terser --compress --mangle --comments false --output ./chefcookie.min.js ./chefcookie.min.js",
-        "js:babel": "npx babel ./_js/ --out-dir ./_build/",
-        "js": "npm-run-all --sequential js:vite js:minify js:babel",
-        "js:dev": "npm-run-all --sequential js:vite js:babel",
+        "js:package": "vite build --logLevel error --mode package",
+        "js": "npm-run-all --sequential js:vite js:minify js:package",
+        "js:dev": "npm-run-all --sequential js:vite js:package",
         "watch:js": "onchange ./_js/*.js --initial --poll 50 --delay 0 --await-write-finish 50 -- npm run js:dev",
         "dev": "npm-run-all --parallel watch:*",
         "prod": "npm-run-all --parallel js",
         "update-changelog": "auto-changelog --commit-limit false --package",
-        "start": "serve --listen 8080",
+        "start": "serve --listen 18080",
         "build": "npm run prod",
         "test": "npm run cypress:test",
-        "cypress:test": "start-server-and-test start http://localhost:8080 'npx cypress run'",
-        "cypress:open": "start-server-and-test start http://localhost:8080 'cypress open'"
+        "cypress:test": "start-server-and-test start http://localhost:18080 'npx cypress run'",
+        "cypress:open": "start-server-and-test start http://localhost:18080 'cypress open'"
     },
     "dependencies": {
-        "@babel/runtime": "^7.29.2",
         "cookie": "^1.1.1",
         "onchange": "^7.1.0"
     },
     "devDependencies": {
-        "@babel/cli": "^7.28.6",
-        "@babel/core": "^7.29.0",
-        "@babel/plugin-transform-class-properties": "^7.28.6",
-        "@babel/plugin-transform-optional-chaining": "^7.28.6",
-        "@babel/plugin-transform-private-methods": "^7.28.6",
-        "@babel/plugin-transform-runtime": "^7.29.0",
-        "@babel/preset-env": "^7.29.5",
         "@prettier/plugin-php": ">=0.25",
-        "auto-changelog": "^2.5.1",
-        "babelify": "^10.0.0",
-        "cypress": "^15.14.2",
+        "auto-changelog": "^2.6.0",
+        "cypress": "^15.17.0",
         "npm-run-all": "^4.1.5",
         "prettier": ">=3",
         "serve": "^14.2.6",
-        "start-server-and-test": "^3.0.2",
-        "terser": "^5.47.1",
-        "vite": "^8.0.11"
+        "start-server-and-test": "^3.0.11",
+        "terser": "^5.48.0",
+        "vite": "^8.0.16"
+    },
+    "overrides": {
+        "@babel/core": "^7.29.7",
+        "form-data": "^4.0.6",
+        "qs": "^6.15.2",
+        "shell-quote": "^1.8.4",
+        "systeminformation": "^5.31.7",
+        "tmp": "^0.2.7",
+        "uuid": "^11.1.1"
     },
     "browserslist": [
         "> 0.25%",

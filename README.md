@@ -23,7 +23,6 @@ chefcookie is a gdpr cookie solution without compromises.
 - ships multiple layouts (overlay, bottombar, topbar)
 - supports custom tracking scripts
 - auto disable tracking for logged in wordpress users
-- ie11 support available
 - script grouping with optional optin on script level
 - (intentionally) supports [i don't care about cookies](https://www.i-dont-care-about-cookies.eu)
 
