@@ -1439,10 +1439,12 @@ export default class chefcookie {
             window.location.protocol.indexOf('https') > -1
                 ? {
                       secure: true,
-                      samesite: 'None'
+                      sameSite: 'None'
                   }
                 : {};
-        document.cookie = cookie.stringifySetCookie(cookie_name, value, {
+        document.cookie = cookie.stringifySetCookie({
+            name: cookie_name,
+            value: value,
             httpOnly: false,
             maxAge: 60 * 60 * 24 * days,
             path: '/',
