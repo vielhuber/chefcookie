@@ -456,7 +456,7 @@ you can programmatically control chefcookie via javascript:
 
 #### exclude user agent
 
-you can avoid showing the banner for specific user agents (i.e. bots or crawlers), using a regular expression.
+you can avoid showing the banner for specific user agents (i.e. bots or crawlers), using a regular expression:
 
 ```js
 const cc = new chefcookie({
