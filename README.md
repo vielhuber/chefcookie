@@ -4,11 +4,10 @@
 [![License](https://img.shields.io/github/license/vielhuber/chefcookie)](https://github.com/vielhuber/chefcookie/blob/main/LICENSE.md)
 [![Last Commit](https://img.shields.io/github/last-commit/vielhuber/chefcookie)](https://github.com/vielhuber/chefcookie/commits)
 [![node version](https://img.shields.io/node/v/chefcookie)](https://www.npmjs.com/package/chefcookie)
+[![npm Version](https://img.shields.io/npm/v/chefcookie)](https://www.npmjs.com/package/chefcookie)
 [![npm Downloads](https://img.shields.io/npm/dt/chefcookie)](https://www.npmjs.com/package/chefcookie)
 
 # 👻 chefcookie 👻
-
-[![NPM](https://img.shields.io/npm/v/chefcookie.svg)](https://www.npmjs.com/package/chefcookie)
 
 chefcookie is a gdpr cookie solution without compromises.
 
