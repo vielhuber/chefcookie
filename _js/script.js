@@ -2379,4 +2379,6 @@ export default class chefcookie {
     }
 }
 
-window.chefcookie = chefcookie;
+if (typeof window !== 'undefined') {
+    window.chefcookie = chefcookie;
+}

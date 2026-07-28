@@ -7,12 +7,12 @@ export default defineConfig(({ mode }) => {
                 outDir: '_build',
                 lib: {
                     entry: './_js/script.js',
-                    formats: ['cjs'],
-                    fileName: () => 'script.js'
+                    formats: ['es', 'cjs'],
+                    fileName: format => (format === 'es' ? 'script.mjs' : 'script.js')
                 },
-                rollupOptions: {
+                rolldownOptions: {
                     output: {
-                        exports: 'named'
+                        exports: 'default'
                     }
                 },
                 sourcemap: false,
@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
     return {
         build: {
             outDir: '.',
-            rollupOptions: {
+            rolldownOptions: {
                 input: './_js/script.js',
                 output: {
                     entryFileNames: 'chefcookie.min.js',
