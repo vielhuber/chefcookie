@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "3.0.6",
+    "version": "3.0.7",
     "main": "./_build/script.js",
     "module": "./_build/script.mjs",
     "exports": {
@@ -24,7 +24,6 @@
     "license": "MIT",
     "description": "",
     "scripts": {
-        "preinstall": "node -e \"if(+process.versions.node.split('.')[0]<20){console.error('chefcookie requires Node >=20 (current LTS).');process.exit(1)}\"",
         "js:vite": "vite build --logLevel error",
         "js:minify": "terser --compress --mangle --comments false --output ./chefcookie.min.js ./chefcookie.min.js",
         "js:package": "vite build --logLevel error --mode package",
