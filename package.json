@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "3.0.8",
+    "version": "3.0.9",
     "main": "./_build/script.js",
     "module": "./_build/script.mjs",
     "exports": {
@@ -69,6 +69,6 @@
         "node": ">=20"
     },
     "allowScripts": {
-        "cypress@15.19.0": true
+        "cypress": true
     }
 }

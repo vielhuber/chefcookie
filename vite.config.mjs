@@ -1,6 +1,10 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ command, mode }) => {
+    if (command === 'serve') {
+        return {};
+    }
+
     if (mode === 'package') {
         return {
             build: {
