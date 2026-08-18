@@ -162,6 +162,9 @@ export default class chefcookie {
         }
         requestAnimationFrame(() => {
             setTimeout(() => {
+                if (this.isOpened === false) {
+                    return;
+                }
                 document.querySelector('.chefcookie').style.transition =
                     'opacity ' +
                     this.animationSpeed / 1000 +
@@ -182,6 +185,9 @@ export default class chefcookie {
                 }
                 requestAnimationFrame(() => {
                     setTimeout(() => {
+                        if (this.isOpened === false) {
+                            return;
+                        }
                         document.querySelector('.chefcookie__inner').style.overflowY = 'auto';
                         if (this.config.style.layout === 'topbar') {
                             window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -1,11 +1,5 @@
 /// <reference types="cypress" />
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-    // returning false here prevents Cypress from
-    // failing the test
-    return false;
-});
-
 describe('chefcookie test 001', () => {
     beforeEach(() => {
         cy.clearCookies();

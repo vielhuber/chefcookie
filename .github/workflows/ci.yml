@@ -37,5 +37,8 @@ jobs:
             - name: Build
               run: npm run prod --if-present
 
+            - name: Test
+              run: npm test
+
             - name: Publish
               run: npm publish
