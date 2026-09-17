@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "main": "./_build/script.js",
     "module": "./_build/script.mjs",
     "exports": {
