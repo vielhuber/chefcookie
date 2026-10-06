@@ -1275,6 +1275,7 @@ export default class chefcookie {
         if (document.querySelector('a[href="#chefcookie__accept"]') !== null) {
             [].forEach.call(document.querySelectorAll('a[href="#chefcookie__accept"]'), el => {
                 this.registerEventListener(el, 'click', e => {
+                    e.preventDefault();
                     if (this.isOpened === false) {
                         return;
                     }
@@ -1291,7 +1292,6 @@ export default class chefcookie {
                     this.close();
                     this.setCookieToHideOverlay();
                     this.updateOptOutOptIn();
-                    e.preventDefault();
                 });
             });
         }
