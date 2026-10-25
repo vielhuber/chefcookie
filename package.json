@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "3.1.2",
+    "version": "3.1.3",
     "main": "./_build/script.js",
     "module": "./_build/script.mjs",
     "exports": {
@@ -43,13 +43,13 @@
         "onchange": "^7.1.0"
     },
     "devDependencies": {
-        "@prettier/plugin-php": ">=0.25",
-        "cypress": "^16.0.0",
-        "npm-run-all2": "^9.0.3",
+        "@prettier/plugin-php": ">=0.26",
+        "cypress": "^16.2.0",
+        "npm-run-all2": "^9.0.4",
         "prettier": ">=3",
-        "start-server-and-test": "^3.0.12",
+        "start-server-and-test": "^3.0.13",
         "terser": "^5.51.2",
-        "vite": "^8.2.2"
+        "vite": "^8.3.5"
     },
     "overrides": {
         "@babel/core": "^7.29.7",
