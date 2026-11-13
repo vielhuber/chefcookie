@@ -2369,13 +2369,10 @@ export default class chefcookie {
         ) {
             return true;
         }
-        if (/HeadlessChromium|Lighthouse|PTST/.test(navigator.userAgent)) {
+        if (/HeadlessChrome|HeadlessChromium|Lighthouse|PTST/.test(navigator.userAgent)) {
             return true;
         }
         if (navigator.webdriver) {
-            return true;
-        }
-        if (navigator.plugins.length === 0) {
             return true;
         }
         if (!navigator.languages || navigator.languages.length === 0) {
