@@ -1,6 +1,6 @@
 {
     "name": "chefcookie",
-    "version": "3.1.4",
+    "version": "3.1.5",
     "main": "./_build/script.js",
     "module": "./_build/script.mjs",
     "exports": {
@@ -39,17 +39,17 @@
         "cypress:open": "start-server-and-test start http://localhost:18080/_tests/index.html 'cypress open'"
     },
     "dependencies": {
-        "cookie": "^2.0.1",
+        "cookie": "^2.0.2",
         "onchange": "^7.1.0"
     },
     "devDependencies": {
         "@prettier/plugin-php": ">=0.26",
-        "cypress": "^16.2.0",
+        "cypress": "^16.3.0",
         "npm-run-all2": "^9.0.4",
         "prettier": ">=3",
         "start-server-and-test": "^3.0.13",
         "terser": "^5.51.2",
-        "vite": "^8.3.5"
+        "vite": "^8.3.8"
     },
     "overrides": {
         "@babel/core": "^7.29.7",
